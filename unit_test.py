@@ -37,7 +37,8 @@ class TestTicTacGame(unittest.TestCase):
                 self.file_3.write(str(step))
                 self.file_3.write('\n')
 
-        with open("input_with_mistakes.txt", "w", encoding="utf-8") as self.file_4:
+        with open("input_with_mistakes.txt", "w", encoding="utf-8") \
+                as self.file_4:
             for step in self.steps_with_mistakes:
                 self.file_4.write(str(step))
                 self.file_4.write('\n')
