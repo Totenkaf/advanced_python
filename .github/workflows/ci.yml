@@ -29,9 +29,11 @@ jobs:
 
       - name: FLAKE_8 CHECK
         run: |
+          cd HW_1
           flake8 main.py
           flake8 game
           flake8 unit_test.py
+          cd ../
       
       - name: INSTALL PYLINT
         run: |
@@ -39,9 +41,11 @@ jobs:
 
       - name: PYLINT CHECK
         run: |
+          cd HW_1
           pylint main.py
           pylint game
           pylint unit_test.py
+          cd ../
 
   testing:
     runs-on: ubuntu-latest
@@ -60,7 +64,9 @@ jobs:
 
       - name: RUN UNIT TESTS
         run: |
+          cd HW_1
           python3 -m unittest unit_test.py
+          cd ../
       
       - name: INSTALL COVERAGE
         run: |
@@ -68,8 +74,10 @@ jobs:
       
       - name: MAKE COVERAGE
         run: |
+          cd HW_1
           coverage run unit_test.py
           coverage report -m
+          cd ..
 
   #     - uses: codecov/codecov-action@v2
   #     - name: CODE COVERAGE
