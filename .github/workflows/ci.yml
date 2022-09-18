@@ -14,14 +14,34 @@ jobs:
           sudo apt-get update && sudo apt-get install -y python3-pip
           which python3
           which pip
+      
+      - name: INSTALL PEP8
+        run: |
+          sudo pip3 install pep8-naming
 
       - name: INSTALL FLAKE_8
         run: |
-          sudo pip3 install flake8
+          sudo pip3 install flake8-bugbear
+          sudo pip3 install flake8-builtins
+          sudo pip3 install flake8-commas
+          sudo pip3 install flake8-variables-names
+          sudo pip3 install flake8-import-order
+
+      - name: FLAKE_8 CHECK
+        run: |
+          flake8 main.py
+          flake8 game
+          flake8 unit_test.py
       
       - name: INSTALL PYLINT
         run: |
           sudo pip3 install pylint
+
+      - name: PYLINT CHECK
+        run: |
+          pylint main.py
+          pylint game
+          pylint unit_test.py
 
   # building:
   #   runs-on: ubuntu-latest
