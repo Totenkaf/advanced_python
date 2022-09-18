@@ -1,0 +1,96 @@
+# Copyright 2022 by Artem Ustsov
+on: push
+
+jobs:
+  checking:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: WORKING DIRECTORY
+        run: pwd
+
+      - name: INSTALL PIP
+        run: |
+          sudo apt-get update && sudo apt-get install -y python3-pip
+          which python3
+          which pip
+
+      - name: INSTALL FLAKE_8
+        run: |
+          sudo pip3 install flake8
+      
+      - name: INSTALL PYLINT
+        run: |
+          sudo pip3 install pylint
+
+  # building:
+  #   runs-on: ubuntu-latest
+  #   needs: [checking]
+  #   steps:
+
+  #     - uses: actions/checkout@v2
+  #     - name: WORKING DIRECTORY
+  #       run: pwd
+
+  #     - name: RUN VALGRIND PROGRAMM_PARALLEL LIB_FILEINPUT_MAX AVAILABLE CORES
+  #       run: |
+  #         mkdir -p build && cd build
+  #         sudo cmake -DBUILD_PARALLEL=ON ..
+  #         sudo make
+  #         INPUT_KEY=-i1
+  #         CORES_KEY=-j100
+  #         DATA_FILENAME="data.txt"
+  #         SEQUENCE_SIZE=1000
+  #         R_WINDOW=15
+  #         sudo valgrind --tool=memcheck --leak-check=full --leak-resolution=med ./ECG ${INPUT_KEY} ${CORES_KEY} ${DATA_FILENAME} ${SEQUENCE_SIZE} ${R_WINDOW}
+  #         cd ../
+
+  # testing:
+  #   runs-on: ubuntu-latest
+  #   needs: [building]
+  #   steps:
+
+  #     - uses: actions/checkout@v2
+  #     - name: WORKING DIRECTORY
+  #       run: pwd
+
+  #     - name: INSTALL PIP
+  #       run: |
+  #         sudo apt-get update && sudo apt-get install -y python3-pip
+  #         which python3
+  #         which pip
+
+  #     - name: INPUT_TEST
+  #       run:  |
+  #         mkdir -p build && cd build
+  #         sudo cmake -DBUILD_PARALLEL=OFF -DBUILD_TESTS=ON ..
+  #         sudo make
+  #         cd unit_test
+  #         sudo ./input_test
+  #         cd ../
+
+  #     - uses: codecov/codecov-action@v2
+  #     - name: CODE COVERAGE
+  #       run: |
+  #         mkdir -p build && cd build
+  #         sudo cmake -DBUILD_PARALLEL=OFF -DBUILD_TESTS=ON -DBUILD_STRESS_TEST=ON -DENABLE_COVERAGE=ON ..
+  #         sudo make
+  #         sudo ./ECG -i1 data.txt 10000 12
+  #         cd unit_test
+  #         sudo ./input_test
+  #         sudo ./static_test
+  #         cd ../
+  #         cd stress_test
+  #         sudo ./stress_test -i1 data.txt 10000 12
+  #         cd ../
+  #         sudo cmake -DBUILD_PARALLEL=ON -DBUILD_TESTS=ON -DBUILD_STRESS_TEST=ON -DENABLE_COVERAGE=ON ..
+  #         sudo make
+  #         cd unit_test
+  #         sudo ./parallel_test
+  #         cd ../
+  #         lcov --directory . --capture --output-file coverage.info
+  #         lcov --remove coverage.info '/usr/*' "${HOME}" '/.cache/*' --output-file coverage.info
+  #         lcov --list coverage.info
+  #         cd ..
+  #         bash <(curl -s https://codecov.io/bash) -f build/coverage.info || echo "CodeCov didn't collect coverage reports"
+  #         cat codecov.yml | curl --data-binary @- https://codecov.io/validate
