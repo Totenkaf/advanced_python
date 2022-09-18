@@ -58,10 +58,6 @@ jobs:
           which python3
           which pip
 
-      - name: INSTALL UNITTEST
-        run: |
-          sudo pip3 install unittest
-
       - name: RUN UNIT TESTS
         run: |
           python3 -m unittest unit_test.py
