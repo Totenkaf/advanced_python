@@ -30,9 +30,8 @@ jobs:
       - name: FLAKE_8 CHECK
         run: |
           cd HW_1
-          flake8 main.py
           flake8 game
-          flake8 unit_test.py
+          flake8 main.py
           cd ../
       
       - name: INSTALL PYLINT
@@ -42,9 +41,8 @@ jobs:
       - name: PYLINT CHECK
         run: |
           cd HW_1
-          pylint main.py
-          pylint game
-          pylint unit_test.py
+          flake8 game
+          flake8 main.py
           cd ../
 
   testing:
@@ -65,7 +63,7 @@ jobs:
       - name: RUN UNIT TESTS
         run: |
           cd HW_1
-          python3 -m unittest unit_test.py
+          python3 -m unittest game/test/tic_tac_game_test.py
           cd ../
       
       - name: INSTALL COVERAGE
@@ -75,32 +73,9 @@ jobs:
       - name: MAKE COVERAGE
         run: |
           cd HW_1
-          coverage run unit_test.py
+          coverage run game/test/tic_tac_game_test.py
           coverage report -m
           cd ..
 
-  #     - uses: codecov/codecov-action@v2
-  #     - name: CODE COVERAGE
-  #       run: |
-  #         mkdir -p build && cd build
-  #         sudo cmake -DBUILD_PARALLEL=OFF -DBUILD_TESTS=ON -DBUILD_STRESS_TEST=ON -DENABLE_COVERAGE=ON ..
-  #         sudo make
-  #         sudo ./ECG -i1 data.txt 10000 12
-  #         cd unit_test
-  #         sudo ./input_test
-  #         sudo ./static_test
-  #         cd ../
-  #         cd stress_test
-  #         sudo ./stress_test -i1 data.txt 10000 12
-  #         cd ../
-  #         sudo cmake -DBUILD_PARALLEL=ON -DBUILD_TESTS=ON -DBUILD_STRESS_TEST=ON -DENABLE_COVERAGE=ON ..
-  #         sudo make
-  #         cd unit_test
-  #         sudo ./parallel_test
-  #         cd ../
-  #         lcov --directory . --capture --output-file coverage.info
-  #         lcov --remove coverage.info '/usr/*' "${HOME}" '/.cache/*' --output-file coverage.info
-  #         lcov --list coverage.info
-  #         cd ..
-  #         bash <(curl -s https://codecov.io/bash) -f build/coverage.info || echo "CodeCov didn't collect coverage reports"
-  #         cat codecov.yml | curl --data-binary @- https://codecov.io/validate
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v2

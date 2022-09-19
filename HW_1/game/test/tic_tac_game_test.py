@@ -149,3 +149,7 @@ class TestTicTacGame(unittest.TestCase):
         self.assertEqual(self.game_3.board_field, ['O', 'O', 'X',
                                                    'X', 'X', 'O',
                                                    'O', 'X', 'X'])
+
+
+if __name__ == '__main__':
+    unittest.main()
