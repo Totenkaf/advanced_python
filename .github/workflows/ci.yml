@@ -63,7 +63,7 @@ jobs:
       - name: RUN UNIT TESTS
         run: |
           cd HW_1
-          python3 -m unittest game/test/tic_tac_game_test.py
+          python3 -m unittest game/test/*_test.py
           cd ../
       
       - name: INSTALL COVERAGE
@@ -73,9 +73,9 @@ jobs:
       - name: MAKE COVERAGE
         run: |
           cd HW_1
-          coverage run game/test/tic_tac_game_test.py
+          coverage run -m unittest game/test/*_test.py
           coverage report -m
-          cd ..
+          cd ../
 
-      - name: Upload Coverage to Codecov
+      - name: UPLOAD COVERAGE TO CODECOV
         uses: codecov/codecov-action@v2
