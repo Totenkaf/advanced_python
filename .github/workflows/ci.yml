@@ -75,8 +75,6 @@ jobs:
           cd HW_1
           coverage run -m unittest game/test/*_test.py
           coverage report -m
-
-      - name: UPLOAD COVERAGE TO CODECOV
-        uses: codecov/codecov-action@v2
+      - uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
