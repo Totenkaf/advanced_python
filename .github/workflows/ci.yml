@@ -80,4 +80,4 @@ jobs:
       - name: UPLOAD COVERAGE TO CODECOV
         uses: codecov/codecov-action@v2
         with:
-          token: ${{ secrets.42067270-0bca-4277-a9b5-6302e6ae08d9 }}
+          token: ${{ 42067270-0bca-4277-a9b5-6302e6ae08d9 }}
