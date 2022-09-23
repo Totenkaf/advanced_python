@@ -1,7 +1,7 @@
-'''
+"""
 TicTacToe game project. Main file
 Copyright 2022 by Artem Ustsov
-'''
+"""
 import sys
 
 from game.tic_tac_toe import TicTacGame

@@ -1,21 +1,21 @@
-'''
+"""
 TicTacToe game project.
 Copyright 2022 by Artem Ustsov
-'''
+"""
 import sys
 
 
 class TicTacGame:
-    '''Main TicTacToe game Object'''
+    """Main TicTacToe game Object"""
     def __init__(self, input_fd=sys.stdin):
-        '''Initialize basic game settings'''
+        """Initialize basic game settings"""
         self.board_size = 3
         self.input_fd = input_fd
         self.board_cells_num = self.board_size * self.board_size
         self.board_field = list(range(1, self.board_cells_num + 1))
 
     def show_board(self) -> None:
-        '''Draw the game board as pseudo graph in stdout'''
+        """Draw the game board as pseudo graph in stdout"""
 
         print("\n")
 
@@ -40,10 +40,10 @@ class TicTacGame:
         print("\n")
 
     def validate_input(self, current_player) -> tuple:
-        '''
+        """
         Gives a current_player (X or O), check the input, return a tuple
         with validation status and chosen position by current_player
-        '''
+        """
         while True:
             try:
                 print(f"Player {current_player} turn. Choose your pos: ")
@@ -68,9 +68,9 @@ class TicTacGame:
         return True, player_chosen_pos
 
     def make_player_step(self, step_counter) -> str:
-        '''
+        """
         Takes a step_counter, return current_player
-        '''
+        """
         if step_counter % 2 == 0:
             current_player = "X"
             is_valid, player_chosen_pos = self.validate_input(current_player)
@@ -88,9 +88,9 @@ class TicTacGame:
         return current_player
 
     def start_pair_game(self) -> None:
-        '''
+        """
         Initialize the game. Return None
-        '''
+        """
         step_counter = 0
         game_over = False
         while not game_over:
@@ -108,10 +108,10 @@ class TicTacGame:
         print("Game Over")
 
     def check_winner(self, current_player) -> bool:
-        '''
+        """
         Takes a current_player and checks the current board_field status
         with win combinations, return True, otherwise False
-        '''
+        """
         win_cords = (
                       (0, 1, 2), (3, 4, 5),
                       (6, 7, 8), (0, 3, 6),
@@ -127,9 +127,9 @@ class TicTacGame:
         return False
 
     def check_tie(self, step_counter):
-        '''
+        """
         Takes a step_counter, returns True if step_counter = 9, otherwise False
-        '''
+        """
         if step_counter == self.board_cells_num:
             print("Tie!")
             return True
