@@ -7,7 +7,7 @@ import unittest
 from parser.json_parser import keyword_handler, parse_json
 from unittest.mock import patch
 
-from .factory_boy_example import JsonStrFactory
+# from .factory_boy_example import JsonStrFactory
 
 
 class TestJsonParser(unittest.TestCase):
@@ -62,7 +62,8 @@ class TestJsonParser(unittest.TestCase):
         Test the keyword_handler missing all arguments
         but with keyword_Callback function
         """
-        parse_json(self.test_json_source, keyword_callback=keyword_handler_mock)
+        parse_json(self.test_json_source,
+                   keyword_callback=keyword_handler_mock)
         self.assertEqual(keyword_handler_mock.call_count, 6)
 
     def test_parse_json_with_no_keyword_callback(self):
