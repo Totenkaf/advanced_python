@@ -72,14 +72,14 @@ class TestJsonParser(unittest.TestCase):
         """
         self.assertRaises(AttributeError, parse_json, self.test_json_source)
 
-    @patch("parser.json_parser.print_statistics")
-    def test_print_statistics(self, print_statistics_mock):
-        """
-        Test the print_statistics via mocking
-        """
-        parse_json(self.test_json_source,
-                   keyword_callback=keyword_handler)
-        self.assertEqual(print_statistics_mock.call_count, 6)
+    # @patch("parser.json_parser.print_statistics")
+    # def test_print_statistics(self, print_statistics_mock):
+    #     """
+    #     Test the print_statistics via mocking
+    #     """
+    #     parse_json(self.test_json_source,
+    #                keyword_callback=keyword_handler)
+    #     self.assertEqual(print_statistics_mock.call_count, 6)
 
 
 if __name__ == '__main__':
