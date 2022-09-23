@@ -16,7 +16,12 @@ parsers:
       method: no
       macro: no
 
+profiling:
+  critical_files_paths:
+    - HW_1/game/tic_tac_toe.py
+
 comment:
   layout: "reach,diff,flags,files,footer"
   behavior: default
   require_changes: no
+  show_critical_paths: true
