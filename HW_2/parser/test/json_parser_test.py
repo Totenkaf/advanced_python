@@ -7,7 +7,7 @@ import unittest
 from parser.json_parser import keyword_handler, parse_json
 from unittest.mock import patch
 
-# from .factory_boy_example import JsonStrFactory
+from .json_factory import JsonStrFactory
 
 
 class TestJsonParser(unittest.TestCase):
@@ -80,6 +80,34 @@ class TestJsonParser(unittest.TestCase):
         parse_json(self.test_json_source,
                    keyword_callback=keyword_handler)
         self.assertEqual(print_statistics_mock.call_count, 6)
+
+    @patch("parser.json_parser.keyword_handler")
+    def test_on_random_dataset(self, keyword_handler_mock):
+        """
+        Test the print_statistics via mocking
+        with factory boy generated samples
+        """
+        data = []
+        data.extend(JsonStrFactory.create_batch(size=3))
+
+        tmp = []
+        tmp.extend([' '.join(json_str.colors) for json_str in data])
+
+        keywords = []
+        for field in tmp:
+            for value in field.split():
+                keywords.append(value)
+
+        # required_fields = random.sample(
+        # [json_str.name for json_str in data], 10)
+        keywords = keywords[:5]
+        strings = [string.make_str() for string in data]
+
+        for string in strings:
+            parse_json(string,
+                       keywords=keywords,
+                       keyword_callback=keyword_handler_mock)
+        self.assertEqual(keyword_handler_mock.call_count, 5)
 
 
 if __name__ == '__main__':
