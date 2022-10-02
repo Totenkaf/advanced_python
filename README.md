@@ -1,3 +1,5 @@
+[![.github/workflows/ci.yml](https://github.com/Totenkaf/advanced_python/actions/workflows/ci.yml/badge.svg)](https://github.com/Totenkaf/advanced_python/actions/workflows/ci.yml)
+
 # VK | SEM II_Advanced Python | HW_3
 
 ================================================================ 
