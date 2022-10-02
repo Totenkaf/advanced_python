@@ -1,6 +1,6 @@
 [![.github/workflows/ci.yml](https://github.com/Totenkaf/advanced_python/actions/workflows/ci.yml/badge.svg)](https://github.com/Totenkaf/advanced_python/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/Totenkaf/advanced_python/branch/HW_3/graph/badge.svg?token=5jHkOnOQib)](https://codecov.io/gh/Totenkaf/advanced_python)
-# VK | SEM II_Advanced Python | HW_3
+[![codecov](https://codecov.io/gh/Totenkaf/advanced_python/branch/HW_4/graph/badge.svg?token=5jHkOnOQib)](https://codecov.io/gh/Totenkaf/advanced_python)
+# VK | SEM II_Advanced Python | HW_4
 
 ================================================================ 
   
@@ -8,21 +8,66 @@
 Группа ML-21.  
 Преподаватели: Геннадий Кандауров, Антон Кухтичев
 
-### Реализовать класс, отнаследованный от списка
-При этом один список:
+### 1. Написать метакласс, который в начале названий всех атрибутов и методов (кроме магических) добавляет префикс "custom_" (+тесты).
+  Подменяться должны так же атрибуты экземпляра после создания экземпляра класса (dynamic в примере).
 
-- Можно вычитать из другого CustomList([5, 1, 3, 7]) - CustomList([1, 2, 7]) = CustomList([4, -1, -4, 7]);  
-- Можно складывать с другим CustomList([5, 1, 3, 7]) + CustomList([1, 2, 7]) = CustomList([6, 3, 10, 7]);  
-- Результатом сложения/вычитания должен быть новый кастомный список;  
+```py
+    class CustomMeta():
+        pass
 
-Сложение/вычитание также должно работать с обычными списками:  
-[1, 2] +- CustomList([3, 4]) -> CustomList(...)  
-CustomList([3, 4]) +- [1, 2] -> CustomList(...)  
+    class CustomClass(metaclass=CustomMeta):
+        x = 50
 
-- При неравной длине, дополнять меньший список нулями только на время выполнения операции. Исходные списки не должны изменяться;
-- При сравнении списков должна сравниваться сумма элементов списков;
-- Должен быть переопределен str, чтобы выводились элементы списка и их сумма;
-- Списки можно считать всегда числовыми;  
+        def __init__(self, val=99):
+            self.val = val
 
-### На все должны быть тесты в отдельном модуле;  
-### Перед отправкой на проверку код должен быть прогнан через flake8 и pylint, по желанию еще black.
+        def line(self):
+            return 100
+
+        def __str__(self):
+            return "Custom_by_metaclass"
+
+    inst = CustomClass()
+    inst.custom_x == 50
+    inst.custom_val == 99
+    inst.custom_line() == 100
+    CustomClass.custom_x == 50
+    str(inst) == "Custom_by_metaclass"
+
+    inst.dynamic = "added later"
+    inst.custom_dynamic == "added later"
+    inst.dynamic  # ошибка
+
+    inst.x  # ошибка
+    inst.val  # ошибка
+    inst.line() # ошибка
+    inst.yyy  # ошибка
+    CustomClass.x  # ошибка
+```
+
+
+### 2. Дескрипторы с проверками типов и значений данных (+тесты)
+
+```py
+    class Integer:
+        pass
+
+    class String:
+        pass
+
+    class PositiveInteger:
+        pass
+
+    class Data:
+        num = Integer()
+        name = String()
+        price = PositiveInteger()
+
+        def __init__(...):
+            ....
+```
+
+
+### 3. Тесты в отдельном модуле
+
+### 4. Перед отправкой на проверку код должен быть прогнан через flake8 и pylint, по желанию еще black
