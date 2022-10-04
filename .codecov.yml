@@ -18,7 +18,7 @@ parsers:
 
 profiling:
   critical_files_paths:
-    - HW_1/game/tic_tac_toe.py
+    - 01/game/tic_tac_toe.py
 
 comment:
   layout: "reach,diff,flags,files,footer"
