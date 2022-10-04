@@ -18,7 +18,7 @@ parsers:
 
 profiling:
   critical_files_paths:
-    - HW_2/parser/json_parser.py
+    - 02/parser/json_parser.py
 
 comment:
   layout: "reach,diff,flags,files,footer"

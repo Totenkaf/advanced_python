@@ -27,7 +27,7 @@ jobs:
           sudo pip3 install flake8-import-order
       - name: FLAKE_8 CHECK
         run: |
-          cd HW_2
+          cd 02
           flake8 parser
           flake8 main.py
           cd ../
@@ -38,7 +38,7 @@ jobs:
 
       - name: PYLINT CHECK
         run: |
-          cd HW_2
+          cd 02
           flake8 parser
           flake8 main.py
           cd ../
@@ -59,13 +59,13 @@ jobs:
       
       - name: INSTALL FACTORY BOY
         run: |
-          cd HW_2
+          cd 02
           sudo pip3 install factory_boy
           cd ../
 
       - name: RUN UNIT TESTS
         run: |
-          cd HW_2
+          cd 02
           python3 -m unittest parser/test/*_test.py
           cd ../
       
@@ -75,7 +75,7 @@ jobs:
       
       - name: MAKE COVERAGE
         run: |
-          cd HW_2
+          cd 02
           coverage run -m unittest parser/test/*_test.py
           coverage report -m
           mv .coverage ../.coverage
