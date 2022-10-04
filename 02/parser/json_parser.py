@@ -9,10 +9,12 @@ def print_statistics(*args) -> None:
     """Prints the keyword symbol statistics"""
     print(f"Catch keyword is: {args[0]}")
     print("== Statistics ==")
-    print(f"- {len(args[0])} characters with {len(set(args[0]))} "
-          f"unique symbols\n"
-          f"- {args[1]} uppercase symbols\n"
-          f"- {args[2]} lowercase symbols\n")
+    print(
+        f"- {len(args[0])} characters with {len(set(args[0]))} "
+        f"unique symbols\n"
+        f"- {args[1]} uppercase symbols\n"
+        f"- {args[2]} lowercase symbols\n",
+    )
 
 
 def keyword_handler(keyword: str) -> None:
@@ -25,8 +27,12 @@ def keyword_handler(keyword: str) -> None:
     print_statistics(keyword, upper_characters, lower_characters)
 
 
-def parse_json(json_source: str, required_fields=None,
-               keywords=None, keyword_callback=None) -> None:
+def parse_json(
+    json_source: str,
+    required_fields=None,
+    keywords=None,
+    keyword_callback=None,
+) -> None:
     """
     Takes a string as an argument, calculates the number of letters
     and numbers in a word, finds the number of unique characters.

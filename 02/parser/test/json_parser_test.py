@@ -7,22 +7,25 @@ import unittest
 from parser.json_parser import keyword_handler, parse_json
 from unittest.mock import patch
 
-from .json_factory import JsonStrFactory
+# from .json_factory import JsonStrFactory
 
 
 class TestJsonParser(unittest.TestCase):
     """
-        Main testing class of json_parser
+    Main testing class of json_parser
     """
+
     # pylint: disable=too-many-instance-attributes
     # pylint: disable=consider-using-with
     def setUp(self) -> None:
-        self.test_json_source = '{' \
-                        '"key1": "word1 word2 word3", ' \
-                        '"key2": "word2 word6 word4 abracadabra",' \
-                        '"key3": "word1",' \
-                        '"key4": ""' \
-                        '}'
+        self.test_json_source = (
+            "{"
+            '"key1": "word1 word2 word3", '
+            '"key2": "word2 word6 word4 abracadabra",'
+            '"key3": "word1",'
+            '"key4": ""'
+            "}"
+        )
 
         self.test_fields = ["key1", "key2"]
         self.test_words = ["word1", "word6"]
@@ -32,19 +35,26 @@ class TestJsonParser(unittest.TestCase):
         """
         Test the keyword_handler with giving all arguments
         """
-        parse_json(self.test_json_source, self.test_fields,
-                   self.test_words, keyword_handler_mock)
+        parse_json(
+            self.test_json_source,
+            self.test_fields,
+            self.test_words,
+            keyword_handler_mock,
+        )
         self.assertEqual(keyword_handler_mock.call_count, 2)
 
     @patch("parser.json_parser.keyword_handler")
-    def test_keyword_handler_with_no_required_fields(self,
-                                                     keyword_handler_mock):
+    def test_keyword_handler_with_no_required_fields(
+        self, keyword_handler_mock,
+    ):
         """
         Test the keyword_handler missing the required_fields
         """
-        parse_json(self.test_json_source,
-                   keywords=self.test_words,
-                   keyword_callback=keyword_handler_mock)
+        parse_json(
+            self.test_json_source,
+            keywords=self.test_words,
+            keyword_callback=keyword_handler_mock,
+        )
         self.assertEqual(keyword_handler_mock.call_count, 2)
 
     @patch("parser.json_parser.keyword_handler")
@@ -52,8 +62,11 @@ class TestJsonParser(unittest.TestCase):
         """
         Test the keyword_handler missing the keywords
         """
-        parse_json(self.test_json_source, required_fields=self.test_fields,
-                   keyword_callback=keyword_handler_mock)
+        parse_json(
+            self.test_json_source,
+            required_fields=self.test_fields,
+            keyword_callback=keyword_handler_mock,
+        )
         self.assertEqual(keyword_handler_mock.call_count, 6)
 
     @patch("parser.json_parser.keyword_handler")
@@ -62,8 +75,9 @@ class TestJsonParser(unittest.TestCase):
         Test the keyword_handler missing all arguments
         but with keyword_Callback function
         """
-        parse_json(self.test_json_source,
-                   keyword_callback=keyword_handler_mock)
+        parse_json(
+            self.test_json_source, keyword_callback=keyword_handler_mock,
+        )
         self.assertEqual(keyword_handler_mock.call_count, 6)
 
     def test_parse_json_with_no_keyword_callback(self):
@@ -77,38 +91,37 @@ class TestJsonParser(unittest.TestCase):
         """
         Test the print_statistics via mocking
         """
-        parse_json(self.test_json_source,
-                   keyword_callback=keyword_handler)
+        parse_json(self.test_json_source, keyword_callback=keyword_handler)
         self.assertEqual(print_statistics_mock.call_count, 6)
 
-    @patch("parser.json_parser.keyword_handler")
-    def test_on_random_dataset(self, keyword_handler_mock):
-        """
-        Test the print_statistics via mocking
-        with factory boy generated samples
-        """
-        data = []
-        data.extend(JsonStrFactory.create_batch(size=3))
+    # @patch("parser.json_parser.keyword_handler")
+    # def test_on_random_dataset(self, keyword_handler_mock):
+    #     """
+    #     Test the print_statistics via mocking
+    #     with factory boy generated samples
+    #     """
+    #     data = []
+    #     data.extend(JsonStrFactory.create_batch(size=3))
+    #
+    #     tmp = []
+    #     tmp.extend([' '.join(json_str.colors) for json_str in data])
+    #
+    #     keywords = []
+    #     for field in tmp:
+    #         for value in field.split():
+    #             keywords.append(value)
+    #
+    #     # required_fields = random.sample(
+    #     # [json_str.name for json_str in data], 10)
+    #     keywords = keywords[:5]
+    #     strings = [string.make_str() for string in data]
+    #
+    #     for string in strings:
+    #         parse_json(string,
+    #                    keywords=keywords,
+    #                    keyword_callback=keyword_handler_mock)
+    #     self.assertEqual(keyword_handler_mock.call_count, 5)
 
-        tmp = []
-        tmp.extend([' '.join(json_str.colors) for json_str in data])
 
-        keywords = []
-        for field in tmp:
-            for value in field.split():
-                keywords.append(value)
-
-        # required_fields = random.sample(
-        # [json_str.name for json_str in data], 10)
-        keywords = keywords[:5]
-        strings = [string.make_str() for string in data]
-
-        for string in strings:
-            parse_json(string,
-                       keywords=keywords,
-                       keyword_callback=keyword_handler_mock)
-        self.assertEqual(keyword_handler_mock.call_count, 5)
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
