@@ -25,7 +25,7 @@ jobs:
 
       - name: RUN BLACK
         run: |
-          cd HW_3
+          cd 03
           black .
           cd ../
 
@@ -39,7 +39,7 @@ jobs:
 
       - name: FLAKE_8 CHECK
         run: |
-          cd HW_3
+          cd 03
           flake8 list
           flake8 main.py
           cd ../
@@ -50,7 +50,7 @@ jobs:
 
       - name: PYLINT CHECK
         run: |
-          cd HW_3
+          cd 03
           pylint list
           pylint main.py
           cd ../
@@ -72,7 +72,7 @@ jobs:
 
       - name: RUN UNIT TESTS
         run: |
-          cd HW_3
+          cd 03
           python3 -m unittest list/test/*_test.py
           cd ../
       
@@ -82,7 +82,7 @@ jobs:
       
       - name: MAKE COVERAGE
         run: |
-          cd HW_3
+          cd 03
           coverage run -m unittest list/test/*_test.py
           coverage report -m
           mv .coverage ../.coverage
