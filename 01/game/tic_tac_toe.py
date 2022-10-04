@@ -7,37 +7,48 @@ import sys
 
 class TicTacGame:
     """Main TicTacToe game Object"""
-    def __init__(self, input_fd=sys.stdin):
+
+    def __init__(self, input_fd=sys.stdin, output_fd=sys.stdout):
         """Initialize basic game settings"""
         self.board_size = 3
         self.input_fd = input_fd
+        self.output_fd = output_fd
         self.board_cells_num = self.board_size * self.board_size
         self.board_field = list(range(1, self.board_cells_num + 1))
 
     def show_board(self) -> None:
         """Draw the game board as pseudo graph in stdout"""
 
-        print("\n")
+        print("\n", file=self.output_fd)
 
-        print("\t     |     |")
-        print(f"\t  {self.board_field[0]}  |  "
-              f"{self.board_field[1]}  |  "
-              f"{self.board_field[2]}")
-        print('\t_____|_____|_____')
+        print("\t     |     |", file=self.output_fd)
+        print(
+            f"\t  {self.board_field[0]}  |  "
+            f"{self.board_field[1]}  |  "
+            f"{self.board_field[2]}",
+            file=self.output_fd,
+        )
+        print("\t_____|_____|_____", file=self.output_fd)
 
-        print("\t     |     |")
-        print(f"\t  {self.board_field[3]}  |  "
-              f"{self.board_field[4]}  |  "
-              f"{self.board_field[5]}")
-        print('\t_____|_____|_____')
+        print("\t     |     |", file=self.output_fd)
+        print(
+            f"\t  {self.board_field[3]}  |  "
+            f"{self.board_field[4]}  |  "
+            f"{self.board_field[5]}",
+            file=self.output_fd,
+        )
+        print("\t_____|_____|_____", file=self.output_fd)
 
-        print("\t     |     |")
-        print(f"\t  {self.board_field[6]}  |  "
-              f"{self.board_field[7]}  |  "
-              f"{self.board_field[8]}")
-        print("\t     |     |")
+        print("\t     |     |", file=self.output_fd)
+        print(
+            f"\t  {self.board_field[6]}  |  "
+            f"{self.board_field[7]}  |  "
+            f"{self.board_field[8]}",
+            file=self.output_fd,
+        )
+        print("\t     |     |", file=self.output_fd)
 
-        print("\n")
+        print("\n", file=self.output_fd)
 
     def validate_input(self, current_player) -> tuple:
         """
@@ -46,23 +57,35 @@ class TicTacGame:
         """
         while True:
             try:
-                print(f"Player {current_player} turn. Choose your pos: ")
+                print(
+                    f"Player {current_player} turn. Choose your pos: ",
+                    file=self.output_fd,
+                )
                 player_chosen_pos = self.input_fd.readline()
-                print(f"{current_player} choose {player_chosen_pos}")
-                if player_chosen_pos == '':
+                print(
+                    f"{current_player} choose {player_chosen_pos}",
+                    file=self.output_fd,
+                )
+                if player_chosen_pos == "":
                     return False, -1
                 player_chosen_pos = int(player_chosen_pos)
             except ValueError:
-                print("Wrong input. Enter the number position from 1 to 9\n")
+                print(
+                    "Wrong input. Enter the number position from 1 to 9\n",
+                    file=self.output_fd,
+                )
                 continue
 
             if player_chosen_pos < 1 or player_chosen_pos > 9:
-                print("Wrong input. Enter the number position from 1 to 9\n")
+                print(
+                    "Wrong input. Enter the number position from 1 to 9\n",
+                    file=self.output_fd,
+                )
                 continue
 
             if str(self.board_field[player_chosen_pos - 1]) not in "XO":
                 break
-            print("The cell is occupied. Try again!\n")
+            print("The cell is occupied. Try again!\n", file=self.output_fd)
             continue
 
         return True, player_chosen_pos
@@ -105,7 +128,7 @@ class TicTacGame:
             else:
                 break
         self.show_board()
-        print("Game Over")
+        print("Game Over", file=self.output_fd)
 
     def check_winner(self, current_player) -> bool:
         """
@@ -113,16 +136,22 @@ class TicTacGame:
         with win combinations, return True, otherwise False
         """
         win_cords = (
-                      (0, 1, 2), (3, 4, 5),
-                      (6, 7, 8), (0, 3, 6),
-                      (1, 4, 7), (2, 5, 8),
-                      (0, 4, 8), (2, 4, 6),
-                     )
+            (0, 1, 2),
+            (3, 4, 5),
+            (6, 7, 8),
+            (0, 3, 6),
+            (1, 4, 7),
+            (2, 5, 8),
+            (0, 4, 8),
+            (2, 4, 6),
+        )
         for win_cord in win_cords:
-            if self.board_field[win_cord[0]] ==\
-                    self.board_field[win_cord[1]] ==\
-                    self.board_field[win_cord[2]]:
-                print(current_player, "Wins!")
+            if (
+                self.board_field[win_cord[0]]
+                == self.board_field[win_cord[1]]
+                == self.board_field[win_cord[2]]
+            ):
+                print(current_player, "Wins!", file=self.output_fd)
                 return True
         return False
 
@@ -131,6 +160,6 @@ class TicTacGame:
         Takes a step_counter, returns True if step_counter = 9, otherwise False
         """
         if step_counter == self.board_cells_num:
-            print("Tie!")
+            print("Tie!", file=self.output_fd)
             return True
         return False

@@ -2,10 +2,10 @@
 [![codecov](https://codecov.io/gh/Totenkaf/advanced_python/branch/HW_1/graph/badge.svg?token=5jHkOnOQib)](https://codecov.io/gh/Totenkaf/advanced_python)
 # VK | SEM II_Advanced Python | HW_1
 
-================================================================ 
+================================================================  
 Усцов Артем Алексеевич.  
 Группа ML-21.  
-Преподаватели: Геннадий Кандауров, Антон Кухтичев
+Преподаватели: Геннадий Кандауров, Антон Кухтичев  
 
 - Реализовать игру крестики-нолики;  
 - Написать тесты (unittest или assert);  

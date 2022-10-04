@@ -12,12 +12,13 @@ from game.tic_tac_toe import TicTacGame
 
 class TestTicTacGame(unittest.TestCase):
     """
-    Main testclass of TicTacGame Object
+    Main testing class of TicTacGame Object
     """
+
     # pylint: disable=too-many-instance-attributes
     # pylint: disable=consider-using-with
     def setUp(self) -> None:
-        self.steps_with_mistakes = [5, 'x', -10, 12, '*']
+        self.steps_with_mistakes = [5, "x", -10, 12, "*"]
         self.x_wins_steps = [5, 1, 2, 3, 8]
         self.o_wins_steps = [1, 9, 2, 3, 4, 6]
         self.tie_steps = [5, 1, 8, 2, 3, 7, 4, 6, 9]
@@ -25,35 +26,39 @@ class TestTicTacGame(unittest.TestCase):
         with open("x_wins.txt", "w", encoding="utf-8") as self.file_1:
             for step in self.x_wins_steps:
                 self.file_1.write(str(step))
-                self.file_1.write('\n')
+                self.file_1.write("\n")
 
         with open("o_wins.txt", "w", encoding="utf-8") as self.file_2:
             for step in self.o_wins_steps:
                 self.file_2.write(str(step))
-                self.file_2.write('\n')
+                self.file_2.write("\n")
 
         with open("tie.txt", "w", encoding="utf-8") as self.file_3:
             for step in self.tie_steps:
                 self.file_3.write(str(step))
-                self.file_3.write('\n')
+                self.file_3.write("\n")
 
-        with open("input_with_mistakes.txt", "w", encoding="utf-8") \
-                as self.file_4:
+        with open(
+            "input_with_mistakes.txt",
+            "w",
+            encoding="utf-8",
+        ) as self.file_4:
             for step in self.steps_with_mistakes:
                 self.file_4.write(str(step))
-                self.file_4.write('\n')
+                self.file_4.write("\n")
 
-        self.file_1 = open(self.file_1.name, 'r', encoding="utf-8")
-        self.game_1 = TicTacGame(input_fd=self.file_1)
+        self.log_file = open("test_logs.txt", "w+", encoding="utf-8")
+        self.file_1 = open(self.file_1.name, "r", encoding="utf-8")
+        self.game_1 = TicTacGame(input_fd=self.file_1, output_fd=self.log_file)
 
-        self.file_2 = open(self.file_2.name, 'r', encoding="utf-8")
-        self.game_2 = TicTacGame(input_fd=self.file_2)
+        self.file_2 = open(self.file_2.name, "r", encoding="utf-8")
+        self.game_2 = TicTacGame(input_fd=self.file_2, output_fd=self.log_file)
 
-        self.file_3 = open(self.file_3.name, 'r', encoding="utf-8")
-        self.game_3 = TicTacGame(input_fd=self.file_3)
+        self.file_3 = open(self.file_3.name, "r", encoding="utf-8")
+        self.game_3 = TicTacGame(input_fd=self.file_3, output_fd=self.log_file)
 
-        self.file_4 = open(self.file_4.name, 'r', encoding="utf-8")
-        self.game_4 = TicTacGame(input_fd=self.file_4)
+        self.file_4 = open(self.file_4.name, "r", encoding="utf-8")
+        self.game_4 = TicTacGame(input_fd=self.file_4, output_fd=self.log_file)
 
         self.game = TicTacGame()
 
@@ -62,6 +67,7 @@ class TestTicTacGame(unittest.TestCase):
         self.file_2.close()
         self.file_3.close()
         self.file_4.close()
+        self.log_file.close()
         try:
             os.remove(self.file_1.name)
             os.remove(self.file_2.name)
@@ -71,7 +77,7 @@ class TestTicTacGame(unittest.TestCase):
             print(why)
 
     def test_object_init_stdin(self):
-        """Test default initialisations with standart input object"""
+        """Test default initialisations with standard input object"""
         self.assertEqual(self.game.input_fd, sys.stdin)
         self.assertEqual(self.game.board_size, 3)
         self.assertEqual(self.game.board_cells_num, 9)
@@ -111,25 +117,25 @@ class TestTicTacGame(unittest.TestCase):
         self.assertEqual(self.game_4.validate_input("O"), (False, -1))
 
     def test_check_x_winner(self):
-        """Сhecking the ability to return the correct X winner"""
+        """Checks the ability to return the correct X winner"""
         for i, step in enumerate(self.x_wins_steps):
             if i % 2 == 0:
-                self.game_1.board_field[step - 1] = 'X'
+                self.game_1.board_field[step - 1] = "X"
             else:
-                self.game_1.board_field[step - 1] = 'O'
-        self.assertTrue(self.game_1.check_winner('X'))
+                self.game_1.board_field[step - 1] = "O"
+        self.assertTrue(self.game_1.check_winner("X"))
 
     def test_check_o_winner(self):
-        """Сhecking the ability to return the correct O winner"""
+        """Checks the ability to return the correct O winner"""
         for i, step in enumerate(self.o_wins_steps):
             if i % 2 == 0:
-                self.game_2.board_field[step - 1] = 'X'
+                self.game_2.board_field[step - 1] = "X"
             else:
-                self.game_2.board_field[step - 1] = 'O'
-        self.assertTrue(self.game_2.check_winner('O'))
+                self.game_2.board_field[step - 1] = "O"
+        self.assertTrue(self.game_2.check_winner("O"))
 
     def test_check_tie(self):
-        """Сhecking the ability to return the correct tie situation"""
+        """Checks the ability to return the correct tie situation"""
         self.assertTrue(self.game_1.check_tie(9))
         self.assertFalse(self.game_1.check_tie(6))
 
@@ -146,10 +152,11 @@ class TestTicTacGame(unittest.TestCase):
         check_tie_mock.return_value = False
         self.game_3.start_pair_game()
         self.assertEqual(check_tie_mock.call_count, 9)
-        self.assertEqual(self.game_3.board_field, ['O', 'O', 'X',
-                                                   'X', 'X', 'O',
-                                                   'O', 'X', 'X'])
+        self.assertEqual(
+            self.game_3.board_field,
+            ["O", "O", "X", "X", "X", "O", "O", "X", "X"],
+        )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
