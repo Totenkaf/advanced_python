@@ -60,7 +60,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [checking]
     steps:
-
       - uses: actions/checkout@v2
       - name: WORKING DIRECTORY
         run: pwd
@@ -71,12 +70,11 @@ jobs:
           which python3
           which pip
 
-      - name: RUN UNIT TESTS
-        run: |
-          cd 04
-          python3 -m unittest metaclass/tests/*_test.py
-#           python3 -m unittest descriptor/tests/*_test.py
-          cd ../
+#      - name: RUN UNIT TESTS
+#        run: |
+#          cd 04
+#          python3 -m unittest metaclass/tests/*_test.py
+#          cd ../
 
       - name: INSTALL COVERAGE
         run: |
