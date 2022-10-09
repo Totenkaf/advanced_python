@@ -41,7 +41,7 @@ jobs:
       - name: FLAKE_8 CHECK
         run: |
           cd 04
-          flake8 descriptor
+#          flake8 descriptor
           flake8 metaclass
           cd ../
       
@@ -52,7 +52,7 @@ jobs:
       - name: PYLINT CHECK
         run: |
             cd 04
-            pylint descriptor
+#            pylint descriptor
             pylint metaclass
             cd ../
 
@@ -70,11 +70,11 @@ jobs:
           which python3
           which pip
 
-#      - name: RUN UNIT TESTS
-#        run: |
-#          cd 04
-#          python3 -m unittest metaclass/tests/*_test.py
-#          cd ../
+      - name: RUN UNIT TESTS
+        run: |
+          cd 04
+          python3 -m unittest metaclass/tests/*_test.py
+          cd ../
 
 #      - name: INSTALL COVERAGE
 #        run: |
