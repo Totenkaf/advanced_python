@@ -1,6 +1,4 @@
-[![.github/workflows/ci.yml](https://github.com/Totenkaf/advanced_python/actions/workflows/ci.yml/badge.svg)](https://github.com/Totenkaf/advanced_python/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/Totenkaf/advanced_python/branch/HW_4/graph/badge.svg?token=5jHkOnOQib)](https://codecov.io/gh/Totenkaf/advanced_python)
-# VK | SEM II_Advanced Python | HW_4
+# VK | SEM II_Advanced Python | HW_5
 
 ================================================================ 
   
@@ -8,65 +6,56 @@
 Группа ML-21.  
 Преподаватели: Геннадий Кандауров, Антон Кухтичев
 
-### 1. Написать метакласс, который в начале названий всех атрибутов и методов (кроме магических) добавляет префикс "custom_" (+тесты).
-  Подменяться должны так же атрибуты экземпляра после создания экземпляра класса (dynamic в примере).
+## 1. LRU-кэш
+Интерфейс:
 
 ```py
-    class CustomMeta():
-        pass
+    class LRUCache:
 
-    class CustomClass(metaclass=CustomMeta):
-        x = 50
+        def __init__(self, limit=42):
+            pass
 
-        def __init__(self, val=99):
-            self.val = val
+        def get(self, key):
+            pass
 
-        def line(self):
-            return 100
+        def set(self, key, value):
+            pass
 
-        def __str__(self):
-            return "Custom_by_metaclass"
 
-    inst = CustomClass()
-    inst.custom_x == 50
-    inst.custom_val == 99
-    inst.custom_line() == 100
-    CustomClass.custom_x == 50
-    str(inst) == "Custom_by_metaclass"
+    cache = LRUCache(2)
 
-    inst.dynamic = "added later"
-    inst.custom_dynamic == "added later"
-    inst.dynamic  # ошибка
+    cache.set("k1", "val1")
+    cache.set("k2", "val2")
 
-    inst.x  # ошибка
-    inst.val  # ошибка
-    inst.line() # ошибка
-    inst.yyy  # ошибка
-    CustomClass.x  # ошибка
+    print(cache.get("k3"))  # None
+    print(cache.get("k2"))  # "val2"
+    print(cache.get("k1"))  # "val1"
+
+    cache.set("k3", "val3")
+
+    print(cache.get("k3"))  # "val3"
+    print(cache.get("k2"))  # None
+    print(cache.get("k1"))  # "val1"
+
+
+    Если удобнее, get/set можно сделать по аналогии с dict:
+    cache["k1"] = "val1"
+    print(cache["k3"])
 ```
 
+Реализация любым способом без использования OrderedDict.
 
-### 2. Дескрипторы с проверками типов и значений данных (+тесты)
+### 2. Написать генератор filter_file для чтения и фильтрации файла
+Есть текстовый файл, который может не помещаться в память.
+В каждой строке файла фраза или предложение: набор слов, разделенных пробелами (знаков препинания нет).
 
-```py
-    class Integer:
-        pass
+Генератор должен принимать на вход имя файла или файловый объект и список слов для поиска.
+Генератор перебирает строки файла и возвращает только те из них (строку целиком), где встретилось хотя бы одно из слов для поиска.
+Поиск должен выполняться по полному совпадению слова без учета регистра.
 
-    class String:
-        pass
+Например, для строки из файла "а Роза упала на лапу Азора" слово поиска "роза" должно сработать, а "роз" или "розан" - уже нет.
 
-    class PositiveInteger:
-        pass
-
-    class Data:
-        num = Integer()
-        name = String()
-        price = PositiveInteger()
-
-        def __init__(...):
-            ....
-```
-
+Для тестов можноо в том числе использовать StringIO.
 
 ### 3. Тесты в отдельном модуле
 

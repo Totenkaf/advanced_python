@@ -18,8 +18,8 @@ parsers:
 
 profiling:
   critical_files_paths:
-    - 04/metaclass/my_metaclass.py
-    - 04/descriptor/my_descriptor.py
+    - 05/lru_cache/my_lru_cache.py
+    - 05/file_generator/my_file_generator.py
 
 comment:
   layout: "reach,diff,flags,files,footer"
