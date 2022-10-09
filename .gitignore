@@ -3,4 +3,3 @@ venv/
 .coverage
 factory_boy_example.py
 __pycache__/
-
