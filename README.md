@@ -1,4 +1,4 @@
-codecov](https://codecov.io/gh/Totenkaf/advanced_python/branch/HW_4/graph/badge.svg?token=5jHkOnOQib)](https://codecov.io/gh/Totenkaf/advanced_python)
+
 # VK | SEM II_Advanced Python | HW_4
 
 ================================================================ 
