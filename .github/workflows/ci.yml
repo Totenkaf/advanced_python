@@ -57,42 +57,42 @@ jobs:
             cd ../
 
   testing:
-     runs-on: ubuntu-latest
-     needs: [checking]
-     steps:
+    runs-on: ubuntu-latest
+    needs: [checking]
+    steps:
 
-       - uses: actions/checkout@v2
-       - name: WORKING DIRECTORY
-         run: pwd
-      
-       - name: INSTALL PIP
-         run: |
-           sudo apt-get update && sudo apt-get install -y python3-pip
-           which python3
-           which pip
+      - uses: actions/checkout@v2
+      - name: WORKING DIRECTORY
+        run: pwd
 
-       - name: RUN UNIT TESTS
-         run: |
-           cd 04
-           python3 -m unittest metaclass/tests/*_test.py
+      - name: INSTALL PIP
+        run: |
+          sudo apt-get update && sudo apt-get install -y python3-pip
+          which python3
+          which pip
+
+      - name: RUN UNIT TESTS
+        run: |
+          cd 04
+          python3 -m unittest metaclass/tests/*_test.py
 #           python3 -m unittest descriptor/tests/*_test.py
-           cd ../
-      
-       - name: INSTALL COVERAGE
-         run: |
-           sudo pip3 install coverage
-      
-       - name: MAKE COVERAGE
-         run: |
-           cd 04
-           coverage run -m unittest metaclass/tests/*_test.py
-#           coverage run -m unittest descriptor/tests/*_test.py
-           coverage html
-           coverage report -m
-           mv .coverage ../.coverage
-           cd ../
+          cd ../
 
-       - name: UPLOAD COVERAGE TO CODECOV
-         uses: codecov/codecov-action@v2
-         with:
-           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: INSTALL COVERAGE
+        run: |
+          sudo pip3 install coverage
+
+      - name: MAKE COVERAGE
+        run: |
+          cd 04
+          coverage run -m unittest metaclass/tests/*_test.py
+#           coverage run -m unittest descriptor/tests/*_test.py
+          coverage html
+          coverage report -m
+          mv .coverage ../.coverage
+          cd ../
+
+      - name: UPLOAD COVERAGE TO CODECOV
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
