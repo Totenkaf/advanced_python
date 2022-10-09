@@ -41,7 +41,6 @@ jobs:
       - name: FLAKE_8 CHECK
         run: |
           cd 04
-#          flake8 descriptor
           flake8 metaclass
           cd ../
       
@@ -52,7 +51,6 @@ jobs:
       - name: PYLINT CHECK
         run: |
             cd 04
-#            pylint descriptor
             pylint metaclass
             cd ../
 
@@ -76,21 +74,20 @@ jobs:
           python3 -m unittest metaclass/tests/*_test.py
           cd ../
 
-#      - name: INSTALL COVERAGE
-#        run: |
-#          sudo pip3 install coverage
-#
-#      - name: MAKE COVERAGE
-#        run: |
-#          cd 04
-#          coverage run -m unittest metaclass/tests/*_test.py
-##           coverage run -m unittest descriptor/tests/*_test.py
-#          coverage html
-#          coverage report -m
-#          mv .coverage ../.coverage
-#          cd ../
-#
-#      - name: UPLOAD COVERAGE TO CODECOV
-#        uses: codecov/codecov-action@v2
-#        with:
-#          token: ${{ secrets.CODECOV_TOKEN }}
+      - name: INSTALL COVERAGE
+        run: |
+          sudo pip3 install coverage
+
+      - name: MAKE COVERAGE
+        run: |
+          cd 04
+          coverage run -m unittest metaclass/tests/*_test.py
+          coverage html
+          coverage report -m
+          mv .coverage ../.coverage
+          cd ../
+
+      - name: UPLOAD COVERAGE TO CODECOV
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
