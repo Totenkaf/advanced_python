@@ -20,6 +20,10 @@ jobs:
         run: |
           sudo pip3 install pep8-naming
 
+      - name: INSTALL FACTORY BOY
+        run: |
+          sudo pip3 install factory_boy
+
       - name: INSTALL BLACK
         run: |
           sudo pip3 install black
@@ -69,6 +73,10 @@ jobs:
           sudo apt-get update && sudo apt-get install -y python3-pip
           which python3
           which pip
+
+      - name: INSTALL FACTORY BOY
+        run: |
+          sudo pip3 install factory_boy
 
       - name: RUN UNIT TESTS
         run: |
