@@ -94,8 +94,8 @@ jobs:
           cd 04
           coverage run -m unittest metaclass/tests/*_test.py
           coverage run -m unittest descriptor/tests/*_test.py
-          coverage html
           coverage report -m
+          coverage html
           mv .coverage ../.coverage
           cd ../
 
