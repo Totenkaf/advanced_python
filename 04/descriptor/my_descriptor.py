@@ -4,10 +4,12 @@ Copyright 2022 by Artem Ustsov
 """
 
 
+# pylint: disable=attribute-defined-outside-init
 class Integer:
     """
     Integer data-descriptor
     """
+
     @classmethod
     def is_integer(cls, value: int) -> None:
         """
@@ -17,7 +19,7 @@ class Integer:
             raise TypeError(f"Value must be a int-like not {type(value)}")
 
     def __set_name__(self, owner, name):
-        self.name = "".join(["_", name])
+        self.name = name
 
     def __get__(self, instance, owner):
         return instance.__dict__[self.name]
@@ -27,10 +29,12 @@ class Integer:
         instance.__dict__[self.name] = value
 
 
+# pylint: disable=attribute-defined-outside-init
 class String:
     """
     String data-descriptor
     """
+
     @classmethod
     def is_string(cls, value: str) -> None:
         """
@@ -45,7 +49,7 @@ class String:
         Checks if an incoming value is an str with letters
         """
         if not value.isalpha():
-            raise ValueError(f"Value must consists of only ascii letters")
+            raise ValueError("Value must consists of only ascii letters")
 
     def __set_name__(self, owner, name):
         self.name = "".join(["_", name])
@@ -59,10 +63,12 @@ class String:
         instance.__dict__[self.name] = value
 
 
+# pylint: disable=attribute-defined-outside-init
 class PositiveInteger(Integer):
     """
     Positive Integer data-descriptor. Inherits Integer class
     """
+
     @classmethod
     def is_positive(cls, value: int):
         """
@@ -70,11 +76,8 @@ class PositiveInteger(Integer):
         """
         if not value > 0:
             raise ValueError(
-                f"Value must be a strong positive. You gave {value}"
+                f"Value must be a strong positive. You gave {value}",
             )
-
-    def __init__(self):
-        super().__init__()
 
     def __set__(self, instance, value):
         self.is_integer(value)
@@ -82,10 +85,12 @@ class PositiveInteger(Integer):
         instance.__dict__[self.name] = value
 
 
+# pylint: disable=too-few-public-methods
 class Data:
     """
     Main Data class
     """
+
     num = Integer()
     name = String()
     price = PositiveInteger()
