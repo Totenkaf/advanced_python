@@ -92,8 +92,7 @@ jobs:
       - name: MAKE COVERAGE
         run: |
           cd 04
-          coverage run -m unittest metaclass/tests/*_test.py
-          coverage run -m unittest descriptor/tests/*_test.py
+          coverage run -m unittest metaclass/tests/*_test.py descriptor/tests/*_test.py
           coverage report -m
           coverage html
           mv .coverage ../.coverage
