@@ -4,9 +4,9 @@ Copyright 2022 by Artem Ustsov
 """
 
 # import argparse
-import sys
 import os
-from typing import List, NoReturn, Tuple
+import sys
+from typing import Any, List, NoReturn, Tuple
 
 
 # pylint: disable=attribute-defined-outside-init
@@ -51,7 +51,7 @@ class Chunker:
     buffer_size = PositiveInteger()
 
     def __init__(
-        self, input_fd: str, output_fd, buffer_size: int = 1024 * 1024
+        self, input_fd: str, output_fd, buffer_size: int = 1024 * 1024,
     ) -> None:
         self.input_fd = input_fd
         self.output_fd = output_fd
@@ -79,21 +79,21 @@ class Chunker:
                     break
 
     @staticmethod
-    def find_end_of_chunk(file) -> NoReturn:
+    def find_end_of_chunk(file_fd: Any) -> NoReturn:
         """Check the end of chunk with skipping incomplete line
         Incomplete means that line doesn't end with \n"""
 
         #  skip incomplete line
-        file.readline()
-        file_pointer = file.tell()
-        file.readline()
+        file_fd.readline()
+        file_pointer = file_fd.tell()
+        file_fd.readline()
 
         # while line == '\n':
         #     file_pointer = file.tell()
         #     line = file.readline()
 
         #  revert one line
-        file.seek(file_pointer)
+        file_fd.seek(file_pointer)
 
     def parse_wrapper(
         self,
@@ -114,7 +114,7 @@ class Chunker:
 
                 input_file.seek(chunk_start)
                 for sentence in parser_func(
-                    input_file.read(size).splitlines(), search_values
+                    input_file.read(size).splitlines(), search_values,
                 ):
                     print(sentence, file=output_file)
 

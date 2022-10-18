@@ -66,7 +66,7 @@ class TestFileGenerator(unittest.TestCase):
         """
 
         self.assertRaises(
-            ValueError, Chunker, self.input_fd, self.output_fd, buffer_size=0
+            ValueError, Chunker, self.input_fd, self.output_fd, buffer_size=0,
         )
         self.assertRaises(
             ValueError,
@@ -76,10 +76,10 @@ class TestFileGenerator(unittest.TestCase):
             buffer_size=-234623,
         )
         self.assertRaises(
-            TypeError, Chunker, self.input_fd, self.output_fd, buffer_size="0"
+            TypeError, Chunker, self.input_fd, self.output_fd, buffer_size="0",
         )
         self.assertRaises(
-            TypeError, Chunker, self.input_fd, self.output_fd, buffer_size={0}
+            TypeError, Chunker, self.input_fd, self.output_fd, buffer_size={0},
         )
 
     def test_find_occurrence_returned_sentence(self):
@@ -88,7 +88,7 @@ class TestFileGenerator(unittest.TestCase):
         self.search_values = ["розовая", "роза"]
         self.returned_sentences = []
         for returned_sentence in find_occurrence(
-            self.test_sentences, self.search_values
+            self.test_sentences, self.search_values,
         ):
             self.returned_sentences.append(returned_sentence)
 
@@ -99,7 +99,7 @@ class TestFileGenerator(unittest.TestCase):
         self.search_values_1 = ["Розы"]
         self.returned_sentences_1 = []
         for returned_sentence in find_occurrence(
-            self.test_sentences, self.search_values_1
+            self.test_sentences, self.search_values_1,
         ):
             self.returned_sentences_1.append(returned_sentence)
 
@@ -142,15 +142,15 @@ class TestFileGenerator(unittest.TestCase):
             "роза роза роза роза роза",
         ]
         self.test_sentence_len_in_bytes = len(
-            (self.test_sentences[0] + "\n").encode("utf-8")
+            (self.test_sentences[0] + "\n").encode("utf-8"),
         )
         self.test_sentences_len_in_bytes = len(
-            (self.test_sentences[0] + "\n").encode("utf-8")
+            (self.test_sentences[0] + "\n").encode("utf-8"),
         ) * len(self.test_sentences)
 
         self.chunkify_input_filename = "chunkify_input.txt"
         with open(
-            self.chunkify_input_filename, "w", encoding="utf-8"
+            self.chunkify_input_filename, "w", encoding="utf-8",
         ) as self.file:
             for sentence in self.test_sentences:
                 self.file.write(sentence)
