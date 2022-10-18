@@ -133,23 +133,3 @@ def find_occurrence(sentences: List[str], search_values: List[str]) -> str:
                 if word == search_value and not sentence_processed:
                     sentence_processed = True
                     yield sentence
-
-
-# if __name__ == "__main__":
-#     parser = argparse.ArgumentParser()
-#     parser.add_argument("-i", "--input", default="tests/input.txt")
-#     parser.add_argument("-o", "--output", default="stdout")
-#     args = parser.parse_args()
-#
-#     occurrences_list = ["роза"]
-#
-#     chunker = Chunker(args.input, args.output, buffer_size=32)
-#
-#     for chunk_start_pos, chunk_size in chunker.chunkify():
-#         print(chunk_start_pos, chunk_size)
-#         chunker.parse_wrapper(
-#             chunk_start=chunk_start_pos,
-#             size=chunk_size,
-#             search_values=occurrences_list,
-#             parser_func=find_occurrence,
-#         )
