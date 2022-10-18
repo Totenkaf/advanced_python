@@ -1,3 +1,5 @@
+[![.github/workflows/ci.yml](https://github.com/Totenkaf/advanced_python/actions/workflows/ci.yml/badge.svg)](https://github.com/Totenkaf/advanced_python/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/Totenkaf/advanced_python/branch/HW_5/graph/badge.svg?token=5jHkOnOQib)](https://codecov.io/gh/Totenkaf/advanced_python)
 # VK | SEM II_Advanced Python | HW_5
 
 ================================================================ 
