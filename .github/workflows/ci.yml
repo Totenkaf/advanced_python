@@ -42,6 +42,7 @@ jobs:
         run: |
           cd 05
           flake8 lru_cache
+          flake8 file_generator
           cd ../
 
       - name: INSTALL PYLINT
@@ -52,6 +53,7 @@ jobs:
         run: |
             cd 05
             pylint lru_cache
+            pylint file_generator
             cd ../
 
   testing:
@@ -71,7 +73,7 @@ jobs:
       - name: RUN UNIT TESTS
         run: |
           cd 05
-          python3 -m unittest lru_cache/tests/*_test.py
+          python3 -m unittest lru_cache/tests/*_test.py file_generator/tests/*_test.py
           cd ../
 
       - name: INSTALL COVERAGE
@@ -81,7 +83,7 @@ jobs:
       - name: MAKE COVERAGE
         run: |
           cd 05
-          coverage run -m unittest lru_cache/tests/*_test.py
+          coverage run -m unittest lru_cache/tests/*_test.py file_generator/tests/*_test.py
           coverage report -m
           mv .coverage ../.coverage
           cd ../

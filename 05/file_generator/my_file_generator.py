@@ -3,17 +3,57 @@ File generator package main file
 Copyright 2022 by Artem Ustsov
 """
 
-import argparse
+# import argparse
 import sys
 import os
 from typing import List, NoReturn, Tuple
 
 
+# pylint: disable=attribute-defined-outside-init
+class PositiveInteger:
+    """
+    Integer data-descriptor
+    """
+
+    @classmethod
+    def is_integer(cls, value: int) -> None:
+        """
+        Checks if an incoming value is an int
+        """
+        if not isinstance(value, int):
+            raise TypeError(f"Value must be a int-like not {type(value)}")
+
+    @classmethod
+    def is_positive(cls, value: int):
+        """
+        Checks if an incoming value is strong positive
+        """
+        if not value > 0:
+            raise ValueError(
+                f"Value must be a strong positive. You gave {value}",
+            )
+
+    def __set_name__(self, owner, name):
+        self.name = name
+
+    def __get__(self, instance, owner):
+        return instance.__dict__[self.name]
+
+    def __set__(self, instance, value):
+        self.is_integer(value)
+        self.is_positive(value)
+        instance.__dict__[self.name] = value
+
+
 class Chunker:
     """Chunker object for parsing"""
 
-    def __init__(self, filename: str, output_fd, buffer_size: int = 1024*1024):
-        self.filename = filename
+    buffer_size = PositiveInteger()
+
+    def __init__(
+        self, input_fd: str, output_fd, buffer_size: int = 1024 * 1024
+    ) -> None:
+        self.input_fd = input_fd
         self.output_fd = output_fd
         self.buffer_size = buffer_size
 
@@ -22,17 +62,14 @@ class Chunker:
         Return tuple of chunk_start position and chunk_size in file to parse
         """
 
-        if self.buffer_size < 1:
-            raise ValueError("Buffer size must be strong positive")
-
-        with open(self.filename, 'rb') as file:
-            file_end = os.path.getsize(self.filename)
+        with open(self.input_fd, "rb") as file:
+            file_end = os.path.getsize(self.input_fd)
             chunk_end = file.tell()
             while True:
                 chunk_start = chunk_end
                 file.seek(self.buffer_size, 1)
 
-                self.find_end_of_chunk(file)
+                self.__class__.find_end_of_chunk(file)
 
                 chunk_end = file.tell()
                 chunk_offset = chunk_end - chunk_start
@@ -48,51 +85,71 @@ class Chunker:
 
         #  skip incomplete line
         file.readline()
-        p = file.tell()
-        line = file.readline()
+        file_pointer = file.tell()
+        file.readline()
 
-        while line:
-            p = file.tell()
-            line = file.readline()
+        # while line == '\n':
+        #     file_pointer = file.tell()
+        #     line = file.readline()
 
         #  revert one line
-        file.seek(p)
+        file.seek(file_pointer)
 
-    def process_wrapper(self, chunk_start: int, size: int, search_values: List[str]) -> NoReturn:
-        """Takes the chunk_start position and size of the chunk (in bytes) and parse the line"""
-        with open(self.filename, 'r', encoding='utf-8') as input_file:
-            with open(self.output_fd, 'w', encoding='utf-8') \
-                    if self.output_fd != 'stdout' \
-                    else sys.stdout as output_file:
+    def parse_wrapper(
+        self,
+        chunk_start: int,
+        size: int,
+        search_values: List[str],
+        parser_func,
+    ) -> NoReturn:
+        """Takes the chunk_start position and size of the chunk (in bytes)
+        and parse the line"""
+
+        with open(self.input_fd, "r", encoding="utf-8") as input_file:
+            with open(
+                self.output_fd,
+                "w",
+                encoding="utf-8",
+            ) if self.output_fd != "stdout" else sys.stdout as output_file:
 
                 input_file.seek(chunk_start)
-                sentences = input_file.read(size).splitlines()
-                for sentence in sentences:
-                    sentence_with_occurrence = self.find_occurrence(sentence, search_values)
-                    print(*sentence_with_occurrence, file=output_file)
+                for sentence in parser_func(
+                    input_file.read(size).splitlines(), search_values
+                ):
+                    print(sentence, file=output_file)
 
-    @staticmethod
-    def find_occurrence(sentence: str, search_values: List[str]) -> str:
-        """Tries to find exactly occurrence of the search value in sentence"""
+
+def find_occurrence(sentences: List[str], search_values: List[str]) -> str:
+    """Tries to find exactly occurrence of the search value in sentence.
+    Found sentences are returned in their actual order in the file"""
+
+    for sentence in sentences:
+        #  if sentence contains simultaneously several search values
+        #  flag prevents re-parse
+        sentence_processed = False
         for search_value in search_values:
             #  set() for avoiding duplicate words in sentences
             for word in set(sentence.split()):
-                if word == search_value:
+                if word == search_value and not sentence_processed:
+                    sentence_processed = True
                     yield sentence
 
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-i", "--input", default="input.txt")
-    parser.add_argument("-o", "--output", default="stdout")
-    args = parser.parse_args()
-
-    occurrences_list = ["роза", "всегда"]
-
-    chunker = Chunker(args.input, args.output, buffer_size=32)
-
-    for chunk_start_pos, chunk_size in chunker.chunkify():
-        chunker.process_wrapper(chunk_start=chunk_start_pos,
-                                size=chunk_size,
-                                search_values=occurrences_list,
-                                )
+# if __name__ == "__main__":
+#     parser = argparse.ArgumentParser()
+#     parser.add_argument("-i", "--input", default="tests/input.txt")
+#     parser.add_argument("-o", "--output", default="stdout")
+#     args = parser.parse_args()
+#
+#     occurrences_list = ["роза"]
+#
+#     chunker = Chunker(args.input, args.output, buffer_size=32)
+#
+#     for chunk_start_pos, chunk_size in chunker.chunkify():
+#         print(chunk_start_pos, chunk_size)
+#         chunker.parse_wrapper(
+#             chunk_start=chunk_start_pos,
+#             size=chunk_size,
+#             search_values=occurrences_list,
+#             parser_func=find_occurrence,
+#         )
