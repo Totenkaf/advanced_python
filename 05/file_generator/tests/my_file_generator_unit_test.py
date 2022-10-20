@@ -205,11 +205,14 @@ class TestFileGenerator(unittest.TestCase):
             self.output_filename = f"output_{i}.txt"
             chunk_stat = []
             with open(
-                self.output_filename, "w", encoding="utf-8",
-            ) if self.output_filename != "stdout" \
-                    else sys.stdout as output_file:
+                self.output_filename,
+                "w",
+                encoding="utf-8",
+            ) if self.output_filename != "stdout" else sys.stdout as output_file:
                 self.chunker = Chunker(
-                    self.input_fd, output_file, chunk_size=i * 16,
+                    self.input_fd,
+                    output_file,
+                    chunk_size=i * 16,
                 )
                 for chunk_start_pos, chunk_offset in self.chunker.chunkify():
                     chunk_stat.append((chunk_start_pos, chunk_offset))
@@ -225,7 +228,9 @@ class TestFileGenerator(unittest.TestCase):
         found_sentences = []
         for i in range(1, 4):
             self.output_filename = f"output_{i}.txt"
-            with open(self.output_filename, "r", encoding="utf-8") as output_file:
+            with open(
+                self.output_filename, "r", encoding="utf-8",
+            ) as output_file:
                 found_sentences.append(output_file.read().splitlines())
 
         right_rose_sentences = [

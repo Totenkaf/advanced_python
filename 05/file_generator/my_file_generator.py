@@ -63,7 +63,7 @@ class Chunker:
         Return tuple of chunk_start position and chunk_size in file to parse
         """
 
-        with open(self.input_fd, "r", encoding='utf-8') as file:
+        with open(self.input_fd, "r", encoding="utf-8") as file:
             file_end = os.path.getsize(self.input_fd)
             while True:
                 chunk_end = file.tell()
