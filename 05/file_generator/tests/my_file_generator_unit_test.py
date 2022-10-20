@@ -208,7 +208,8 @@ class TestFileGenerator(unittest.TestCase):
                 self.output_filename,
                 "w",
                 encoding="utf-8",
-            ) if self.output_filename != "stdout" else sys.stdout as output_file:
+            ) if self.output_filename != "stdout" \
+                    else sys.stdout as output_file:
                 self.chunker = Chunker(
                     self.input_fd,
                     output_file,
