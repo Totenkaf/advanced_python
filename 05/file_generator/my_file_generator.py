@@ -93,7 +93,9 @@ class Chunker:
             #  set the file pointer into position according to chunk of data
             input_file.seek(chunk_start)
             #  make decoding binary sequence into utf-8
-            sentences = input_file.read(chunk_offset).decode("utf-8").splitlines()
+            sentences = (
+                input_file.read(chunk_offset).decode("utf-8").splitlines()
+            )
             for sentence in parser_func(sentences, search_values):
                 print(sentence, file=self.output_fd)
 
@@ -108,6 +110,9 @@ def find_occurrence(sentences: List[str], search_values: List[str]) -> str:
         sentence_processed = False
         for search_value in search_values:
             #  set() for avoiding duplicate words in sentences
-            if search_value in set(sentence.split()) and not sentence_processed:
+            if (
+                search_value in set(sentence.split())
+                and not sentence_processed
+            ):
                 sentence_processed = True
                 yield sentence
