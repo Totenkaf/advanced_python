@@ -3,10 +3,8 @@ File generator package main file
 Copyright 2022 by Artem Ustsov
 """
 
-# import argparse
 import os
-import sys
-from typing import Any, List, NoReturn, Tuple
+from typing import Callable, List, NoReturn, Tuple
 
 
 # pylint: disable=attribute-defined-outside-init
@@ -48,75 +46,58 @@ class PositiveInteger:
 class Chunker:
     """Chunker object for parsing"""
 
-    buffer_size = PositiveInteger()
+    chunk_size = PositiveInteger()
 
     def __init__(
-        self, input_fd: str, output_fd, buffer_size: int = 1024 * 1024,
+        self,
+        input_fd,
+        output_fd,
+        chunk_size: int = 1024 * 1024,
     ) -> None:
         self.input_fd = input_fd
         self.output_fd = output_fd
-        self.buffer_size = buffer_size
+        self.chunk_size = chunk_size
 
     def chunkify(self) -> Tuple[int, int]:
         """Make chunks.
         Return tuple of chunk_start position and chunk_size in file to parse
         """
 
-        with open(self.input_fd, "rb") as file:
+        with open(self.input_fd, "r", encoding="utf-8") as file:
             file_end = os.path.getsize(self.input_fd)
-            chunk_end = file.tell()
             while True:
+                chunk_end = file.tell()
                 chunk_start = chunk_end
-                file.seek(self.buffer_size, 1)
-
-                self.__class__.find_end_of_chunk(file)
+                chunk = file.read(self.chunk_size)
+                if not chunk:
+                    break
+                if chunk[-1] != "\n":
+                    file.readline()
 
                 chunk_end = file.tell()
-                chunk_offset = chunk_end - chunk_start
-
-                yield chunk_start, chunk_offset
-                if chunk_end >= file_end:
+                yield chunk_start, chunk_end - chunk_start
+                if chunk_end > file_end:
                     break
-
-    @staticmethod
-    def find_end_of_chunk(file_fd: Any) -> NoReturn:
-        """Check the end of chunk with skipping incomplete line
-        Incomplete means that line doesn't end with \n"""
-
-        #  skip incomplete line
-        file_fd.readline()
-        file_pointer = file_fd.tell()
-        file_fd.readline()
-
-        # while line == '\n':
-        #     file_pointer = file.tell()
-        #     line = file.readline()
-
-        #  revert one line
-        file_fd.seek(file_pointer)
 
     def parse_wrapper(
         self,
         chunk_start: int,
-        size: int,
+        chunk_offset: int,
         search_values: List[str],
-        parser_func,
+        parser_func: Callable,
     ) -> NoReturn:
         """Takes the chunk_start position and size of the chunk (in bytes)
         and parse the line"""
 
-        with open(self.input_fd, "r", encoding="utf-8") as input_file:
-            with open(
-                self.output_fd,
-                "w",
-                encoding="utf-8",
-            ) if self.output_fd != "stdout" else sys.stdout as output_file:
-
-                input_file.seek(chunk_start)
-                for sentence in parser_func(
-                    input_file.read(size).splitlines(), search_values,
-                ):
-                    print(sentence, file=output_file)
+        with open(self.input_fd, "rb") as input_file:
+            #  set the file pointer into position according to chunk of data
+            input_file.seek(chunk_start)
+            #  make decoding binary sequence into utf-8
+            sentences = (
+                input_file.read(chunk_offset).decode("utf-8").splitlines()
+            )
+            for sentence in parser_func(sentences, search_values):
+                print(sentence, file=self.output_fd)
 
 
 def find_occurrence(sentences: List[str], search_values: List[str]) -> str:
@@ -129,7 +110,9 @@ def find_occurrence(sentences: List[str], search_values: List[str]) -> str:
         sentence_processed = False
         for search_value in search_values:
             #  set() for avoiding duplicate words in sentences
-            for word in set(sentence.split()):
-                if word == search_value and not sentence_processed:
-                    sentence_processed = True
-                    yield sentence
+            if (
+                search_value in set(sentence.split())
+                and not sentence_processed
+            ):
+                sentence_processed = True
+                yield sentence
