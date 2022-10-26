@@ -24,6 +24,16 @@ jobs:
         run: |
           sudo pip3 install black
 
+      - name: INSTALL ISORT
+        run: |
+          sudo pip3 install isort
+
+      - name: RUN ISORT
+        run: |
+          cd 06
+          isort .
+          cd ../
+
       - name: RUN BLACK
         run: |
           cd 06
@@ -43,6 +53,7 @@ jobs:
           cd 06
           flake8 server
           flake8 client
+          flake8 thread_pool
           cd ../
 
       - name: INSTALL PYLINT
@@ -54,6 +65,7 @@ jobs:
             cd 06
             pylint server
             pylint client
+            pylint thread_pool
             cd ../
 
   testing:
@@ -73,7 +85,7 @@ jobs:
       - name: RUN UNIT TESTS
         run: |
           cd 06
-          python3 -m unittest server/tests/*_test.py client/tests/*_test.py
+          python3 -m unittest server/tests/*_test.py client/tests/*_test.py thread_pool/tests/*_test.py
           cd ../
 
       - name: INSTALL COVERAGE
@@ -83,7 +95,7 @@ jobs:
       - name: MAKE COVERAGE
         run: |
           cd 06
-          coverage run -m unittest server/tests/*_test.py client/tests/*_test.py
+          coverage run -m unittest server/tests/*_test.py client/tests/*_test.py thread_pool/tests/*_test.py
           coverage report -m
           mv .coverage ../.coverage
           cd ../

@@ -20,6 +20,7 @@ profiling:
   critical_files_paths:
     - 06/server/my_server.py
     - 06/client/my_client.py
+    - 06/thread_pool/thread_pool.py
 
 comment:
   layout: "reach,diff,flags,files,footer"
