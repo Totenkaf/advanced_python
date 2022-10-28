@@ -45,7 +45,8 @@ class TestJsonParser(unittest.TestCase):
 
     @patch("parser.json_parser.keyword_handler")
     def test_keyword_handler_with_no_required_fields(
-        self, keyword_handler_mock,
+        self,
+        keyword_handler_mock,
     ):
         """
         Test the keyword_handler missing the required_fields
@@ -76,7 +77,8 @@ class TestJsonParser(unittest.TestCase):
         but with keyword_Callback function
         """
         parse_json(
-            self.test_json_source, keyword_callback=keyword_handler_mock,
+            self.test_json_source,
+            keyword_callback=keyword_handler_mock,
         )
         self.assertEqual(keyword_handler_mock.call_count, 6)
 

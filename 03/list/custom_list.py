@@ -55,18 +55,17 @@ class CustomList(list):
         pads the smaller one with zeros
         """
         if not isinstance(l_array, (list, cls)) or not isinstance(
-            r_array, (list, cls),
+            r_array,
+            (list, cls),
         ):
             raise TypeError
         if operator == "+":
             return [
-                x + y
-                for x, y in zip_longest(r_array, l_array, fillvalue=fill_value)
+                x + y for x, y in zip_longest(r_array, l_array, fillvalue=fill_value)
             ]
         if operator == "-":
             return [
-                x - y
-                for x, y in zip_longest(r_array, l_array, fillvalue=fill_value)
+                x - y for x, y in zip_longest(r_array, l_array, fillvalue=fill_value)
             ]
         return None
 

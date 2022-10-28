@@ -5,19 +5,26 @@ Copyright 2022 by Artem Ustsov
 
 import argparse
 import logging
+import os
 import socket
 import sys
 import threading
 from time import sleep
-import os
+from typing import Any, NoReturn
 
 from thread_pool.thread_pool import ThreadPool
 
 
 class Client:
+    """Threadpool client.
+    Main thread listen the socket, take urls from the file
+    and give it to worker.
+    Worker is a thread from the pool that send request (url)
+    to the server, response the answer and print the parsed result
+    into stdout (or file)
+    Circle continue
     """
 
-    """
     def __init__(
         self,
         num_of_workers=2,
@@ -31,13 +38,16 @@ class Client:
         self._port = port
         self._lock = threading.RLock()
 
-    def run_client(self, input_fd=sys.stdin, output_fd=sys.stdout):
+    def run_client(
+        self, input_fd: Any = sys.stdin, output_fd: Any = sys.stdout
+    ) -> NoReturn:
+        """Run the client. Create client socket and connect to it.
+
+        :param input_fd: Input ile descriptor
+        :param output_fd: Output ile descriptor
+        :return: Nothing
         """
 
-        :param input_fd:
-        :param output_fd:
-        :return:
-        """
         self._input_fd = input_fd
         self._output_fd = output_fd
         client_sock = socket.socket(
@@ -46,52 +56,74 @@ class Client:
         client_sock.connect((self._ip_address, self._port))
 
         with ThreadPool(self._num_of_workers) as pool:
-            logging.debug(f"{threading.current_thread().name} make pool")
+            logging.getLogger().debug(
+                "%s make pool", threading.current_thread().name
+            )
             while True:
                 line = self._input_fd.readline().strip("\n")
                 if not line:
                     break
-                logging.debug(
-                    f"{threading.current_thread().name} read from file {line}"
+                logging.getLogger().debug(
+                    "%s read %s from file",
+                    threading.current_thread().name,
+                    line,
                 )
-                pool.add_task(self.handle_response, line, client_sock)
+                pool.add_task(self.send_response, line, client_sock)
                 self.read_response(client_sock)
-                logging.debug(f"{threading.current_thread().name} after pool")
+                logging.getLogger().debug(
+                    "%s read after pool", threading.current_thread().name
+                )
 
-        logging.debug(f"{threading.current_thread().name} close pool")
+        logging.getLogger().debug(
+            "%s close pool", threading.current_thread().name
+        )
         client_sock.close()
-        logging.debug(f"{threading.current_thread().name} close socket")
+        logging.getLogger().debug(
+            "%s close socket", threading.current_thread().name
+        )
 
-    def handle_response(self, server_request, client_sock):
-        """
+    def send_response(
+        self, server_request: Any, client_sock: socket
+    ) -> NoReturn:
+        """Each thread send the response to server.
 
         :param server_request:
-        :param client_sock:
-        :return:
+        :param client_sock: Client socket from
+        what urls will be sent
+        :return: Nothing
         """
+
         with self._lock:
-            logging.debug(
-                f"{threading.current_thread().name} ready to send {server_request}"
+            logging.getLogger().debug(
+                "%s close pool %s",
+                threading.current_thread().name,
+                server_request,
             )
             client_sock.sendall(server_request.encode())
             sleep(0.1)
 
-    def read_response(self, client_sock):
+    def read_response(self, client_sock: socket) -> NoReturn:
+        """Main thread read the response from the server and
+        sent it to outpu_fd
+
+        :param client_sock: Client socket what listen a response
+        from the server
+        :return: Nothing
         """
 
-        :param client_sock:
-        :return:
-        """
-        logging.debug(f"{threading.current_thread().name} send the request")
-        logging.debug(
-            f"{threading.current_thread().name} wait for server response"
+        logging.getLogger().debug(
+            "%s send the request", threading.current_thread().name
         )
+        logging.getLogger().debug(
+            "%s wait for server response", threading.current_thread().name
+        )
+
         server_response = (
             str(client_sock.recv(1024).decode(encoding="utf-8"))
             .replace("'", "")
             .replace("bhttps://", "")
         )
-        logging.info(f"{server_response}")
+        logging.getLogger().debug("%s", server_response)
         print(
             f"{server_response}",
             file=self._output_fd,
@@ -99,7 +131,7 @@ class Client:
 
 
 if __name__ == "__main__":
-    logging.info("=====PROGRAM START=====")
+    logging.getLogger().info("=====PROGRAM START=====")
 
     parser = argparse.ArgumentParser()
     # parser.add_argument("-d", "--debug", default='off')
@@ -111,16 +143,16 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    # if not os.path.isdir("logs"):
-    #     os.mkdir("logs")
+    if not os.path.isdir("logs"):
+        os.mkdir("logs")
 
-    fmt = "%(asctime)s: %(message)s"
+    FORMAT_LOG = "%(asctime)s: %(message)s"
     file_log = logging.FileHandler("logs/client.log")
     console_out = logging.StreamHandler()
 
     logging.basicConfig(
         handlers=(file_log, console_out),
-        format=fmt,
+        format=FORMAT_LOG,
         level=logging.INFO,
         datefmt="%H:%M:%S",
     )
@@ -140,4 +172,4 @@ if __name__ == "__main__":
     ) if args.output != "stdout" else sys.stdin as output_file:
         thread_client.run_client(input_fd=input_file, output_fd=output_file)
 
-    logging.info("=====PROGRAM STOP=====")
+    logging.getLogger().info("=====PROGRAM STOP=====")

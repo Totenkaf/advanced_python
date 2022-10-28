@@ -28,9 +28,7 @@ class TestCustomClass(unittest.TestCase):
         Check right custom_ methods and attributes
         """
         self.custom_class_attributes = [
-            key
-            for key in self.inst.__class__.__dict__
-            if not key.startswith("__")
+            key for key in self.inst.__class__.__dict__ if not key.startswith("__")
         ]
         self.magic_class_methods = [
             key for key in self.inst.__class__.__dict__ if key.startswith("__")
