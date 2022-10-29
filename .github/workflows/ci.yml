@@ -20,26 +20,6 @@ jobs:
         run: |
           sudo pip3 install pep8-naming
 
-      - name: INSTALL BLACK
-        run: |
-          sudo pip3 install black
-
-      - name: INSTALL ISORT
-        run: |
-          sudo pip3 install isort
-
-      - name: RUN ISORT
-        run: |
-          cd 06
-          isort .
-          cd ../
-
-      - name: RUN BLACK
-        run: |
-          cd 06
-          black .
-          cd ../
-
       - name: INSTALL FLAKE_8
         run: |
           sudo pip3 install flake8-bugbear
@@ -51,9 +31,9 @@ jobs:
       - name: FLAKE_8 CHECK
         run: |
           cd 06
-          flake8 server
-          flake8 client
-          flake8 thread_pool
+          flake8 --ignore=I100,I201 server
+          flake8 --ignore=I100,I201 client
+          flake8 --ignore=I100,I201 thread_pool
           cd ../
 
       - name: INSTALL PYLINT

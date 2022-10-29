@@ -5,4 +5,4 @@ line-length = 78
 target-version = ['py37']
 
 [tool.isort]
-profile = "black"
+profile = "hug"
