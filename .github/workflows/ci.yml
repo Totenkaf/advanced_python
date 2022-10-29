@@ -20,6 +20,11 @@ jobs:
         run: |
           sudo pip3 install pep8-naming
 
+      - name: INSTALL ADDITIONAL LIBS
+        run: |
+          sudo pip3 install bs4
+          sudo pip3 install json-tools
+
       - name: INSTALL FLAKE_8
         run: |
           sudo pip3 install flake8-bugbear
@@ -61,6 +66,11 @@ jobs:
           sudo apt-get update && sudo apt-get install -y python3-pip
           which python3
           which pip
+
+      - name: INSTALL ADDITIONAL LIBS
+        run: |
+          sudo pip3 install bs4
+          sudo pip3 install json-tools
 
       - name: RUN UNIT TESTS
         run: |
