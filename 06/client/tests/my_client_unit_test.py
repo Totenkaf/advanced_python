@@ -16,7 +16,6 @@ class TestClient(unittest.TestCase):
     Main test class for my_client module
     """
 
-    @patch.object(KVPair, "__init__")
     def test_kv_pair_init(self, __init__mock):
         """KV Pair mock init"""
         __init__mock.return_value = None

@@ -34,10 +34,10 @@ class TestThreadPool(unittest.TestCase):
 
         run_mock.return_value = None
         self.queue = Queue(1)
-        self.queue.put(('func', 2))
+        self.queue.put(("func", 2))
         self.worker = Worker(self.queue)
         self.assertEqual(self.worker.daemon, True)
-        self.assertEqual(self.worker.tasks.get(), ('func', 2))
+        self.assertEqual(self.worker.tasks.get(), ("func", 2))
         self.assertTrue(run_mock.called)
 
     @patch.object(ThreadPool, "__init__")
@@ -78,11 +78,16 @@ class TestThreadPool(unittest.TestCase):
         self.assertEqual(self.pool.tasks.maxsize, self.num_of_workers)
         self.assertEqual(self.pool.tasks.get(), (func, (2, 3)))
         self.assertEqual(self.pool.tasks.get(), (func, ("test",)))
-        self.assertEqual(self.pool.tasks.get(), (func, ([1, 2, 3], (4, 5), {6, 7, 8}, {"9": "10"})))
+        self.assertEqual(
+            self.pool.tasks.get(),
+            (func, ([1, 2, 3], (4, 5), {6, 7, 8}, {"9": "10"})),
+        )
 
     @patch.object(ThreadPool, "__enter__")
     @patch.object(ThreadPool, "__exit__")
-    def test_thread_pool_context_manager(self, __enter__mock, __exit__mock) -> Any:
+    def test_thread_pool_context_manager(
+        self, __enter__mock, __exit__mock
+    ) -> Any:
         """
 
         :param __enter__mock:
@@ -112,6 +117,7 @@ class TestThreadPool(unittest.TestCase):
 
         class FakeStat:
             """Fake class for saving condition"""
+
             def __init__(self):
                 self.counter = 0
                 self.sums = []
@@ -139,7 +145,10 @@ class TestThreadPool(unittest.TestCase):
             for i in range(self.num_to_sum):
                 pool.add_task(self.fake_stat.func, i, i + 1)
 
-        self.assertEqual(sorted(self.fake_stat.sums), [2*num+1 for num in range(self.num_to_sum)])
+        self.assertEqual(
+            sorted(self.fake_stat.sums),
+            [2 * num + 1 for num in range(self.num_to_sum)],
+        )
         self.assertEqual(self.fake_stat.counter, self.num_to_sum)
 
 

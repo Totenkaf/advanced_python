@@ -1,8 +1,9 @@
 """Copyright 2022 by Artem Ustsov"""
 
 from queue import Queue
-from threading import Thread
+from threading import Thread, current_thread
 from typing import Any, Callable, NoReturn
+import logging
 
 
 class Worker(Thread):
@@ -20,12 +21,13 @@ class Worker(Thread):
         :return: Nothing
         """
         # pylint: disable=broad-except
+        logging.getLogger().debug("%s starts", current_thread().name)
         while True:
             func, args = self.tasks.get()
             try:
                 func(*args)
             except Exception as error:
-                print(error)
+                logging.getLogger().debug(error)
             finally:
                 self.tasks.task_done()
 
