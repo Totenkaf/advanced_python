@@ -5,7 +5,6 @@ Copyright 2022 by Artem Ustsov
 
 # import argparse
 import logging
-
 # import os
 import socket
 import sys
