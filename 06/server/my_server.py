@@ -3,14 +3,14 @@ Multithread server project
 Copyright 2022 by Artem Ustsov
 """
 
-import argparse
+# import argparse
 import json
 import logging
-import os
+
+# import os
 import socket
 import threading
 from collections import Counter
-from time import sleep
 from typing import Any, NoReturn
 
 import requests
@@ -29,6 +29,7 @@ class Server:
     Circle continue.
     """
 
+    # pylint: disable=too-many-arguments
     def __init__(
         self,
         k_top=3,
@@ -168,19 +169,19 @@ class Server:
                         client_request, client_sock, "CONNECTION DENIED"
                     )
                     raise
-                elif isinstance(error, TooManyRedirects):
+                if isinstance(error, TooManyRedirects):
                     logging.getLogger().debug("TOO MANY REDIRECTS")
                     logging.getLogger().debug(error)
                     self.write_response(
                         client_request, client_sock, "TOO MANY REDIRECTS"
                     )
                     raise
-                else:
-                    logging.getLogger().debug(error)
-                    self.write_response(
-                        client_request, client_sock, "ERROR: OTHER"
-                    )
-                    raise
+                logging.getLogger().debug(error)
+                self.write_response(
+                    client_request, client_sock, "ERROR: OTHER"
+                )
+                raise
+
             finally:
                 self._urls_processed += 1
                 logging.getLogger().info(
@@ -256,5 +257,6 @@ class Server:
 #     )
 #
 #     thread_server.run_server()
+#     print(thread_server._urls_processed)
 #
 #     logging.getLogger().info("=====PROGRAM STOP=====")

@@ -3,13 +3,13 @@ Multithread client project
 Copyright 2022 by Artem Ustsov
 """
 
-import argparse
+# import argparse
 import logging
-import os
+
+# import os
 import socket
 import sys
 import threading
-from time import sleep
 from typing import Any, NoReturn
 
 from thread_pool.thread_pool import ThreadPool
@@ -38,8 +38,10 @@ class Client:
         self._ip_address = ip_address
         self._port = port
         self._lock = lock
+        self._urls_processed = 0
 
     # pylint: disable=broad-except
+    # pylint: disable=try-except-raise
     def run_client(
         self, input_fd: Any = sys.stdin, output_fd: Any = sys.stdout
     ) -> NoReturn:
@@ -52,10 +54,8 @@ class Client:
 
         self._input_fd = input_fd
         self._output_fd = output_fd
-        client_sock = socket.socket(
-            socket.AF_INET, socket.SOCK_STREAM, proto=0
-        )
-        client_sock.connect((self._ip_address, self._port))
+
+        client_sock = self.create_client_sock()
 
         with ThreadPool(self._num_of_workers) as pool:
             logging.getLogger().debug(
@@ -72,17 +72,16 @@ class Client:
                         line,
                     )
                     pool.add_task(self.send_response, line, client_sock)
-                    self.read_response(client_sock)
+                    print(
+                        self.read_response(client_sock), file=self._output_fd
+                    )
                     logging.getLogger().debug(
                         "%s read after pool", threading.current_thread().name
                     )
                 except Exception as error:
                     if isinstance(error, ConnectionError):
                         break
-                    elif isinstance(error, ConnectionResetError):
-                        break
-                    else:
-                        break
+                    break
 
         logging.getLogger().debug(
             "%s close pool", threading.current_thread().name
@@ -91,6 +90,18 @@ class Client:
         logging.getLogger().debug(
             "%s close socket", threading.current_thread().name
         )
+
+    def create_client_sock(self) -> socket:
+        """Create the socket on specific ip and port
+
+        :return: Created socket
+        """
+
+        client_sock = socket.socket(
+            socket.AF_INET, socket.SOCK_STREAM, proto=0
+        )
+        client_sock.connect((self._ip_address, self._port))
+        return client_sock
 
     # pylint: disable=broad-except
     def send_response(
@@ -117,15 +128,17 @@ class Client:
                     logging.getLogger().debug("CONNECTION DENIED")
                     logging.debug(error)
                     raise
-                elif isinstance(error, ConnectionResetError):
-                    logging.getLogger().debug("CONNECTING RESET")
-                    logging.debug(error)
-                    raise
-                else:
-                    logging.debug(error)
-                    raise
+                logging.debug(error)
+                raise
 
-    def read_response(self, client_sock: socket) -> NoReturn:
+            finally:
+                self._urls_processed += 1
+                logging.getLogger().info(
+                    "URLs processed: %i", self._urls_processed
+                )
+
+    @staticmethod
+    def read_response(client_sock: socket) -> str:
         """Main thread read the response from the server and
         sent it to outpu_fd
 
@@ -139,8 +152,9 @@ class Client:
                 "%s send the request", threading.current_thread().name
             )
 
+            value = client_sock.recv(1024)
             server_response = (
-                str(client_sock.recv(1024).decode(encoding="utf-8"))
+                str(value.decode(encoding="utf-8"))
                 .replace("'", "")
                 .replace("bhttps://", "")
             )
@@ -151,10 +165,7 @@ class Client:
         except ConnectionResetError:
             raise
         else:
-            print(
-                f"{server_response}",
-                file=self._output_fd,
-            )
+            return server_response
 
 
 # if __name__ == "__main__":
@@ -194,5 +205,6 @@ class Client:
 #         args.output, "w", encoding="utf-8"
 #     ) if args.output != "stdout" else sys.stdin as output_file:
 #         thread_client.run_client(input_fd=input_file, output_fd=output_file)
+#     print(thread_client._urls_processed)
 #
 #     logging.getLogger().info("=====PROGRAM STOP=====")

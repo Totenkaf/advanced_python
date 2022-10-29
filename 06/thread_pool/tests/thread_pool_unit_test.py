@@ -2,19 +2,20 @@
 Multithread pool unit test
 Copyright 2022 by Artem Ustsov
 """
+import threading
 import unittest
+from queue import Queue
+from time import sleep
+from typing import Any, NoReturn
 from unittest.mock import patch
 
 from thread_pool.thread_pool import ThreadPool, Worker
-from queue import Queue
-from typing import Any, NoReturn
-import threading
-from time import sleep
 
 
 #  pylint: disable=too-many-public-methods
 #  pylint: disable=attribute-defined-outside-init
 #  pylint: disable=too-many-instance-attributes
+#  pylint: disable=too-few-public-methods
 class TestThreadPool(unittest.TestCase):
     """
     Main test class for thread_pool
@@ -25,7 +26,8 @@ class TestThreadPool(unittest.TestCase):
         """Worker mock init"""
 
         __init__mock.return_value = None
-        self.worker = Worker()
+        self.queue = Queue(1)
+        self.worker = Worker(self.queue)
         self.assertTrue(__init__mock.called)
 
     @patch.object(Worker, "run")
@@ -45,7 +47,8 @@ class TestThreadPool(unittest.TestCase):
         """Thread pool mock init"""
 
         __init__mock.return_value = None
-        self.thread_pool = ThreadPool()
+        self.num_of_threads = 0
+        self.thread_pool = ThreadPool(self.num_of_threads)
         self.assertTrue(__init__mock.called)
 
     @patch.object(Worker, "__init__")
@@ -69,7 +72,6 @@ class TestThreadPool(unittest.TestCase):
         self.pool = ThreadPool(self.num_of_workers)
 
         def func() -> NoReturn:
-            """Callable object"""
             pass
 
         self.pool.add_task(func, 2, 3)
@@ -99,7 +101,6 @@ class TestThreadPool(unittest.TestCase):
         __exit__mock.return_value = None
 
         def func() -> NoReturn:
-            """Callable object"""
             pass
 
         self.num_of_workers = 3
@@ -123,17 +124,18 @@ class TestThreadPool(unittest.TestCase):
                 self.sums = []
                 self._lock = threading.Lock()
 
-            def func(self, a: int, b: int) -> NoReturn:
+            def func(self, summand_1: int, summand_2: int) -> NoReturn:
                 """Add a to b
 
-                :param a: summand
-                :param b: summand
+                :param summand_1: summand
+                :param summand_2: summand
                 :return: sum of two summands
                 """
+
                 with self._lock:
                     local_copy = self.counter
                     local_copy += 1
-                    self.sums.append(a + b)
+                    self.sums.append(summand_1 + summand_2)
                     sleep(0.01)
                     self.counter = local_copy
 

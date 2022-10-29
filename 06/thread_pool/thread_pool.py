@@ -1,9 +1,9 @@
 """Copyright 2022 by Artem Ustsov"""
 
+import logging
 from queue import Queue
 from threading import Thread, current_thread
 from typing import Any, Callable, NoReturn
-import logging
 
 
 class Worker(Thread):
