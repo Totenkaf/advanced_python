@@ -6,13 +6,13 @@ Copyright 2022 by Artem Ustsov
 # import argparse
 import json
 import logging
-# import os
-import requests
 import socket
 import threading
 from collections import Counter
 from typing import Any, NoReturn
 
+# import os
+import requests
 from bs4 import BeautifulSoup
 from requests import TooManyRedirects
 from thread_pool.thread_pool import ThreadPool
