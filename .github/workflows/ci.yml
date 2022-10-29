@@ -71,6 +71,7 @@ jobs:
         run: |
           sudo pip3 install bs4
           sudo pip3 install json-tools
+          sudo pip3 install lxml
 
       - name: RUN UNIT TESTS
         run: |
