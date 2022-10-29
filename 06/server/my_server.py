@@ -158,7 +158,7 @@ class Server:
                         server_response.text,
                     )
                     self.write_response(
-                        client_request, client_sock, server_response
+                        client_request, client_sock, server_response,
                     )
                 else:
                     self.write_response(
