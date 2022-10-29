@@ -30,20 +30,22 @@ class Client:
         num_of_workers=2,
         ip_address="0.0.0.0",
         port=53210,
-        lock=threading.RLock(),
+        lock=threading.RLock,
     ):
         self._input_fd = None
         self._output_fd = None
         self._num_of_workers = num_of_workers
         self._ip_address = ip_address
         self._port = port
-        self._lock = lock
+        self._lock = lock()
         self._urls_processed = 0
 
     # pylint: disable=broad-except
     # pylint: disable=try-except-raise
     def run_client(
-        self, input_fd: Any = sys.stdin, output_fd: Any = sys.stdout
+        self,
+        input_fd: Any = sys.stdin,
+        output_fd: Any = sys.stdout,
     ) -> NoReturn:
         """Run the client. Create client socket and connect to it.
 
@@ -59,7 +61,8 @@ class Client:
 
         with ThreadPool(self._num_of_workers) as pool:
             logging.getLogger().debug(
-                "%s make pool", threading.current_thread().name
+                "%s make pool",
+                threading.current_thread().name,
             )
             while True:
                 try:
@@ -73,10 +76,12 @@ class Client:
                     )
                     pool.add_task(self.send_response, line, client_sock)
                     print(
-                        self.read_response(client_sock), file=self._output_fd
+                        self.read_response(client_sock),
+                        file=self._output_fd,
                     )
                     logging.getLogger().debug(
-                        "%s read after pool", threading.current_thread().name
+                        "%s read after pool",
+                        threading.current_thread().name,
                     )
                 except Exception as error:
                     if isinstance(error, ConnectionError):
@@ -84,11 +89,13 @@ class Client:
                     break
 
         logging.getLogger().debug(
-            "%s close pool", threading.current_thread().name
+            "%s close pool",
+            threading.current_thread().name,
         )
         client_sock.close()
         logging.getLogger().debug(
-            "%s close socket", threading.current_thread().name
+            "%s close socket",
+            threading.current_thread().name,
         )
 
     def create_client_sock(self) -> socket:
@@ -98,14 +105,18 @@ class Client:
         """
 
         client_sock = socket.socket(
-            socket.AF_INET, socket.SOCK_STREAM, proto=0
+            socket.AF_INET,
+            socket.SOCK_STREAM,
+            proto=0,
         )
         client_sock.connect((self._ip_address, self._port))
         return client_sock
 
     # pylint: disable=broad-except
     def send_response(
-        self, server_request: Any, client_sock: socket
+        self,
+        server_request: Any,
+        client_sock: socket,
     ) -> NoReturn:
         """Each thread send the response to server.
 
@@ -134,7 +145,8 @@ class Client:
             finally:
                 self._urls_processed += 1
                 logging.getLogger().info(
-                    "URLs processed: %i", self._urls_processed
+                    "URLs processed: %i",
+                    self._urls_processed,
                 )
 
     @staticmethod
@@ -149,7 +161,8 @@ class Client:
 
         try:
             logging.getLogger().debug(
-                "%s send the request", threading.current_thread().name
+                "%s send the request",
+                threading.current_thread().name,
             )
 
             value = client_sock.recv(1024)
@@ -159,7 +172,8 @@ class Client:
                 .replace("bhttps://", "")
             )
             logging.getLogger().debug(
-                "%s wait for server response", threading.current_thread().name
+                "%s wait for server response",
+                threading.current_thread().name,
             )
             logging.getLogger().debug("%s", server_response)
         except ConnectionResetError:

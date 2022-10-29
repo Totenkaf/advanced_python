@@ -65,7 +65,7 @@ class TestServer(unittest.TestCase):
             ["fake_ip", "fake_port"],
         )
         self.client_socket = self.server.accept_client_conn(
-            self.server_socket
+            self.server_socket,
         )
         mock_socket.recv.return_value = fake_recv()
 
@@ -91,7 +91,7 @@ class TestServer(unittest.TestCase):
             ["fake_ip", "fake_port"],
         )
         self.client_socket = self.server.accept_client_conn(
-            self.server_socket
+            self.server_socket,
         )
         mock_socket.recv = Mock(side_effect=ConnectionResetError)
         self.assertEqual(self.server.read_request(self.client_socket), None)
@@ -113,11 +113,11 @@ class TestServer(unittest.TestCase):
             ["fake_ip", "fake_port"],
         )
         self.client_socket = self.server.accept_client_conn(
-            self.server_socket
+            self.server_socket,
         )
         mock_socket.recv.return_value = "fake request".encode()
         self.client_fake_request = self.server.read_request(
-            self.client_socket
+            self.client_socket,
         )
 
         mock_requests_get = mock_requests_get_patcher.start()
@@ -157,11 +157,11 @@ class TestServer(unittest.TestCase):
             ["fake_ip", "fake_port"],
         )
         self.client_socket = self.server.accept_client_conn(
-            self.server_socket
+            self.server_socket,
         )
         mock_socket.recv.return_value = "fake request".encode()
         self.client_fake_request = self.server.read_request(
-            self.client_socket
+            self.client_socket,
         )
 
         mock_requests = mock_requests_patcher.start()
@@ -201,7 +201,6 @@ class TestServer(unittest.TestCase):
         """Mock the requests.get"""
 
         mock_requests_get_patcher = patch("server.my_server.requests.get")
-        # mock_write_response_patcher = patch.object(Server, "write_response")
 
         self.server_socket = self.server.create_serv_sock()
         mock_socket.return_value.accept.return_value = (
@@ -209,11 +208,11 @@ class TestServer(unittest.TestCase):
             ["fake_ip", "fake_port"],
         )
         self.client_socket = self.server.accept_client_conn(
-            self.server_socket
+            self.server_socket,
         )
         mock_socket.recv.return_value = "fake request".encode("utf-8")
         self.client_fake_request = self.server.read_request(
-            self.client_socket
+            self.client_socket,
         )
 
         mock_requests_get = mock_requests_get_patcher.start()
@@ -248,6 +247,7 @@ class TestServer(unittest.TestCase):
                                     С<sub>2</sub>Н<sub>5</sub>ОН</p>
                                   </body>
                                 </html>"""
+
         self.json_response = self.server.parse_response(self.server_response)
         # only three because of default k_top=3 on server
         self.json_expected = json.dumps(
@@ -258,7 +258,8 @@ class TestServer(unittest.TestCase):
 
         # json_tools.diff return empty list if no differences
         self.assertEqual(
-            json_tools.diff(self.json_response, self.json_expected), []
+            json_tools.diff(self.json_response, self.json_expected),
+            [],
         )
 
     @patch("server.my_server.socket.socket")
@@ -287,7 +288,7 @@ class TestServer(unittest.TestCase):
             ["fake_ip", "fake_port"],
         )
         self.client_socket = self.server.accept_client_conn(
-            self.server_socket
+            self.server_socket,
         )
         mock_socket.recv.return_value = fake_recv()
 
@@ -302,7 +303,7 @@ class TestServer(unittest.TestCase):
 
         with ThreadPool(self.server._k_top) as pool:
             for client_request in self.server.read_request(
-                self.client_socket
+                self.client_socket,
             ):
                 pool.add_task(
                     self.server.handle_request,
@@ -339,8 +340,8 @@ class TestServer(unittest.TestCase):
     #         ["fake_ip", "fake_port"],
     #     )
     #
-        # self.client_socket = \
-        #     self.server.accept_client_conn(self.server_socket)
+    # self.client_socket = \
+    #     self.server.accept_client_conn(self.server_socket)
     #     mock_read_response = mock_read_response_patcher.start()
     #     # mock_read_response.return_value = Mock(side_effect=test)
     #     mock_read_response.return_value = self.client_socket.test()

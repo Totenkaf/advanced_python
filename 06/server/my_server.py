@@ -36,13 +36,13 @@ class Server:
         num_of_workers=2,
         ip_address="0.0.0.0",
         port=53210,
-        lock=threading.RLock(),
+        lock=threading.RLock,
     ):
         self._k_top = k_top
         self._num_of_workers = num_of_workers
         self._ip_address = ip_address
         self._port = port
-        self._lock = lock
+        self._lock = lock()
         self._urls_processed = 0
 
     # pylint: disable=broad-except
@@ -59,7 +59,9 @@ class Server:
             client_request = self.read_request(client_sock)
             while client_request:
                 pool.add_task(
-                    self.handle_request, client_request, client_sock
+                    self.handle_request,
+                    client_request,
+                    client_sock,
                 )
                 client_request = self.read_request(client_sock)
 
@@ -107,16 +109,20 @@ class Server:
         """
 
         logging.getLogger().debug(
-            "%s start read socket", threading.current_thread().name
+            "%s start read socket",
+            threading.current_thread().name,
         )
         try:
             request = client_sock.recv(1024)
             logging.getLogger().debug(
-                "%s catch %s", threading.current_thread().name, request
+                "%s catch %s",
+                threading.current_thread().name,
+                request,
             )
             if not request:
                 logging.getLogger().debug(
-                    "%s break cycle", threading.current_thread().name
+                    "%s break cycle",
+                    threading.current_thread().name,
                 )
                 return None
         except ConnectionResetError as error:
@@ -125,7 +131,9 @@ class Server:
         return request
 
     def handle_request(
-        self, client_request: Any, client_sock: socket
+        self,
+        client_request: Any,
+        client_sock: socket,
     ) -> NoReturn:
         """Send the request to external server. Take back the response,
         partse it's html body, make counts the number
@@ -148,7 +156,7 @@ class Server:
                 server_response = requests.get(url, timeout=1)
                 if server_response:
                     server_response = self.parse_response(
-                        server_response.text
+                        server_response.text,
                     )
                     self.write_response(
                         client_request, client_sock, server_response
@@ -166,30 +174,39 @@ class Server:
                     logging.getLogger().debug("CONNECTION DENIED")
                     logging.getLogger().debug(error)
                     self.write_response(
-                        client_request, client_sock, "CONNECTION DENIED"
+                        client_request,
+                        client_sock,
+                        "CONNECTION DENIED",
                     )
                     raise
                 if isinstance(error, TooManyRedirects):
                     logging.getLogger().debug("TOO MANY REDIRECTS")
                     logging.getLogger().debug(error)
                     self.write_response(
-                        client_request, client_sock, "TOO MANY REDIRECTS"
+                        client_request,
+                        client_sock,
+                        "TOO MANY REDIRECTS",
                     )
                     raise
                 logging.getLogger().debug(error)
                 self.write_response(
-                    client_request, client_sock, "ERROR: OTHER"
+                    client_request,
+                    client_sock,
+                    "ERROR: OTHER",
                 )
                 raise
 
             finally:
                 self._urls_processed += 1
                 logging.getLogger().info(
-                    "URLs processed: %i", self._urls_processed
+                    "URLs processed: %i",
+                    self._urls_processed,
                 )
 
     def parse_response(
-        self, server_response: Any, parser_type: str = "lxml"
+        self,
+        server_response: Any,
+        parser_type: str = "lxml",
     ) -> json:
         """Parse the url
 
@@ -203,12 +220,16 @@ class Server:
         words = [word for word in bodies.split() if word.isalnum()]
         most_common_words = dict(Counter(words).most_common(self._k_top))
         return json.dumps(
-            most_common_words, separators=(", ", ": "), ensure_ascii=False
+            most_common_words,
+            separators=(", ", ": "),
+            ensure_ascii=False,
         )
 
     @staticmethod
     def write_response(
-        client_request: Any, client_sock: socket, server_response: Any
+        client_request: Any,
+        client_sock: socket,
+        server_response: Any,
     ) -> NoReturn:
         """Send back the parsed statistics to client
 
@@ -219,7 +240,9 @@ class Server:
         """
 
         logging.getLogger().debug(
-            "%s sending %s", threading.current_thread().name, server_response
+            "%s sending %s",
+            threading.current_thread().name,
+            server_response,
         )
         client_sock.sendall(f"{client_request}: {server_response}".encode())
 
