@@ -7,13 +7,7 @@ Copyright 2022 by Artem Ustsov
 import unittest
 from unittest.mock import patch
 
-from lru_cache.my_lru_cache import (
-    CircledDoubleLinkedList,
-    KVPair,
-    LimitException,
-    LRUCache,
-    Node,
-)
+from lru_cache.my_lru_cache import CircledDoubleLinkedList, KVPair, LimitException, LRUCache, Node
 
 #  pylint: disable=too-many-public-methods
 #  pylint: disable=attribute-defined-outside-init
@@ -139,7 +133,9 @@ class TestLRUCache(unittest.TestCase):
 
         # return data of isolated node must be the same as node_2
         self.assertEqual(self.isolated_node.data.key, self.node_2.data.key)
-        self.assertEqual(self.isolated_node.data.value, self.node_2.data.value)
+        self.assertEqual(
+            self.isolated_node.data.value, self.node_2.data.value
+        )
 
         # isolated node doesn't have any references
         self.assertIsNone(self.node_2.next)

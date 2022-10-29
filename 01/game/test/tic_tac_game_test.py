@@ -49,16 +49,24 @@ class TestTicTacGame(unittest.TestCase):
 
         self.log_file = open("test_logs.txt", "w+", encoding="utf-8")
         self.file_1 = open(self.file_1.name, "r", encoding="utf-8")
-        self.game_1 = TicTacGame(input_fd=self.file_1, output_fd=self.log_file)
+        self.game_1 = TicTacGame(
+            input_fd=self.file_1, output_fd=self.log_file
+        )
 
         self.file_2 = open(self.file_2.name, "r", encoding="utf-8")
-        self.game_2 = TicTacGame(input_fd=self.file_2, output_fd=self.log_file)
+        self.game_2 = TicTacGame(
+            input_fd=self.file_2, output_fd=self.log_file
+        )
 
         self.file_3 = open(self.file_3.name, "r", encoding="utf-8")
-        self.game_3 = TicTacGame(input_fd=self.file_3, output_fd=self.log_file)
+        self.game_3 = TicTacGame(
+            input_fd=self.file_3, output_fd=self.log_file
+        )
 
         self.file_4 = open(self.file_4.name, "r", encoding="utf-8")
-        self.game_4 = TicTacGame(input_fd=self.file_4, output_fd=self.log_file)
+        self.game_4 = TicTacGame(
+            input_fd=self.file_4, output_fd=self.log_file
+        )
 
         self.game = TicTacGame()
 

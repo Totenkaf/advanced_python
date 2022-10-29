@@ -45,7 +45,7 @@ class TestClient(unittest.TestCase):
     def test_read_response(self, mock_socket):
         """socket.recv mocking"""
         mock_create_socket_patcher = patch.object(
-            Client, "create_client_sock"
+            Client, "create_client_sock",
         )
 
         mock_create_socket = mock_create_socket_patcher.start()
@@ -72,7 +72,7 @@ class TestClient(unittest.TestCase):
             fake_response = self.client.read_response(self.client_socket)
             self.assertEqual(fake_response, expected_value)
         self.assertEqual(
-            mock_socket.recv.call_count, len(self.expected_values)
+            mock_socket.recv.call_count, len(self.expected_values),
         )
 
         mock_socket.recv = Mock(side_effect=ConnectionResetError)
@@ -89,7 +89,7 @@ class TestClient(unittest.TestCase):
         """socket.senddall mock"""
 
         mock_create_socket_patcher = patch.object(
-            Client, "create_client_sock"
+            Client, "create_client_sock",
         )
 
         mock_socket.sendall.return_value = True
@@ -107,7 +107,7 @@ class TestClient(unittest.TestCase):
         """socket.senddall mock"""
 
         mock_create_socket_patcher = patch.object(
-            Client, "create_client_sock"
+            Client, "create_client_sock",
         )
 
         mock_create_socket = mock_create_socket_patcher.start()
@@ -155,12 +155,12 @@ class TestClient(unittest.TestCase):
         self.client_1 = Client()
 
         with open(
-            self.input_filename, "r", encoding="utf-8"
+            self.input_filename, "r", encoding="utf-8",
         ) as input_file, open(
-            self.output_filename, "w", encoding="utf-8"
+            self.output_filename, "w", encoding="utf-8",
         ) as output_file:
             self.client_1.run_client(
-                input_fd=input_file, output_fd=output_file
+                input_fd=input_file, output_fd=output_file,
             )
 
         with open(self.output_filename, "r", encoding="utf-8") as file:
