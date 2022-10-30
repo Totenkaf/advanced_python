@@ -1,7 +1,7 @@
 # Copyright 2022 by Artem Ustsov
 
 codecov:
-  require_ci_to_pass: yes
+  require_ci_to_pass: no
 
 coverage:
   precision: 2
