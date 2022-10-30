@@ -5,7 +5,6 @@ Copyright 2022 by Artem Ustsov
 
 # pylint: disable=wrong-import-order
 from descriptor.my_descriptor import Data
-
 from factory import Factory, Faker, Sequence, fuzzy
 
 
@@ -15,6 +14,7 @@ class DataFactory(Factory):
 
     class Meta:
         """Working meta module"""
+
         model = Data
 
     num = Sequence(lambda n: n)

@@ -1,0 +1,97 @@
+# Copyright 2022 by Artem Ustsov
+
+on: push
+
+jobs:
+  checking:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: WORKING DIRECTORY
+        run: pwd
+
+      - name: INSTALL PIP
+        run: |
+          sudo apt-get update && sudo apt-get install -y python3-pip
+          which python3
+          which pip
+      
+      - name: INSTALL PEP8
+        run: |
+          sudo pip3 install pep8-naming
+
+      - name: INSTALL ADDITIONAL LIBS
+        run: |
+          sudo pip3 install bs4
+          sudo pip3 install json-tools
+
+      - name: INSTALL FLAKE_8
+        run: |
+          sudo pip3 install flake8-bugbear
+          sudo pip3 install flake8-builtins
+          sudo pip3 install flake8-commas
+          sudo pip3 install flake8-variables-names
+          sudo pip3 install flake8-import-order
+
+      - name: FLAKE_8 CHECK
+        run: |
+          cd 06
+          flake8 --ignore=I100,I201 server
+          flake8 --ignore=I100,I201 client
+          flake8 --ignore=I100,I201 thread_pool
+          cd ../
+
+      - name: INSTALL PYLINT
+        run: |
+           sudo pip3 install pylint
+
+      - name: PYLINT CHECK
+        run: |
+            cd 06
+            pylint server
+            pylint client
+            pylint thread_pool
+            cd ../
+
+  testing:
+    runs-on: ubuntu-latest
+    needs: [checking]
+    steps:
+      - uses: actions/checkout@v2
+      - name: WORKING DIRECTORY
+        run: pwd
+
+      - name: INSTALL PIP
+        run: |
+          sudo apt-get update && sudo apt-get install -y python3-pip
+          which python3
+          which pip
+
+      - name: INSTALL ADDITIONAL LIBS
+        run: |
+          sudo pip3 install bs4
+          sudo pip3 install json-tools
+          sudo pip3 install lxml
+
+      - name: RUN UNIT TESTS
+        run: |
+          cd 06
+          python3 -m unittest server/tests/*_test.py client/tests/*_test.py thread_pool/tests/*_test.py
+          cd ../
+
+      - name: INSTALL COVERAGE
+        run: |
+          sudo pip3 install coverage
+
+      - name: MAKE COVERAGE
+        run: |
+          cd 06
+          coverage run -m unittest server/tests/*_test.py client/tests/*_test.py thread_pool/tests/*_test.py
+          coverage report -m
+          mv .coverage ../.coverage
+          cd ../
+
+      - name: UPLOAD COVERAGE TO CODECOV
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

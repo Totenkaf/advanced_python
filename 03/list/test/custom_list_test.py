@@ -127,12 +127,14 @@ class TestCustomList(unittest.TestCase):
 
         # custom_list and list suite
         self.assertEqual(
-            self.full_cust_list_2 + [1, 2, 3], [-4, -2, 0, -2, -1],
+            self.full_cust_list_2 + [1, 2, 3],
+            [-4, -2, 0, -2, -1],
         )
 
         # custom_list self add via __radd__
         self.assertEqual(
-            [1, 2, 3] + self.full_cust_list_2, [-4, -2, 0, -2, -1],
+            [1, 2, 3] + self.full_cust_list_2,
+            [-4, -2, 0, -2, -1],
         )
 
         # custom_list self add via __iadd__
@@ -151,7 +153,8 @@ class TestCustomList(unittest.TestCase):
 
         # custom_list self add suite compare with list
         self.assertEqual(
-            self.full_cust_list_1 - self.full_cust_list_1, [0, 0, 0, 0, 0],
+            self.full_cust_list_1 - self.full_cust_list_1,
+            [0, 0, 0, 0, 0],
         )
 
         # different length of custom_list suite
@@ -162,7 +165,8 @@ class TestCustomList(unittest.TestCase):
 
         # custom_list and list suite
         self.assertEqual(
-            self.full_cust_list_2 - [1, 2, 3], [-6, -6, -6, -2, -1],
+            self.full_cust_list_2 - [1, 2, 3],
+            [-6, -6, -6, -2, -1],
         )
 
         # custom_list self add via __radd__

@@ -1,3 +1,6 @@
 .coverage
 .idea/
 ./__pycache__/
+logs
+other
+data/urls_requests.txt

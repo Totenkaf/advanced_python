@@ -33,7 +33,9 @@ class TestCustomClass(unittest.TestCase):
             if not key.startswith("__")
         ]
         self.magic_class_methods = [
-            key for key in self.inst.__class__.__dict__ if key.startswith("__")
+            key
+            for key in self.inst.__class__.__dict__
+            if key.startswith("__")
         ]
         self.assertEqual(
             self.custom_class_attributes,

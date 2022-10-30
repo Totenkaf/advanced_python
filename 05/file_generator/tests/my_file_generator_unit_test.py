@@ -8,11 +8,7 @@ import sys
 import unittest
 from unittest.mock import patch
 
-from file_generator.my_file_generator import (
-    Chunker,
-    PositiveInteger,
-    find_occurrence,
-)
+from file_generator.my_file_generator import Chunker, PositiveInteger, find_occurrence
 
 #  pylint: disable=too-many-public-methods
 #  pylint: disable=attribute-defined-outside-init
@@ -208,8 +204,7 @@ class TestFileGenerator(unittest.TestCase):
                 self.output_filename,
                 "w",
                 encoding="utf-8",
-            ) if self.output_filename != "stdout" \
-                    else sys.stdout as output_file:
+            ) if self.output_filename != "stdout" else sys.stdout as output_file:
                 self.chunker = Chunker(
                     self.input_fd,
                     output_file,
