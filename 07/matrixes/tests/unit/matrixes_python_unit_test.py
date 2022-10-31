@@ -211,10 +211,12 @@ class TestClient(unittest.TestCase):
                 )
 
         self.assertEqual(
-            len(result_quadratic_matrix), len(self.result_matrix_2x2),
+            len(result_quadratic_matrix),
+            len(self.result_matrix_2x2),
         )
         self.assertEqual(
-            len(result_quadratic_matrix[0]), len(self.result_matrix_2x2[0]),
+            len(result_quadratic_matrix[0]),
+            len(self.result_matrix_2x2[0]),
         )
 
         result_rectangle_matrix = multiply_two_matrixes(

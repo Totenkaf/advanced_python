@@ -20,6 +20,16 @@ jobs:
         run: |
           sudo pip3 install pep8-naming
 
+      - name: INSTALL BLACK
+        run: |
+          sudo pip3 install black
+
+      - name: RUN BLACK
+        run: |
+          cd 07
+          black .
+          cd ../
+
       - name: INSTALL FLAKE_8
         run: |
           sudo pip3 install flake8-bugbear
