@@ -6,6 +6,7 @@ Copyright 2022 by Artem Ustsov
 
 # import argparse
 import logging
+
 # import os
 import random
 import sys
@@ -33,15 +34,15 @@ def fill_matrix(
     logging.getLogger().info("Fill matrix %i x %i:", num_rows, num_cols)
     matrix = [[0 for _ in range(num_cols)] for _ in range(num_rows)]
     try:
-        for i in range(num_rows):
-            for j in range(num_cols):
+        for rows in range(num_rows):
+            for cols in range(num_cols):
                 if randomize:
-                    matrix[i][j] = random.randint(0, 5)
+                    matrix[rows][cols] = random.randint(0, 5)
                 else:
                     str_value = input_fd.readline()
                     if not str_value:
                         break
-                    matrix[i][j] = int(str_value)
+                    matrix[rows][cols] = int(str_value)
 
     except ValueError:
         logging.getLogger().debug("Value in matrix must be a number")
@@ -68,7 +69,8 @@ def fill_matrix_chain(
 
     filled_matrix_chain = []
     for num_rows, num_cols in zip(
-        matrix_chain_pattern, matrix_chain_pattern[1:]
+        matrix_chain_pattern,
+        matrix_chain_pattern[1:],
     ):
         if num_cols < 1 or num_rows < 1:
             raise IndexError("Must be a strong positive")
@@ -78,10 +80,11 @@ def fill_matrix_chain(
                 num_cols=num_cols,
                 randomize=randomize,
                 input_fd=input_fd,
-            )
+            ),
         )
         logging.getLogger().debug(
-            "Filled matrix chain %s", filled_matrix_chain
+            "Filled matrix chain %s",
+            filled_matrix_chain,
         )
     return filled_matrix_chain
 
@@ -101,7 +104,7 @@ def multiply_two_matrixes(matrix_first, matrix_second):
     if matrix_first_cols != matrix_second_rows:
         raise ValueError(
             "First matrix row length should be equal "
-            "to second matrix col length"
+            "to second matrix col length",
         )
 
     result_matrix = [
@@ -137,7 +140,8 @@ def multiply_matrix_chain(
         matrix_result_stack = [matrix_chain_list[0]]
         for index in range(1, len(matrix_chain_list)):
             result = multiply_two_matrixes(
-                matrix_result_stack.pop(), matrix_chain_list[index],
+                matrix_result_stack.pop(),
+                matrix_chain_list[index],
             )
             matrix_result_stack.append(result)
     except ValueError as error:

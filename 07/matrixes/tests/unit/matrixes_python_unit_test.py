@@ -54,7 +54,9 @@ class TestClient(unittest.TestCase):
 
         if not os.path.isdir(self.input_2x2_matrix_filename):
             with open(
-                self.input_2x2_matrix_filename, "w", encoding="utf-8",
+                self.input_2x2_matrix_filename,
+                "w",
+                encoding="utf-8",
             ) as file:
                 for rows in range(len(self.matrix_2x2)):
                     for cols in range(len(self.matrix_2x2[0])):
@@ -62,7 +64,9 @@ class TestClient(unittest.TestCase):
 
         if not os.path.isdir(self.input_3x2_matrix_filename):
             with open(
-                self.input_3x2_matrix_filename, "w", encoding="utf-8",
+                self.input_3x2_matrix_filename,
+                "w",
+                encoding="utf-8",
             ) as file:
                 for rows in range(len(self.matrix_3x2)):
                     for cols in range(len(self.matrix_3x2[0])):
@@ -70,11 +74,15 @@ class TestClient(unittest.TestCase):
 
         if not os.path.isdir(self.input_2x4_matrix_filename):
             with open(
-                self.input_2x4_matrix_filename, "w", encoding="utf-8",
+                self.input_2x4_matrix_filename,
+                "w",
+                encoding="utf-8",
             ) as file:
                 for rows in range(len(self.matrix_2x4)):
                     for cols in range(len(self.matrix_2x4[0])):
-                        file.writelines(str(self.matrix_2x4[rows][cols]) + "\n")
+                        file.writelines(
+                            str(self.matrix_2x4[rows][cols]) + "\n",
+                        )
 
     def tearDown(self) -> None:
         """Clear ENV
@@ -97,7 +105,9 @@ class TestClient(unittest.TestCase):
         """
 
         with open(
-            self.input_2x2_matrix_filename, "r", encoding="utf-8"
+            self.input_2x2_matrix_filename,
+            "r",
+            encoding="utf-8",
         ) as file:
             self.matrix = fill_matrix(
                 num_rows=len(self.matrix_2x2),
@@ -108,7 +118,9 @@ class TestClient(unittest.TestCase):
 
             for rows in range(len(self.matrix)):
                 for cols in range(len(self.matrix[0])):
-                    self.assertEqual(self.matrix[rows][cols], self.matrix_2x2[rows][cols])
+                    self.assertEqual(
+                        self.matrix[rows][cols], self.matrix_2x2[rows][cols],
+                    )
 
             self.random_matrix = fill_matrix(
                 num_rows=len(self.matrix_2x2),
@@ -119,14 +131,25 @@ class TestClient(unittest.TestCase):
 
             self.assertEqual(len(self.random_matrix), len(self.matrix_2x2))
             self.assertEqual(
-                len(self.random_matrix[0]), len(self.matrix_2x2[0])
+                len(self.random_matrix[0]),
+                len(self.matrix_2x2[0]),
             )
 
             self.assertRaises(
-                ValueError, fill_matrix, "1", 1, sys.stdin, False,
+                ValueError,
+                fill_matrix,
+                "1",
+                1,
+                sys.stdin,
+                False,
             )
             self.assertRaises(
-                ValueError, fill_matrix, 1, [1], sys.stdin, False,
+                ValueError,
+                fill_matrix,
+                1,
+                [1],
+                sys.stdin,
+                False,
             )
 
     def test_fill_matrix_chain(self) -> None:
@@ -136,7 +159,9 @@ class TestClient(unittest.TestCase):
         """
 
         with open(
-            self.input_3x2_matrix_filename, "r", encoding="utf-8",
+            self.input_3x2_matrix_filename,
+            "r",
+            encoding="utf-8",
         ) as file:
             filled_matrix_chain = fill_matrix_chain(
                 matrix_chain_pattern=[3, 2],
@@ -149,7 +174,8 @@ class TestClient(unittest.TestCase):
             for rows in range(len(filled_matrix_chain[0])):
                 for cols in range(len(filled_matrix_chain[0][0])):
                     self.assertEqual(
-                        filled_matrix_chain[0][rows][cols], self.matrix_3x2[rows][cols],
+                        filled_matrix_chain[0][rows][cols],
+                        self.matrix_3x2[rows][cols],
                     )
 
     def test_fill_matrix_chain_wrong_dim(self) -> None:
@@ -159,7 +185,7 @@ class TestClient(unittest.TestCase):
         """
 
         self.assertRaises(
-            IndexError, fill_matrix_chain, [2, 0, 2], fill_matrix
+            IndexError, fill_matrix_chain, [2, 0, 2], fill_matrix,
         )
         self.assertRaises(IndexError, fill_matrix_chain, [1, -1], fill_matrix)
 
@@ -170,7 +196,7 @@ class TestClient(unittest.TestCase):
         """
 
         result_quadratic_matrix = multiply_two_matrixes(
-            self.matrix_2x2, self.matrix_2x2
+            self.matrix_2x2, self.matrix_2x2,
         )
         for rows in range(len(result_quadratic_matrix)):
             for cols in range(len(result_quadratic_matrix[0])):
@@ -187,7 +213,7 @@ class TestClient(unittest.TestCase):
         )
 
         result_rectangle_matrix = multiply_two_matrixes(
-            self.matrix_3x2, self.matrix_2x4
+            self.matrix_3x2, self.matrix_2x4,
         )
         for rows in range(len(result_rectangle_matrix)):
             for cols in range(len(result_rectangle_matrix[0])):
@@ -197,10 +223,12 @@ class TestClient(unittest.TestCase):
                 )
 
         self.assertEqual(
-            len(result_rectangle_matrix), len(self.result_matrix_3x4),
+            len(result_rectangle_matrix),
+            len(self.result_matrix_3x4),
         )
         self.assertEqual(
-            len(result_rectangle_matrix[0]), len(self.result_matrix_3x4[0]),
+            len(result_rectangle_matrix[0]),
+            len(self.result_matrix_3x4[0]),
         )
 
     def test_multiply_two_matrixes_wrong_dim(self) -> None:
@@ -237,11 +265,12 @@ class TestClient(unittest.TestCase):
 
         self.assertEqual(len(result_matrix), len(self.result_matrix_3x2x4))
         self.assertEqual(
-            len(result_matrix[0]), len(self.result_matrix_3x2x4[0])
+            len(result_matrix[0]), len(self.result_matrix_3x2x4[0]),
         )
 
         for rows in range(len(result_matrix)):
             for cols in range(len(result_matrix[0])):
                 self.assertEqual(
-                    result_matrix[rows][cols], self.result_matrix_3x2x4[rows][cols]
+                    result_matrix[rows][cols],
+                    self.result_matrix_3x2x4[rows][cols],
                 )
