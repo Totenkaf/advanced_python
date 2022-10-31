@@ -40,3 +40,17 @@ master-worker cервер для обработки запросов от кли
 ### 2. Тесты в отдельном модуле
 
 ### 3. Перед отправкой на проверку код должен быть прогнан через flake8 и pylint, по желанию еще black
+
+
+Запуск сервера
+```
+python 06/server/my_server.py -k 5 -w 7
+
+```
+
+
+Запуск клиента
+```
+python 06/client/my_server.py -w 3 --input=data/url_https/txt
+
+```
