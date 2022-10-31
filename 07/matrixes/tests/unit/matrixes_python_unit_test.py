@@ -119,7 +119,8 @@ class TestClient(unittest.TestCase):
             for rows in range(len(self.matrix)):
                 for cols in range(len(self.matrix[0])):
                     self.assertEqual(
-                        self.matrix[rows][cols], self.matrix_2x2[rows][cols],
+                        self.matrix[rows][cols],
+                        self.matrix_2x2[rows][cols],
                     )
 
             self.random_matrix = fill_matrix(
@@ -185,7 +186,10 @@ class TestClient(unittest.TestCase):
         """
 
         self.assertRaises(
-            IndexError, fill_matrix_chain, [2, 0, 2], fill_matrix,
+            IndexError,
+            fill_matrix_chain,
+            [2, 0, 2],
+            fill_matrix,
         )
         self.assertRaises(IndexError, fill_matrix_chain, [1, -1], fill_matrix)
 
@@ -196,7 +200,8 @@ class TestClient(unittest.TestCase):
         """
 
         result_quadratic_matrix = multiply_two_matrixes(
-            self.matrix_2x2, self.matrix_2x2,
+            self.matrix_2x2,
+            self.matrix_2x2,
         )
         for rows in range(len(result_quadratic_matrix)):
             for cols in range(len(result_quadratic_matrix[0])):
@@ -206,14 +211,15 @@ class TestClient(unittest.TestCase):
                 )
 
         self.assertEqual(
-            len(result_quadratic_matrix), len(self.result_matrix_2x2)
+            len(result_quadratic_matrix), len(self.result_matrix_2x2),
         )
         self.assertEqual(
-            len(result_quadratic_matrix[0]), len(self.result_matrix_2x2[0])
+            len(result_quadratic_matrix[0]), len(self.result_matrix_2x2[0]),
         )
 
         result_rectangle_matrix = multiply_two_matrixes(
-            self.matrix_3x2, self.matrix_2x4,
+            self.matrix_3x2,
+            self.matrix_2x4,
         )
         for rows in range(len(result_rectangle_matrix)):
             for cols in range(len(result_rectangle_matrix[0])):
@@ -265,7 +271,8 @@ class TestClient(unittest.TestCase):
 
         self.assertEqual(len(result_matrix), len(self.result_matrix_3x2x4))
         self.assertEqual(
-            len(result_matrix[0]), len(self.result_matrix_3x2x4[0]),
+            len(result_matrix[0]),
+            len(self.result_matrix_3x2x4[0]),
         )
 
         for rows in range(len(result_matrix)):

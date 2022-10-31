@@ -7,7 +7,13 @@ Copyright 2022 by Artem Ustsov
 import unittest
 from unittest.mock import patch
 
-from lru_cache.my_lru_cache import CircledDoubleLinkedList, KVPair, LimitException, LRUCache, Node
+from lru_cache.my_lru_cache import (
+    CircledDoubleLinkedList,
+    KVPair,
+    LimitException,
+    LRUCache,
+    Node,
+)
 
 #  pylint: disable=too-many-public-methods
 #  pylint: disable=attribute-defined-outside-init
