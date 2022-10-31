@@ -6,7 +6,6 @@ Copyright 2022 by Artem Ustsov
 
 # import argparse
 import logging
-
 # import os
 import random
 import sys
@@ -115,11 +114,11 @@ def multiply_two_matrixes(matrix_first, matrix_second):
         len(result_matrix[0]),
     )
 
-    for i in range(matrix_first_rows):
-        for j in range(matrix_second_cols):
-            for k in range(matrix_first_cols):
-                result_matrix[i][j] += (
-                    matrix_first[i][k] * matrix_second[k][j]
+    for rows in range(matrix_first_rows):
+        for cols in range(matrix_second_cols):
+            for _cols in range(matrix_first_cols):
+                result_matrix[rows][cols] += (
+                    matrix_first[rows][_cols] * matrix_second[_cols][cols]
                 )
 
     return result_matrix
@@ -136,9 +135,9 @@ def multiply_matrix_chain(
 
     try:
         matrix_result_stack = [matrix_chain_list[0]]
-        for i in range(1, len(matrix_chain_list)):
+        for index in range(1, len(matrix_chain_list)):
             result = multiply_two_matrixes(
-                matrix_result_stack.pop(), matrix_chain_list[i]
+                matrix_result_stack.pop(), matrix_chain_list[index],
             )
             matrix_result_stack.append(result)
     except ValueError as error:
@@ -179,11 +178,11 @@ def multiply_matrix_chain(
 #         try:
 #             if args.random == "False":
 #                 matrix_chain_list = fill_matrix_chain(
-#                     matrix_chain_pattern, fill_matrix
+#                     matrix_chain_pattern, fill_matrix,
 #                 )
 #             else:
 #                 matrix_chain_list = fill_matrix_chain(
-#                     matrix_chain_pattern, fill_matrix, randomize=True
+#                     matrix_chain_pattern, fill_matrix, randomize=True,
 #                 )
 #             result_matrix = multiply_matrix_chain(matrix_chain_list)
 #         except ValueError as error:
