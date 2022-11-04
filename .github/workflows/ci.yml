@@ -62,7 +62,6 @@ jobs:
         run: |
           cd 07
           python3 -m unittest matrixes/tests/unit/*_test.py
-          python3 -m unittest matrixes/tests/stress/*_test.py
           cd ../
 
       - name: INSTALL COVERAGE
