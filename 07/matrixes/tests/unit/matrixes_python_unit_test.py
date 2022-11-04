@@ -13,13 +13,16 @@ from matrixes.matrixes_python import (
     fill_matrix_chain,
     multiply_matrix_chain,
     multiply_two_matrixes,
+    multiply_matrix_chain_command,
 )
 
 
+# pylint: disable=too-many-instance-attributes
+# pylint: disable=consider-using-enumerate
+# pylint: disable=too-many-branches
+# pylint: disable=attribute-defined-outside-init
 class TestClient(unittest.TestCase):
-    """
-    Main test class for my_client module
-    """
+    """Main test class for my_client module"""
 
     def setUp(self) -> None:
         """Prepare ENV
@@ -28,11 +31,8 @@ class TestClient(unittest.TestCase):
 
         self.matrix_chain_pattern = [3, 2, 3]
         self.matrix_2x2 = [[1, 2], [3, 4]]
-
         self.result_matrix_2x2 = [[7, 10], [15, 22]]
-
         self.matrix_3x2 = [[1, 2], [3, 4], [5, 6]]
-
         self.matrix_2x4 = [[1, 2, 3, 4], [5, 6, 7, 8]]
 
         self.result_matrix_3x4 = [
@@ -51,6 +51,7 @@ class TestClient(unittest.TestCase):
         self.input_2x2_matrix_filename = "input_2x2_matrix.txt"
         self.input_3x2_matrix_filename = "input_3x2_matrix.txt"
         self.input_2x4_matrix_filename = "input_2x4_matrix.txt"
+        self.input_3x4_matrix_filename = "input_3x4_matrix.txt"
 
         if not os.path.isdir(self.input_2x2_matrix_filename):
             with open(
@@ -84,6 +85,23 @@ class TestClient(unittest.TestCase):
                             str(self.matrix_2x4[rows][cols]) + "\n",
                         )
 
+        if not os.path.isdir(self.input_3x4_matrix_filename):
+            with open(
+                self.input_3x4_matrix_filename,
+                "w",
+                encoding="utf-8",
+            ) as file:
+                for rows in range(len(self.matrix_3x2)):
+                    for cols in range(len(self.matrix_3x2[0])):
+                        file.writelines(
+                            str(self.matrix_3x2[rows][cols]) + "\n",
+                        )
+                for rows in range(len(self.matrix_2x4)):
+                    for cols in range(len(self.matrix_2x4[0])):
+                        file.writelines(
+                            str(self.matrix_2x4[rows][cols]) + "\n",
+                        )
+
     def tearDown(self) -> None:
         """Clear ENV
 
@@ -94,6 +112,7 @@ class TestClient(unittest.TestCase):
             os.remove(self.input_2x2_matrix_filename)
             os.remove(self.input_3x2_matrix_filename)
             os.remove(self.input_2x4_matrix_filename)
+            os.remove(self.input_3x4_matrix_filename)
         except OSError as why:
             print(why)
 
@@ -283,3 +302,54 @@ class TestClient(unittest.TestCase):
                     result_matrix[rows][cols],
                     self.result_matrix_3x2x4[rows][cols],
                 )
+
+    def test_multiply_random_matrix_chain_command(self) -> None:
+        """Test matrix chain command
+
+        :return: None
+        """
+
+        chain, is_random = "2,3,10,7", "True"
+        result_matrix = multiply_matrix_chain_command(chain, is_random)
+        self.assertEqual(len(result_matrix), 2)
+        self.assertEqual(len(result_matrix[0]), 7)
+
+    def test_multiply_input_matrix_chain_command(self) -> None:
+        """Test matrix chain command
+
+        :return: None
+        """
+
+        chain, is_random = "3,2,4", "False"
+        with open(
+            self.input_3x4_matrix_filename,
+            "r",
+            encoding="utf-8",
+        ) as file:
+            result_matrix = multiply_matrix_chain_command(
+                chain, is_random, file
+            )
+
+        self.assertEqual(len(result_matrix), 3)
+        self.assertEqual(len(result_matrix[0]), 4)
+
+        for rows in range(len(result_matrix)):
+            for cols in range(len(result_matrix[0])):
+                self.assertEqual(
+                    result_matrix[rows][cols],
+                    self.result_matrix_3x4[rows][cols],
+                )
+
+    def test_multiply_wrong_matrix_chain_command(self) -> None:
+        """Test matrix chain command
+
+        :return: None
+        """
+
+        chain, is_random = "2,3,abc,7", "True"
+        result_matrix = multiply_matrix_chain_command(chain, is_random)
+        self.assertIsNone(result_matrix)
+
+        chain, is_random = "2,3,-1,7", "True"
+        result_matrix = multiply_matrix_chain_command(chain, is_random)
+        self.assertIsNone(result_matrix)
