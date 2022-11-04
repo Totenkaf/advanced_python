@@ -5,14 +5,15 @@ Copyright 2022 by Artem Ustsov
 """
 
 import time
-from matrixes import matrixes_python
+
 from matrixes import matrixes_cpython
+from matrixes import matrixes_python
 
 
 NUMBER = 10
 start = time.time()
 matrixes_python.multiply_matrix_chain_command(
-    chain="100,200,1000,1,5,10,11", is_random="True"
+    chain="100,200,1000,1,5,10,11", is_random="True",
 )
 end = time.time()
 

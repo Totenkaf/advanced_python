@@ -6,7 +6,7 @@ Copyright 2022 by Artem Ustsov
 
 # import argparse
 import logging
-import os
+# import os
 import random
 import sys
 from typing import List, Optional
@@ -152,7 +152,7 @@ def multiply_matrix_chain(
 
 
 def multiply_matrix_chain_command(
-    chain, is_random, input_fd=sys.stdin
+    chain, is_random, input_fd=sys.stdin,
 ) -> None or List[int]:
     """Fill matrix chain command
 

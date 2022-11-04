@@ -4,3 +4,4 @@
 logs
 other
 data/urls_requests.txt
+.DS_store

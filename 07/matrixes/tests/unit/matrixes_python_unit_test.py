@@ -12,8 +12,8 @@ from matrixes.matrixes_python import (
     fill_matrix,
     fill_matrix_chain,
     multiply_matrix_chain,
-    multiply_two_matrixes,
     multiply_matrix_chain_command,
+    multiply_two_matrixes,
 )
 
 
@@ -327,7 +327,7 @@ class TestClient(unittest.TestCase):
             encoding="utf-8",
         ) as file:
             result_matrix = multiply_matrix_chain_command(
-                chain, is_random, file
+                chain, is_random, file,
             )
 
         self.assertEqual(len(result_matrix), 3)
