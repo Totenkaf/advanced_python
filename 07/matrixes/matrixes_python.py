@@ -166,7 +166,7 @@ def multiply_matrix_chain_command(
         matrix_chain_pattern = list(map(int, chain.split(",")))
     except ValueError:
         logging.getLogger().info(
-            "Matrix chain pattern should be a integer number"
+            "Matrix chain pattern should be a integer number",
         )
         return None
     else:
