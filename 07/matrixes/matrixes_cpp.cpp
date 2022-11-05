@@ -114,7 +114,6 @@ Matrix multiply_matrix_chain(std::vector<Matrix>& matrix_chain_list) {
 
 
 extern "C" {
-
     int multiply_matrix_chain_command(int* arr, int arr_len, int edge, int* c_arr) {
         std::vector<int> matrix_chain_pattern;
         for (size_t i = 0; i < arr_len; ++i) {
@@ -128,7 +127,6 @@ extern "C" {
         int c_arr_size = result_multiple.get_num_cols() * result_multiple.get_num_rows();
         return c_arr_size;
     }
-
 }
 
 
