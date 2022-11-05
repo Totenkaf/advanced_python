@@ -151,7 +151,9 @@ def multiply_matrix_chain(
 
 
 def multiply_matrix_chain_command(
-    chain, is_random, input_fd=sys.stdin,
+    chain,
+    is_random,
+    input_fd=sys.stdin,
 ) -> None or List[int]:
     """Fill matrix chain command
 
@@ -185,6 +187,7 @@ def multiply_matrix_chain_command(
                     input_fd=input_fd,
                 )
             result_matrix = multiply_matrix_chain(matrix_chain_list)
+            print(result_matrix)
         except ValueError as error:
             logging.getLogger().info(error)
             return None

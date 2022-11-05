@@ -327,7 +327,9 @@ class TestClient(unittest.TestCase):
             encoding="utf-8",
         ) as file:
             result_matrix = multiply_matrix_chain_command(
-                chain, is_random, file,
+                chain,
+                is_random,
+                file,
             )
 
         self.assertEqual(len(result_matrix), 3)
