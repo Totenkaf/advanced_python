@@ -27,7 +27,7 @@ python main.py --chain=4,2,7,2 --is_random=True
 or with own input
 ~~~
 cd 07
-python main.py --chain=4,2,7,2 --is_random=True --input=your_filename.txt
+python main.py --chain=4,2,7,2 --is_random=False --input=your_filename.txt
 ~~~
 
 
