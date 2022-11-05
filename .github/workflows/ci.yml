@@ -64,6 +64,12 @@ jobs:
           python3 -m unittest matrixes/tests/unit/*_test.py
           cd ../
 
+      - name: RUN PERFORMANCE TESTS
+        run: |
+          cd 07
+          python3 matrixes/tests/perf/*_test.py --random_num=10 --chain_size=1000
+          cd ../
+
       - name: INSTALL COVERAGE
         run: |
           sudo pip3 install coverage
