@@ -8,7 +8,7 @@ import os
 import sys
 import unittest
 
-from matrixes.matrixes_python import (
+from matrixes import (
     fill_matrix,
     fill_matrix_chain,
     multiply_matrix_chain,

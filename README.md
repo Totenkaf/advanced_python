@@ -52,6 +52,6 @@ g++ matrixes_cpp.cpp -o multiply_matrixes_cpp
 
 Run performance test
 ~~~
-cd 07
-python3 matrixes/tests/perf/pert_test.py --random_num=10 --chain_size=1000
+cd 07 matrixes/tests/perf/
+python3 perf_test.py --random_num=10 --chain_size=1000
 ~~~
