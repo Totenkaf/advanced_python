@@ -66,8 +66,8 @@ jobs:
 
       - name: RUN PERFORMANCE TESTS
         run: |
-          cd 07
-          python3 matrixes/tests/perf/*_test.py --random_num=10 --chain_size=1000
+          cd 07 matrixes/tests/perf
+          python3 perf_test.py --random_num=10 --chain_size=1000
           cd ../
 
       - name: INSTALL COVERAGE

@@ -9,8 +9,8 @@ import time
 
 import click
 
-from matrixes import matrixes_ctypes
-from matrixes import matrixes_python
+import matrixes.matrixes_ctypes
+import matrixes.matrixes_python
 
 
 # pylint: disable=no-value-for-parameter
@@ -30,7 +30,7 @@ def run_performance_tests(random_num, chain_size):
     start = time.time()
     matrix_chain = [random.randint(0, random_num) for _ in range(chain_size)]
 
-    matrixes_python.multiply_matrix_chain_command(
+    matrixes.matrixes_python.multiply_matrix_chain_command(
         chain=",".join(list(map(str, matrix_chain))),
         is_random="True",
     )
@@ -40,7 +40,7 @@ def run_performance_tests(random_num, chain_size):
 
     #  C++ dll realisation
     start = time.time()
-    matrixes_ctypes.multiply_matrix_chain_command(matrix_chain, edge=5)
+    matrixes.matrixes_ctypes.multiply_matrix_chain_command(matrix_chain, edge=5)
     end = time.time()
     cy_time = end - start
     print(f"Ctypes time = {cy_time}")
