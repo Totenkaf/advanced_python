@@ -40,7 +40,9 @@ def run_performance_tests(random_num, chain_size):
 
     #  C++ dll realisation
     start = time.time()
-    matrixes.matrixes_ctypes.multiply_matrix_chain_command(matrix_chain, edge=5)
+    matrixes.matrixes_ctypes.multiply_matrix_chain_command(matrix_chain,
+                                                           edge=5,
+                                                           )
     end = time.time()
     cy_time = end - start
     print(f"Ctypes time = {cy_time}")
