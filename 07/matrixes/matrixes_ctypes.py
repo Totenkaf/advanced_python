@@ -26,6 +26,6 @@ def multiply_matrix_chain_command(arr: List[int], edge: int):
     arr_len = len(arr)
     arr_type = ctypes.c_int * arr_len
     result = lib1.multiply_matrix_chain_command(
-        arr_type(*arr), ctypes.c_int(arr_len), ctypes.c_int(edge)
+        arr_type(*arr), ctypes.c_int(arr_len), ctypes.c_int(edge),
     )
     return result

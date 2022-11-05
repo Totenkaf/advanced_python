@@ -9,8 +9,8 @@ import time
 
 import click
 
-from matrixes import matrixes_python
 from matrixes import matrixes_ctypes
+from matrixes import matrixes_python
 
 
 @click.command("perf_test.py")
