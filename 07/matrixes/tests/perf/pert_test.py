@@ -13,10 +13,19 @@ from matrixes import matrixes_ctypes
 from matrixes import matrixes_python
 
 
+# pylint: disable=no-value-for-parameter
 @click.command("perf_test.py")
 @click.option("-r", "--random_num", type=int, default=10)
 @click.option("-s", "--chain_size", type=int, default=1000)
 def run_performance_tests(random_num, chain_size):
+    """Run the performance test. Compare execution type
+    of different ways of calculation matrix chain mul
+
+    :param random_num: maximum value of a number in matrix
+    :param chain_size: number of matrixes in chain
+    :return: None
+    """
+
     #  Python naive realisation
     start = time.time()
     matrix_chain = [random.randint(0, random_num) for _ in range(chain_size)]
