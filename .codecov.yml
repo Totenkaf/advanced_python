@@ -1,0 +1,31 @@
+# Copyright 2022 by Artem Ustsov
+
+codecov:
+  require_ci_to_pass: yes
+
+coverage:
+  precision: 2
+  round: down
+  range: "70...100"
+
+parsers:
+  gcov:
+    branch_detection:
+      conditional: yes
+      loop: yes
+      method: no
+      macro: no
+
+profiling:
+  critical_files_paths:
+    - 07/matrixes/matrixes_python.py
+    - 07/matrixes/matrixes_ctypes.py
+    - 07/matrixes/matrixes_cffi.py
+    - 07/matrixes/matrixes_c_api.py
+    - 07/matrixes/matrixes_cython.py
+
+comment:
+  layout: "reach,diff,flags,files,footer"
+  behavior: default
+  require_changes: no
+  show_critical_paths: true

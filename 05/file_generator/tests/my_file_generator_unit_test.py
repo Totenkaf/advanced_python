@@ -8,7 +8,11 @@ import sys
 import unittest
 from unittest.mock import patch
 
-from file_generator.my_file_generator import Chunker, PositiveInteger, find_occurrence
+from file_generator.my_file_generator import (
+    Chunker,
+    PositiveInteger,
+    find_occurrence,
+)
 
 #  pylint: disable=too-many-public-methods
 #  pylint: disable=attribute-defined-outside-init

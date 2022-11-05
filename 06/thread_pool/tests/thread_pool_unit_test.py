@@ -88,7 +88,9 @@ class TestThreadPool(unittest.TestCase):
     @patch.object(ThreadPool, "__enter__")
     @patch.object(ThreadPool, "__exit__")
     def test_thread_pool_context_manager(
-        self, __enter__mock, __exit__mock,
+        self,
+        __enter__mock,
+        __exit__mock,
     ) -> Any:
         """
 
