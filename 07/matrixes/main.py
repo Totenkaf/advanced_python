@@ -9,8 +9,8 @@ import logging
 import os
 import sys
 
-import matrixes.matrixes_python
-import matrixes.matrixes_ctypes
+import matrixes_python
+import matrixes_ctypes
 
 
 if __name__ == "__main__":
@@ -41,14 +41,14 @@ if __name__ == "__main__":
 
     if args.type in ["C++", "c++", "CPP", "cpp", "c"]:
         matrix_chain_pattern = list(map(int, args.chain.split(",")))
-        matrixes.matrixes_ctypes.multiply_matrix_chain_command(
+        matrixes_ctypes.multiply_matrix_chain_command(
             matrix_chain_pattern, args.edge
         )
     else:
         with open(
             args.input_fd, "r", encoding="utf-8"
         ) if args.input_fd != "stdin" else sys.stdin as input_fd:
-            matrixes.matrixes_python.multiply_matrix_chain_command(
+            matrixes_python.multiply_matrix_chain_command(
                 args.chain, args.is_random, input_fd
             )
         logging.getLogger().info("=====PROGRAM STOP=====")
