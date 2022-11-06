@@ -6,9 +6,9 @@ Copyright 2022 by Artem Ustsov
 
 import random
 import time
-import numpy as np
 
 import click
+import numpy as np
 
 import matrixes_ctypes
 import matrixes_python
@@ -34,7 +34,7 @@ def run_performance_tests(random_num, chain_size):
     num_of_iteration = 100
     py_time = []
     result_py = []
-    for i in range(num_of_iteration):
+    for _ in range(num_of_iteration):
         start = time.time()
         result_py = matrixes_python.multiply_matrix_chain_command(
             chain=chain_python,
@@ -49,7 +49,7 @@ def run_performance_tests(random_num, chain_size):
     #  C++ dll realisation
     cpp_time = []
     result_cpp = 0
-    for i in range(num_of_iteration):
+    for _ in range(num_of_iteration):
         start = time.time()
         result_cpp = matrixes_ctypes.multiply_matrix_chain_command(
             matrix_chain,
@@ -60,7 +60,6 @@ def run_performance_tests(random_num, chain_size):
         cpp_time.append(end - start)
     print(f"Ctypes av_time = {np.mean(cpp_time):0.3f}")
     print(f"Ctypes matrix size {result_cpp}\n")
-    
     print(f"Speedup average = {(np.mean(py_time) / np.mean(cpp_time)):0.3f}")
 
 

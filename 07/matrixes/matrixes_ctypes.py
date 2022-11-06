@@ -7,7 +7,12 @@ Copyright 2022 by Artem Ustsov
 import ctypes
 from typing import List
 lib1 = ctypes.CDLL('./matrix_chain_multiplication.so')
-lib1.multiply_matrix_chain_command.argtypes = (ctypes.POINTER(ctypes.c_int), ctypes.c_int, ctypes.c_int, ctypes.c_int)
+lib1.multiply_matrix_chain_command.argtypes = (
+    ctypes.POINTER(ctypes.c_int),
+    ctypes.c_int,
+    ctypes.c_int,
+    ctypes.c_int,
+)
 
 
 def multiply_matrix_chain_command(arr: List[int], edge: int, verbose: int):

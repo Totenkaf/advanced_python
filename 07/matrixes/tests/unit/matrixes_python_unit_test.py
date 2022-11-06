@@ -310,7 +310,11 @@ class TestClient(unittest.TestCase):
         """
 
         chain, is_random, verbose = "2,3,10,7", "True", 0
-        result_matrix = multiply_matrix_chain_command(chain, is_random, verbose)
+        result_matrix = multiply_matrix_chain_command(
+            chain,
+            is_random,
+            verbose,
+        )
         self.assertEqual(len(result_matrix), 2)
         self.assertEqual(len(result_matrix[0]), 7)
 
@@ -349,9 +353,17 @@ class TestClient(unittest.TestCase):
         """
 
         chain, is_random, verbose = "2,3,abc,7", "True", 0
-        result_matrix = multiply_matrix_chain_command(chain, is_random, verbose)
+        result_matrix = multiply_matrix_chain_command(
+            chain,
+            is_random,
+            verbose,
+        )
         self.assertIsNone(result_matrix)
 
         chain, is_random = "2,3,-1,7", "True"
-        result_matrix = multiply_matrix_chain_command(chain, is_random, verbose)
+        result_matrix = multiply_matrix_chain_command(
+            chain,
+            is_random,
+            verbose,
+        )
         self.assertIsNone(result_matrix)
