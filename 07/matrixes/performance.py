@@ -8,10 +8,11 @@ import random
 import time
 
 import click
-import numpy as np
 
 import matrixes_ctypes
 import matrixes_python
+
+import numpy as np
 
 
 # pylint: disable=no-value-for-parameter
