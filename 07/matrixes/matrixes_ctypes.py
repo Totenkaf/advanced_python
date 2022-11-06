@@ -27,6 +27,7 @@ def multiply_matrix_chain_command(
     :param edge: seed for random generator
     :param verbose: If true print result matrix into stdout
     :return: Result matrix size
+)
     """
 
     arr_len = len(arr)

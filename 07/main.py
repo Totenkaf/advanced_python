@@ -9,8 +9,10 @@ import logging
 import os
 import sys
 
+
 from matrixes import matrixes_python
 from matrixes import matrixes_ctypes
+
 
 
 if __name__ == "__main__":
@@ -35,6 +37,7 @@ if __name__ == "__main__":
     parser.add_argument("-e", "--edge", type=int, default=5)
     parser.add_argument("-i", "--input_fd", default="stdin")
     parser.add_argument("-v", "--verbose", type=int, default=1)
+
 
     args = parser.parse_args()
 

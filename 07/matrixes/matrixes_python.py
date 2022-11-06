@@ -174,6 +174,7 @@ def multiply_matrix_chain_command(
     else:
         try:
             matrix_chain_list = []
+
             if is_random == "False":
                 matrix_chain_list = fill_matrix_chain(
                     matrix_chain_pattern,

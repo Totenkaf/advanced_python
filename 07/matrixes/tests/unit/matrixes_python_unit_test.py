@@ -366,4 +366,3 @@ class TestClient(unittest.TestCase):
             is_random,
             verbose,
         )
-        self.assertIsNone(result_matrix)
