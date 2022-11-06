@@ -4,28 +4,26 @@ Copyright 2022 by Artem Ustsov
 """
 
 import asyncio
+import json
 import logging
 from typing import List, NoReturn, Optional, TextIO
-
-import json
+from collections import Counter
 
 import aiohttp
-
-from collections import Counter
 
 from bs4 import BeautifulSoup
 
 
 class UrlStats:
-    """ """
+    """Class for collecting statistics"""
 
-    def __init__(self):
+    def __init__(self) -> NoReturn:
         self.url_processed = 0
         self.url_correct = 0
         self.url_wrong = 0
 
-    def print_stat(self):
-        """ """
+    def print_stat(self) -> None:
+        """Print the url stats into stdout"""
 
         print("Number of processed URL: ", self.url_processed)
         print("With correctly processed URL: ", self.url_correct)
@@ -33,7 +31,7 @@ class UrlStats:
 
 
 class AsyncioFetcher:
-    """ """
+    """Asyncio URL fetcher"""
 
     def __init__(self, connections: int, k_top: int = 3) -> NoReturn:
         self.connections = connections
@@ -42,7 +40,11 @@ class AsyncioFetcher:
 
     async def fetch(
         self, session: Optional, queue: Optional, file: TextIO,
-    ) -> NoReturn:
+    ) -> None:
+        """Event loop. Fetch the data from url in ClientSession.
+        Send the data from url to parse method
+        """
+
         while True:
             url = await queue.get()
             logging.getLogger().info(f"Got {url} from queue")
@@ -56,24 +58,24 @@ class AsyncioFetcher:
                     logging.getLogger().info("Read data")
                     data = await resp.read()
                     logging.getLogger().info(
-                        f"URL {self.url_stat.url_processed}: {url} ",
+                        f"URL {self.url_stat.url_processed}: {url} "
                         f"with data len as {len(data)}",
                     )
                     parsed_data = await self.parse_data(data)
                     logging.getLogger().info(
-                        f"URL {self.url_stat.url_processed}: {url} ",
+                        f"URL {self.url_stat.url_processed}: {url} "
                         f"with parsed {parsed_data}",
                     )
                     file.write(f"{url} : {parsed_data}\n")
             except Exception as error:
                 if isinstance(error, ConnectionError):
                     logging.getLogger().info(
-                        f"URL {self.url_stat.url_processed}: ",
+                        f"URL {self.url_stat.url_processed}: "
                         f"{url} with {error}",
                     )
                     file.write(f"{url} : {error}\n")
                 logging.getLogger().info(
-                    f"URL {self.url_stat.url_processed}: {url} ",
+                    f"URL {self.url_stat.url_processed}: {url} "
                     f"with other ERROR",
                 )
                 file.write(f"{url} : other ERROR\n")
@@ -86,10 +88,14 @@ class AsyncioFetcher:
                 queue.task_done()
                 self.url_stat.url_processed += 1
 
-    async def fill_queue(self):
+    async def fill_queue(self) -> None:
         pass
 
-    async def batch_fetch(self, urls: List[str], file: TextIO) -> NoReturn:
+    async def batch_fetch(self, urls: List[str], file: TextIO) -> None:
+        """Gets the urls from queue, create new task to process
+        url, synchronize workers
+        """
+
         queue = asyncio.Queue()
         for url in urls:
             logging.getLogger().info(f"Put the url {url} in a queue")
@@ -110,6 +116,8 @@ class AsyncioFetcher:
                 worker.cancel()
 
     async def parse_data(self, data, parser_type="lxml"):
+        """Parse url, create the most common words json"""
+
         soup = BeautifulSoup(data, parser_type)
         bodies = soup.get_text("\n", strip=True)
         words = [word for word in bodies.split() if word.isalnum()]
