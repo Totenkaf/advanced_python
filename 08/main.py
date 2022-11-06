@@ -35,12 +35,16 @@ if __name__ == "__main__":
     parser.add_argument("-o", "--output", default="stdout")
     args = parser.parse_args()
 
-    with open(args.input, "r", encoding="utf-8") if args.input != "stdin" else sys.stdin as file:
+    with open(
+        args.input, "r", encoding="utf-8"
+    ) if args.input != "stdin" else sys.stdin as file:
         URLS = file.read().splitlines()
 
     fetcher = AsyncioFetcher(connections=args.connections, k_top=args.ktop)
 
-    with open(args.output, "w", encoding="utf-8") if args.output != "stdout" else sys.stdout as file:
+    with open(
+        args.output, "w", encoding="utf-8"
+    ) if args.output != "stdout" else sys.stdout as file:
         t1 = time.time()
         asyncio.run(fetcher.batch_fetch(URLS, file))
         t2 = time.time()

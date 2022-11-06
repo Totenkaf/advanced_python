@@ -3,12 +3,10 @@ Asyncio fetcher unit test
 Copyright 2022 by Artem Ustsov
 """
 import json
-import socket
 import unittest
 from unittest.mock import Mock, patch
 
 import json_tools
-from requests import TooManyRedirects
 from fetcher.fetcher import AsyncioFetcher
 
 #  pylint: disable=too-many-public-methods
