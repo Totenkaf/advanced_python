@@ -64,6 +64,7 @@ def fill_matrix_chain(
     :param input_fd: input file descriptor
     :return: filled matrix with number
     """
+
     try:
         filled_matrix_chain = []
         for num_rows, num_cols in zip(
@@ -172,6 +173,8 @@ def multiply_matrix_chain_command(
         return None
     else:
         try:
+            matrix_chain_list = []
+
             if is_random == "False":
                 matrix_chain_list = fill_matrix_chain(
                     matrix_chain_pattern,
@@ -187,7 +190,6 @@ def multiply_matrix_chain_command(
                     input_fd=input_fd,
                 )
             result_matrix = multiply_matrix_chain(matrix_chain_list)
-            print(result_matrix)
         except ValueError as error:
             logging.getLogger().info(error)
             return None
