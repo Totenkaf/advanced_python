@@ -10,6 +10,7 @@ import time
 import click
 
 import matrixes_ctypes
+
 import matrixes_python
 
 import numpy as np
