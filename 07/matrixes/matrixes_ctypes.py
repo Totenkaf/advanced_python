@@ -16,7 +16,11 @@ lib1.multiply_matrix_chain_command.argtypes = (
 )
 
 
-def multiply_matrix_chain_command(arr: List[int], edge: int, verbose: int) -> int:
+def multiply_matrix_chain_command(
+    arr: List[int],
+    edge: int,
+    verbose: int,
+) -> int:
     """Realize dll linkage and work in python code
 
     :param arr: matrix chain pattern
