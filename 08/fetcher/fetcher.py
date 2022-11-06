@@ -7,12 +7,13 @@ import asyncio
 import logging
 from typing import List, NoReturn, Optional, TextIO
 
-import aiohttp
 import json
 
-from bs4 import BeautifulSoup
+import aiohttp
 
 from collections import Counter
+
+from bs4 import BeautifulSoup
 
 
 class UrlStats:
@@ -40,7 +41,7 @@ class AsyncioFetcher:
         self.url_stat = UrlStats()
 
     async def fetch(
-        self, session: Optional, queue: Optional, file: TextIO
+        self, session: Optional, queue: Optional, file: TextIO,
     ) -> NoReturn:
         while True:
             url = await queue.get()
@@ -50,26 +51,30 @@ class AsyncioFetcher:
                 logging.getLogger().info(f"Send a request by url {url}")
                 async with session.get(url) as resp:
                     logging.getLogger().info(
-                        f"Response status for {url} is {resp.status}"
+                        f"Response status for {url} is {resp.status}",
                     )
                     logging.getLogger().info("Read data")
                     data = await resp.read()
                     logging.getLogger().info(
-                        f"URL {self.url_stat.url_processed}: {url} with data len as {len(data)}"
+                        f"URL {self.url_stat.url_processed}: {url} ",
+                        f"with data len as {len(data)}",
                     )
                     parsed_data = await self.parse_data(data)
                     logging.getLogger().info(
-                        f"URL {self.url_stat.url_processed}: {url} with parsed {parsed_data}"
+                        f"URL {self.url_stat.url_processed}: {url} ",
+                        f"with parsed {parsed_data}",
                     )
                     file.write(f"{url} : {parsed_data}\n")
             except Exception as error:
                 if isinstance(error, ConnectionError):
                     logging.getLogger().info(
-                        f"URL {self.url_stat.url_processed}: {url} with {error}"
+                        f"URL {self.url_stat.url_processed}: ",
+                        f"{url} with {error}",
                     )
                     file.write(f"{url} : {error}\n")
                 logging.getLogger().info(
-                    f"URL {self.url_stat.url_processed}: {url} with other ERROR"
+                    f"URL {self.url_stat.url_processed}: {url} ",
+                    f"with other ERROR",
                 )
                 file.write(f"{url} : other ERROR\n")
                 self.url_stat.url_wrong += 1

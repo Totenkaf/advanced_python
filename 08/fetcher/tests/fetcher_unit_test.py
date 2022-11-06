@@ -6,8 +6,10 @@ import json
 import unittest
 from unittest.mock import Mock, patch
 
-import json_tools
 from fetcher.fetcher import AsyncioFetcher
+
+import json_tools
+
 
 #  pylint: disable=too-many-public-methods
 #  pylint: disable=attribute-defined-outside-init
