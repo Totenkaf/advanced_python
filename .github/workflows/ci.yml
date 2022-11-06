@@ -58,6 +58,9 @@ jobs:
           which python3
           which pip
 
+      - name: INSTALL NUMPY
+        run: pip install numpy
+
       - name: RUN UNIT TESTS
         run: |
           cd 07
