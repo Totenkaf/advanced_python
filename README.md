@@ -21,13 +21,13 @@
 If you want to check .py script in Python-like realisation with random numbers
 ~~~
 cd 07
-python main.py --chain=4,2,7,2 --is_random=True
+python main.py --chain=4,2,7,2 --is_random=True --type=python
 ~~~
 
 or with own input
 ~~~
 cd 07
-python main.py --chain=4,2,7,2 --is_random=False --input=your_filename.txt
+python main.py --chain=4,2,7,2 --is_random=False --type=python --input=your_filename.txt
 ~~~
 
 
@@ -40,7 +40,7 @@ g++ -fPIC -shared -o matrix_chain_multiplication.so matrixes_cpp.cpp
 Run script
 ~~~
 cd 07
-python main.py --chain=4,2,7,2 --type=cpp --edge=5
+python3 main.py --chain=4,2,7,2 --type=cpp --edge=5 --verbose=1
 ~~~
 
 If you want to check .cpp lib byself, please uncomment main function and process it manually
@@ -50,8 +50,9 @@ g++ matrixes_cpp.cpp -o multiply_matrixes_cpp
 ./multiply_matrixes_cpp.out
 ~~~
 
-Run performance test
+Run performance test.  
+Be careful test run with 100 iterations of settings anc calculate average execution time!  
 ~~~
-cd 07 matrixes/tests/perf/
-python3 perf_test.py --random_num=10 --chain_size=1000
+cd 07
+python3 matrixes/performance.py --random_num=10 --chain_size=1000
 ~~~

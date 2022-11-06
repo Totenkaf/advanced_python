@@ -19,10 +19,6 @@ parsers:
 profiling:
   critical_files_paths:
     - 07/matrixes/matrixes_python.py
-    - 07/matrixes/matrixes_ctypes.py
-    - 07/matrixes/matrixes_cffi.py
-    - 07/matrixes/matrixes_c_api.py
-    - 07/matrixes/matrixes_cython.py
 
 comment:
   layout: "reach,diff,flags,files,footer"

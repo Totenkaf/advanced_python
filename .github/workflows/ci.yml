@@ -64,10 +64,10 @@ jobs:
           python3 -m unittest matrixes/tests/unit/*_test.py
           cd ../
 
-      - name: RUN PERFORMANCE TESTS
+      - name: RUN PERFORMANCE
         run: |
-          cd 07/matrixes/tests/perf
-          python3 perf_test.py --random_num=10 --chain_size=1000
+          cd 07
+          python3 matrixes/performance.py --random_num=10 --chain_size=1000
           cd ../
 
       - name: INSTALL COVERAGE
