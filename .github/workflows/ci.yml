@@ -61,7 +61,7 @@ jobs:
       - name: RUN UNIT TESTS
         run: |
           cd 08
-          python3 -m unittest fetcher/tests/*_test.py
+          pytest fetcher/tests/*_test.py
           cd ../
 
       - name: INSTALL COVERAGE
@@ -71,7 +71,7 @@ jobs:
       - name: MAKE COVERAGE
         run: |
           cd 08
-          coverage run -m unittest fetcher/tests/*_test.py
+          coverage run -m pytest fetcher/tests/*_test.py
           coverage report -m
           mv .coverage ../.coverage
           cd ../

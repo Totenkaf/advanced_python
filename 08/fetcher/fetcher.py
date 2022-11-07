@@ -88,9 +88,6 @@ class AsyncioFetcher:
                 queue.task_done()
                 self.url_stat.url_processed += 1
 
-    async def fill_queue(self) -> None:
-        pass
-
     async def batch_fetch(self, urls: List[str], file: TextIO) -> None:
         """Gets the urls from queue, create new task to process
         url, synchronize workers
