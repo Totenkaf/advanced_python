@@ -14,6 +14,7 @@ import aiohttp
 from bs4 import BeautifulSoup
 
 
+# pylint:disable=too-few-public-methods
 class UrlStats:
     """Class for collecting statistics"""
 
@@ -30,6 +31,7 @@ class UrlStats:
         print("With error URL: ", self.url_wrong)
 
 
+# pylint:disable=broad-except
 class AsyncioFetcher:
     """Asyncio URL fetcher"""
 
@@ -39,7 +41,10 @@ class AsyncioFetcher:
         self.url_stat = UrlStats()
 
     async def fetch(
-        self, session: Optional, queue: Optional, file: TextIO,
+        self,
+        session: Optional,
+        queue: Optional,
+        file: TextIO,
     ) -> None:
         """Event loop. Fetch the data from url in ClientSession.
         Send the data from url to parse method
@@ -47,42 +52,54 @@ class AsyncioFetcher:
 
         while True:
             url = await queue.get()
-            logging.getLogger().info(f"Got {url} from queue")
+            logging.getLogger().info("Got %s from queue", url)
 
             try:
-                logging.getLogger().info(f"Send a request by url {url}")
+                logging.getLogger().info("Send a request by %s", url)
                 async with session.get(url) as resp:
                     logging.getLogger().info(
-                        f"Response status for {url} is {resp.status}",
+                        "Response status for %s is %s",
+                        url,
+                        resp.status,
                     )
                     logging.getLogger().info("Read data")
                     data = await resp.read()
                     logging.getLogger().info(
-                        f"URL {self.url_stat.url_processed}: {url} "
-                        f"with data len as {len(data)}",
+                        "URL %s: %s with data len as %d",
+                        self.url_stat.url_processed,
+                        url,
+                        len(data),
                     )
                     parsed_data = await self.parse_data(data)
                     logging.getLogger().info(
-                        f"URL {self.url_stat.url_processed}: {url} "
-                        f"with parsed {parsed_data}",
+                        "URL %s: %s with parsed %d",
+                        self.url_stat.url_processed,
+                        url,
+                        parsed_data,
                     )
                     file.write(f"{url} : {parsed_data}\n")
+
             except Exception as error:
                 if isinstance(error, ConnectionError):
                     logging.getLogger().info(
-                        f"URL {self.url_stat.url_processed}: "
-                        f"{url} with {error}",
+                        "URL %s: %s with %s",
+                        self.url_stat.url_processed,
+                        url,
+                        error,
                     )
                     file.write(f"{url} : {error}\n")
                 logging.getLogger().info(
-                    f"URL {self.url_stat.url_processed}: {url} "
-                    f"with other ERROR",
+                    "URL %s: %s with other ERROR",
+                    self.url_stat.url_processed,
+                    url,
                 )
                 file.write(f"{url} : other ERROR\n")
                 self.url_stat.url_wrong += 1
                 continue
+
             else:
                 self.url_stat.url_correct += 1
+
             finally:
                 logging.getLogger().info("Task done")
                 queue.task_done()
@@ -95,7 +112,7 @@ class AsyncioFetcher:
 
         queue = asyncio.Queue()
         for url in urls:
-            logging.getLogger().info(f"Put the url {url} in a queue")
+            logging.getLogger().info("Put the %s in a queue", url)
             await queue.put(url)
 
         timeout = aiohttp.ClientTimeout(total=10)
