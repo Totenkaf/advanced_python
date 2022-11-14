@@ -6,8 +6,8 @@ Copyright 2022 by Artem Ustsov
 import asyncio
 import json
 import logging
-from typing import List, NoReturn, Optional, TextIO
 from collections import Counter
+from typing import List, NoReturn, Optional, TextIO
 
 import aiohttp
 
@@ -117,7 +117,7 @@ class AsyncioFetcher:
 
         timeout = aiohttp.ClientTimeout(total=10)
         async with aiohttp.ClientSession(
-            timeout=timeout, trust_env=True
+            timeout=timeout, trust_env=True,
         ) as session:
             logging.getLogger().info("Make a client session")
             workers = [

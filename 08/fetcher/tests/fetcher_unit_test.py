@@ -7,9 +7,11 @@ import asyncio
 import json
 import sys
 from unittest.mock import AsyncMock, patch
-import pytest
-import json_tools
 import aiohttp
+import json_tools
+
+import pytest
+
 from fetcher.fetcher import AsyncioFetcher, UrlStats
 
 
@@ -81,18 +83,18 @@ async def test_batch_fetch_data():
 
     fetcher = AsyncioFetcher(connections=5, k_top=3)
     urls = ["url_1", "url_2", "url_3"]
-    file = AsyncMock()
+    file_descriptor = AsyncMock()
 
     mock_async_queue_patcher = patch.object(
-        asyncio.Queue, "join", new=AsyncMock()
+        asyncio.Queue, "join", new=AsyncMock(),
     )
     mock_async_queue = mock_async_queue_patcher.start()
     mock_async_queue.return_value = None
 
     with patch.object(
-        AsyncioFetcher, "fetch", new=AsyncMock()
+        AsyncioFetcher, "fetch", new=AsyncMock(),
     ) as async_fetch_mock:
-        await fetcher.batch_fetch(urls, file)
+        await fetcher.batch_fetch(urls, file_descriptor)
         assert async_fetch_mock.call_count == fetcher.connections
 
     mock_async_queue_patcher.stop()
@@ -111,7 +113,7 @@ async def test_fetch_data(mock_out):
     mock_aiohttp_get.return_value = AsyncMock()
 
     mock_url_parse_patcher = patch.object(
-        AsyncioFetcher, "parse_data", new=AsyncMock()
+        AsyncioFetcher, "parse_data", new=AsyncMock(),
     )
     mock_url_parse = mock_url_parse_patcher.start()
     mock_url_parse.return_value = None
@@ -140,7 +142,7 @@ async def test_fetch_bad_data(mock_out):
     mock_aiohttp_get.return_value = AsyncMock()
 
     mock_url_parse_patcher = patch.object(
-        AsyncioFetcher, "parse_data", new=AsyncMock()
+        AsyncioFetcher, "parse_data", new=AsyncMock(),
     )
     mock_url_parse = mock_url_parse_patcher.start()
 
