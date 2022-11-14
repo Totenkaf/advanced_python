@@ -9,9 +9,10 @@ import sys
 from unittest.mock import AsyncMock, patch
 
 import aiohttp
-import json_tools
 
 from fetcher.fetcher import AsyncioFetcher, UrlStats
+
+import json_tools
 
 import pytest
 
