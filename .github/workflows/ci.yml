@@ -16,9 +16,13 @@ jobs:
           which python3
           which pip
       
-      - name: INSTALL PEP8
+      - name: INSTALL UTILS
         run: |
           sudo pip3 install pep8-naming
+          sudo pip3 install bs4
+          sudo pip3 install aiohttp
+          sudo pip3 install json_tools
+          sudo pip3 install pytest
 
       - name: INSTALL FLAKE_8
         run: |
@@ -41,7 +45,7 @@ jobs:
       - name: PYLINT CHECK
         run: |
             cd 08
-            pylint fetcher
+            pylint --disable=C0411 fetcher
             cd ../
 
   testing:
@@ -57,6 +61,14 @@ jobs:
           sudo apt-get update && sudo apt-get install -y python3-pip
           which python3
           which pip
+
+      - name: INSTALL UTILS
+        run: |
+          sudo pip3 install pep8-naming
+          sudo pip3 install bs4
+          sudo pip3 install aiohttp
+          sudo pip3 install json_tools
+          sudo pip3 install pytest
 
       - name: RUN UNIT TESTS
         run: |
