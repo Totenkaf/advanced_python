@@ -7,12 +7,13 @@ import asyncio
 import json
 import sys
 from unittest.mock import AsyncMock, patch
+
 import aiohttp
 import json_tools
 
-import pytest
-
 from fetcher.fetcher import AsyncioFetcher, UrlStats
+
+import pytest
 
 
 #  pylint: disable=too-many-public-methods
