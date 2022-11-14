@@ -3,5 +3,5 @@
 ./__pycache__/
 logs
 other
-data/urls_requests.txt
+data/urls_https_parsed.txt
 .DS_store
