@@ -84,7 +84,7 @@ jobs:
       - name: MAKE COVERAGE
         run: |
           cd 08
-          coverage run --source=fetcher/tests/ -m pytest
+          coverage run --source=fetcher -m pytest
           coverage report -m
           mv .coverage ../.coverage
           cd ../
