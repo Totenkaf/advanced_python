@@ -64,11 +64,11 @@ jobs:
 
       - name: INSTALL UTILS
         run: |
-          sudo pip3 install pep8-naming
-          sudo pip3 install bs4
-          sudo pip3 install aiohttp
-          sudo pip3 install json_tools
-          sudo pip3 install pytest
+          sudo pip install bs4
+          sudo pip install aiohttp
+          sudo pip install json_tools
+          sudo pip install pytest
+          sudo pip install pytest-asyncio
 
       - name: RUN UNIT TESTS
         run: |
