@@ -36,3 +36,9 @@ json_doc = json.loads(json_str)
 Для генерации данных и ключевых слов, нужно использовать factory boy.
 
 ### Узнать степень покрытия тестами с помощью библиотеки coverage
+
+## Quick Start
+~~~
+cd 02
+python3 main.py
+~~~

@@ -11,3 +11,9 @@
 - Написать тесты (unittest или assert);  
 - Проверить и поправить код flake8 и pylint;  
 - Проверить покрытие тестов через coverage
+
+## Quick Start
+~~~
+cd 01
+python3 main.py --input=stdin --output=stdout
+~~~
