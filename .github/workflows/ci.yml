@@ -64,11 +64,12 @@ jobs:
 
       - name: INSTALL UTILS
         run: |
-          sudo pip install bs4
-          sudo pip install aiohttp
-          sudo pip install json_tools
-          sudo pip install pytest
-          sudo pip install pytest-asyncio
+          sudo pip3 install bs4
+          sudo pip3 install aiohttp
+          sudo pip3 install json_tools
+          sudo pip3 install pytest
+          sudo pip3 install pytest-asyncio
+          sudo pip3 install lxml
 
       - name: RUN UNIT TESTS
         run: |
@@ -83,7 +84,7 @@ jobs:
       - name: MAKE COVERAGE
         run: |
           cd 08
-          coverage run -m pytest fetcher/tests/*_test.py
+          coverage run --source=fetcher/tests/ -m pytest
           coverage report -m
           mv .coverage ../.coverage
           cd ../
