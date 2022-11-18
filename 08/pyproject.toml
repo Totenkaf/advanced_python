@@ -1,5 +1,0 @@
-# Copyright 2022 by Artem Ustsov
-
-[tool.black]
-line-length = 78
-target-version = ['py37']
