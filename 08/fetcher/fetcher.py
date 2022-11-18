@@ -65,14 +65,14 @@ class AsyncioFetcher:
                     logging.getLogger().info("Read data")
                     data = await resp.read()
                     logging.getLogger().info(
-                        "URL %s: %s with data len as %d",
+                        "URL %d: %s with data len as %d",
                         self.url_stat.url_processed,
                         url,
                         len(data),
                     )
                     parsed_data = await self.parse_data(data)
                     logging.getLogger().info(
-                        "URL %s: %s with parsed %d",
+                        "URL %d: %s with parsed %s",
                         self.url_stat.url_processed,
                         url,
                         parsed_data,
@@ -82,14 +82,14 @@ class AsyncioFetcher:
             except Exception as error:
                 if isinstance(error, ConnectionError):
                     logging.getLogger().info(
-                        "URL %s: %s with %s",
+                        "URL %d: %s with %s",
                         self.url_stat.url_processed,
                         url,
                         error,
                     )
                     file.write(f"{url} : {error}\n")
                 logging.getLogger().info(
-                    "URL %s: %s with other ERROR",
+                    "URL %d: %s with other ERROR",
                     self.url_stat.url_processed,
                     url,
                 )

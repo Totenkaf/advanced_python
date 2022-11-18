@@ -22,9 +22,7 @@ class CustomMeta(type):
 
 
 class CustomClass(metaclass=CustomMeta):
-    """
-    Class adds the "custom_" to the CustomClass object attributes
-    """
+    """Class adds the "custom_" to the CustomClass object attributes"""
 
     my_variable = 50
 
@@ -43,3 +41,8 @@ class CustomClass(metaclass=CustomMeta):
 
     def __str__(self):
         return "Custom_by_metaclass"
+
+
+if __name__ == "__main__":
+    my_class = CustomClass()
+    print(my_class.__class__.__dict__)

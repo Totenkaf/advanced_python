@@ -28,7 +28,14 @@ CustomList([3, 4]) +- [1, 2] -> CustomList(...)
 ### Перед отправкой на проверку код должен быть прогнан через flake8 и pylint, по желанию еще black.
 
 ## Quick Start
+Run
 ~~~
-cd 03
 python3 main.py
+~~~  
+
+Tests and coverage
 ~~~
+coverage run -m unittest tests/*_test.py
+coverage report -m
+coverage html
+~~~ 

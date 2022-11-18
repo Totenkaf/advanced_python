@@ -12,8 +12,13 @@ if __name__ == "__main__":
     result_list_2 = main_list - cust_list
     result_list_3 = cust_list + main_list
     result_list_4 = main_list + cust_list
-    result_list_5 = CustomList()
-    result_list_5 += cust_list
+    result_list_5 = cust_list + cust_list
+    result_list_6 = cust_list - cust_list
+    result_comparison_1 = cust_list == cust_list
+    result_comparison_2 = cust_list != cust_list
+    result_comparison_3 = cust_list >= cust_list
+    result_comparison_4 = main_list > cust_list
+    result_comparison_5 = cust_list < main_list
 
     print(f"{cust_list}")
     print(f"{main_list}\n")
@@ -21,6 +26,12 @@ if __name__ == "__main__":
         f"{result_list_1}\n"
         f"{result_list_2}\n"
         f"{result_list_3}\n"
-        f"{result_list_3}\n"
-        f"{result_list_5}\n",
+        f"{result_list_4}\n"
+        f"{result_list_5}\n"
+        f"{result_list_6}\n"
+        f"{result_comparison_1}\n"
+        f"{result_comparison_2}\n"
+        f"{result_comparison_3}\n"
+        f"{result_comparison_4}\n"
+        f"{result_comparison_5}\n"
     )

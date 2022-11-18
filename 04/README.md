@@ -71,3 +71,11 @@
 ### 3. Тесты в отдельном модуле
 
 ### 4. Перед отправкой на проверку код должен быть прогнан через flake8 и pylint, по желанию еще black
+
+## Quick Start
+Tests and coverage
+~~~
+coverage run -m unittest tests/*_test.py
+coverage report -m
+coverage html
+~~~ 

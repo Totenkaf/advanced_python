@@ -3,57 +3,35 @@ CustomList project.
 Copyright 2022 by Artem Ustsov
 """
 from itertools import zip_longest
+from typing import Iterable
 
 
 class CustomList(list):
-    """
-    Inherits the built-in type list and
+    """Inherits the built-in type list and
     provides work with a collection of integer elements
     """
 
-    def __init__(self, array=None):
-        if array is None:
-            array = []
-        if not isinstance(array, list):
+    def __init__(self, iterable: Iterable):
+        if not isinstance(iterable, list):
             raise TypeError
-        if not all(map(lambda x: isinstance(x, int), array)):
+        if not all(map(lambda x: isinstance(x, int), iterable)):
             raise ValueError
 
-        super().__init__(array)
-        self.__array = array
-
-    @property
-    def array(self):
-        """
-        Gets the array of CustList
-        """
-        return self.__array
-
-    @array.setter
-    def array(self, array):
-        self.__array = array
-
-    @classmethod
-    def __convert_to_list(cls, other: object):
-        # pylint: disable=protected-access
-        other_array = other
-        if isinstance(other, cls):
-            other_array = other.__array
-        return other_array
+        super().__init__(iterable)
 
     @classmethod
     def __arithmetic_action(
         cls,
-        r_array: list,
-        l_array: list,
+        r_array: Iterable,
+        l_array: Iterable,
         operator: str,
         fill_value=0,
     ):
-        """
-        Provides arithmetic operations on collections.
+        """Provides arithmetic operations on collections.
         If the lengths of the collections are different,
         pads the smaller one with zeros
         """
+
         if not isinstance(l_array, (list, cls)) or not isinstance(
             r_array,
             (list, cls),
@@ -73,61 +51,72 @@ class CustomList(list):
                     r_array, l_array, fillvalue=fill_value
                 )
             ]
-        return None
 
-    def __sub__(self, other: object):
+    def __sub__(self, other: Iterable):
         result_list = self.__arithmetic_action(
-            self.__array,
-            self.__convert_to_list(other),
+            self,
+            other,
             operator="-",
         )
         return CustomList(result_list)
 
-    def __isub__(self, other: object):
+    def __isub__(self, other: Iterable):
         result_list = self.__arithmetic_action(
-            self.__array,
-            self.__convert_to_list(other),
+            self,
+            other,
             operator="-",
         )
         return CustomList(result_list)
 
-    def __rsub__(self, other: object):
+    def __rsub__(self, other: Iterable):
         result_list = self.__arithmetic_action(
-            self.__convert_to_list(other),
-            self.__array,
+            other,
+            self,
             operator="-",
         )
         return CustomList(result_list)
 
-    def __add__(self, other: object):
+    def __add__(self, other: Iterable):
         result_list = self.__arithmetic_action(
-            self.__array,
-            self.__convert_to_list(other),
+            self,
+            other,
             operator="+",
         )
         return CustomList(result_list)
 
-    def __iadd__(self, other: object):
+    def __iadd__(self, other: Iterable):
         result_list = self.__arithmetic_action(
-            self.__array,
-            self.__convert_to_list(other),
+            self,
+            other,
             operator="+",
         )
         return CustomList(result_list)
 
-    def __radd__(self, other: object):
+    def __radd__(self, other: Iterable):
         result_list = self.__arithmetic_action(
-            self.__convert_to_list(other),
-            self.__array,
+            other,
+            self,
             operator="+",
         )
         return CustomList(result_list)
 
-    def __eq__(self, other: object):
-        return sum(self.__array) == sum(self.__convert_to_list(other))
+    def __eq__(self, other: Iterable):
+        return sum(self) == sum(other)
+
+    def __ne__(self, other: Iterable):
+        return sum(self) != sum(other)
+
+    def __gt__(self, other: Iterable):
+        return sum(self) > sum(other)
+
+    def __ge__(self, other: Iterable):
+        return sum(self) >= sum(other)
+
+    def __lt__(self, other: Iterable):
+        return sum(self) < sum(other)
+
+    def __le__(self, other: Iterable):
+        return sum(self) <= sum(other)
 
     def __str__(self):
-        return f"{self.__array}, {sum(self.__array)}"
-
-    def __len__(self):
-        return len(self.__array)
+        return f"{[item for item in self]}, {sum(self)}"

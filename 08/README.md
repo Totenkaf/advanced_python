@@ -22,8 +22,15 @@
 
 ### 3. Перед отправкой на проверку код должен быть прогнан через flake8 и pylint, по желанию еще black
 
-Run
+## Quick Start
+Run a fetcher
 ~~~
-cd 08
 python3 main.py -c 10 --ktop=3 --input=data/urls_https.txt --output=data/urls_https_parsed.txt
+~~~
+
+Tests and coverage
+~~~
+coverage run -m pytest tests/*_test.py
+coverage report -m
+coverage html
 ~~~

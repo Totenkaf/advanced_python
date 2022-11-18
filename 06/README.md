@@ -41,15 +41,20 @@ master-worker cервер для обработки запросов от кли
 
 ## Quick Start
 
-### Run server in one terminal with w-workers and k-top words:
+Run server in one terminal with w-workers and k-top words:
 ~~~
-cd 06
 python run_server.py -w 10 -k 7
 ~~~
 
-### Run client in another terminal (use --output=stdout to print the output):
+Run client in another terminal (use --output=stdout to print in output):
 ~~~
-cd 06
-python run_client.py -w 10 --input=data/urls_https --output=data/urls_requests.txt
+python run_client.py -w 10 --input=data/urls_https.txt --output=data/urls_requests.txt
 cat data/urls_requests.txt
 ~~~
+
+Tests and coverage
+~~~
+coverage run -m unittest tests/*_test.py
+coverage report -m
+coverage html
+~~~ 

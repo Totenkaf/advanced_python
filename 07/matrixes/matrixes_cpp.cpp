@@ -122,7 +122,6 @@ extern "C" {
         
         std::vector<Matrix> filled_matrix_chain = fill_matrix_chain(matrix_chain_pattern, edge);
         Matrix result_multiple = multiply_matrix_chain(filled_matrix_chain);
-        result_multiple.print_as_matrix();
 
         int c_arr_size = result_multiple.get_num_cols() * result_multiple.get_num_rows();
         return c_arr_size;

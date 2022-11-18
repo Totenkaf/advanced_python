@@ -18,41 +18,30 @@
 ### 3. Перед отправкой на проверку код должен быть прогнан через flake8 и pylint, по желанию еще black
 
 
-If you want to check .py script in Python-like realisation with random numbers
+## Quick Start
+Make a dynamic lib
 ~~~
-cd 07
+g++ -fPIC -shared -o matrix_chain_multiplication.so matrixes/matrixes_cpp.cpp
+~~~
+
+Check .py script in Python-like realisation with random numbers
+~~~
 python main.py --chain=4,2,7,2 --is_random=True --type=python
 ~~~
 
-or with own input
+Check .py script in Ctypes-like realisation with random numbers
 ~~~
-cd 07
-python main.py --chain=4,2,7,2 --is_random=False --type=python --input=your_filename.txt
-~~~
-
-
-If you want to check .py script in Ctypes-like realisation with random numbers
-Make a dynamic lib
-~~~
-cd 07
-g++ -fPIC -shared -o matrix_chain_multiplication.so matrixes_cpp.cpp
-~~~
-Run script
-~~~
-cd 07
 python3 main.py --chain=4,2,7,2 --type=cpp --edge=5 --verbose=1
 ~~~
 
-If you want to check .cpp lib byself, please uncomment main function and process it manually
+Check .cpp lib byself, please uncomment main function and process it manually
 ~~~
-cd 07
 g++ matrixes_cpp.cpp -o multiply_matrixes_cpp
 ./multiply_matrixes_cpp.out
 ~~~
 
-Run performance test.  
-Be careful test run with 100 iterations of settings anc calculate average execution time!  
+Performance test.  
+_Be careful test run with 100 iterations of settings and calculate average execution time!_ 
 ~~~
-cd 07
-python3 matrixes/performance.py --random_num=10 --chain_size=1000
+python3 performance.py --random_num=10 --chain_size=1000
 ~~~

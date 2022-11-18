@@ -31,7 +31,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--connections", type=int, default=5)
     parser.add_argument("-k", "--ktop", type=int, default=3)
-    parser.add_argument("-i", "--input", default="../data/urls_https.txt")
+    parser.add_argument("-i", "--input", default="data/urls_https.txt")
     parser.add_argument("-o", "--output", default="stdout")
     args = parser.parse_args()
 
