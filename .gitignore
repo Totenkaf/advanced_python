@@ -1,7 +1,8 @@
 .coverage
 .idea/
-./__pycache__/
+__pycache__/
 logs
 other
 data/urls_https_parsed.txt
 .DS_store
+.pytest_cache
