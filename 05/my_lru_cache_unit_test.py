@@ -168,10 +168,15 @@ class TestLRUCache(unittest.TestCase):
         self.assertEqual(self.lru_cache.cdl_list.len, 0)
         self.assertEqual(self.lru_cache.nodes, {})
 
-    def test_special_valid_lru_cache_init(self):
+    def test_unique_valid_lru_cache_init(self):
         """LRUCache special valid limit"""
-        self.lru_cache = LRUCache(2)
-        self.assertEqual(self.lru_cache.limit, 2)
+        self.lru_cache = LRUCache(1)
+        self.assertEqual(self.lru_cache.limit, 1)
+
+        self.lru_cache.set_value("k1", "val1")
+        self.lru_cache.set_value("k2", "val2")
+        self.assertIsNone(self.lru_cache.get_value("k1"))
+        self.assertEqual(self.lru_cache.get_value("k2"), "val2")
 
     def test_special_invalid_lru_cache_init(self):
         """LRUCache special invalid limit"""
@@ -224,3 +229,31 @@ class TestLRUCache(unittest.TestCase):
 
         #  check the LRU strategy
         self.assertEqual(self.lru_cache.cdl_list.root.next.data.key, "k1")
+
+    def test_main_work(self):
+        self.lru_cache = LRUCache(2)
+
+        self.lru_cache.set_value("k1", "val1")
+        self.lru_cache.set_value("k2", "val2")
+
+        self.assertIsNone(self.lru_cache.get_value("k3"))
+        self.assertEqual(self.lru_cache.get_value("k2"), "val2")
+        self.assertEqual(self.lru_cache.get_value("k1"), "val1")
+
+        self.lru_cache.set_value("k3", "val3")
+        self.assertEqual(self.lru_cache.get_value("k3"), "val3")
+        self.assertIsNone(self.lru_cache.get_value("k2"))
+        self.assertEqual(self.lru_cache.get_value("k1"), "val1")
+
+    def test_consequences(self):
+        self.lru_cache = LRUCache(3)
+        self.lru_cache.set_value("k1", "val1")
+        self.lru_cache.set_value("k2", "val2")
+        self.lru_cache.set_value("k3", "val3")
+
+        self.lru_cache.set_value("k1", "val1_1")
+        self.lru_cache.set_value("k4", "val4")
+
+        self.assertIsNone(self.lru_cache.get_value("k2"))
+        self.assertEqual(self.lru_cache.get_value("k1"), "val1_1")
+        self.assertEqual(self.lru_cache.get_value("k4"), "val4")

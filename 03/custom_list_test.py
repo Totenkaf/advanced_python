@@ -9,10 +9,11 @@ from typing import Iterable
 from custom_list import CustomList
 
 
-def _check_equality(iterable: Iterable, ground_truth: Iterable):
+def _check_equality(iterable, ground_truth):
     return (
         all(item_1 == item_2 for item_1, item_2 in zip(iterable, ground_truth))
         and iterable == ground_truth
+        and len(iterable) == len(ground_truth)
     )
 
 
