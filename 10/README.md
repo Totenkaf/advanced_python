@@ -36,7 +36,7 @@ python3 main.py -c 10 --ktop=3 --input=data/urls_https.txt --output=data/urls_ht
 
 Tests and coverage
 ~~~
-coverage run -m pytest tests/*_test.py
+coverage run -m pytest *_test.py
 coverage report -m
 coverage html
 ~~~
