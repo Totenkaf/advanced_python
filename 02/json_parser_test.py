@@ -4,10 +4,10 @@ Copyright 2022 by Artem Ustsov
 """
 
 import unittest
-from parser.json_parser import keyword_handler, parse_json
+from json_parser import keyword_handler, parse_json
 from unittest.mock import patch
 
-# from .json_factory import JsonStrFactory
+# from json_factory import JsonStrFactory
 
 
 class TestJsonParser(unittest.TestCase):

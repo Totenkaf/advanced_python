@@ -3,7 +3,7 @@ CustomList game project. Main file
 Copyright 2022 by Artem Ustsov
 """
 
-from list.custom_list import CustomList
+from custom_list import CustomList
 
 if __name__ == "__main__":
     cust_list = CustomList([-5, -4, -3, -2, -1])

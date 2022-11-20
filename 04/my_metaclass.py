@@ -12,9 +12,16 @@ class CustomMeta(type):
 
     def __new__(cls, name, bases, attrs):
         customized_attrs = {
-            attr if attr.startswith("__") else "_".join(["custom", attr]): v
+            attr if (attr.startswith("__") and attr.endswith("__")) else "_".join(["custom", attr]): v
             for attr, v in attrs.items()
         }
+
+        def __setattr__(self, key, value):
+            object.__setattr__(self, "_".join(["custom", key]), value)
+
+        custom__setattr__ = __setattr__
+        customized_attrs.update({"__setattr__": custom__setattr__})
+
         return super().__new__(cls, name, bases, customized_attrs)
 
     def __setattr__(cls, key, value):
@@ -29,9 +36,6 @@ class CustomClass(metaclass=CustomMeta):
     def __init__(self, value=99):
         self.value = value
 
-    def __setattr__(self, key, value):
-        object.__setattr__(self, "_".join(["custom", key]), value)
-
     @staticmethod
     def line():
         """
@@ -41,8 +45,3 @@ class CustomClass(metaclass=CustomMeta):
 
     def __str__(self):
         return "Custom_by_metaclass"
-
-
-if __name__ == "__main__":
-    my_class = CustomClass()
-    print(my_class.__class__.__dict__)

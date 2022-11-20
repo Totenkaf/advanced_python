@@ -5,7 +5,7 @@ Copyright 2022 by Artem Ustsov
 
 import unittest
 
-from metaclass.my_metaclass import CustomClass
+from my_metaclass import CustomClass
 
 
 # pylint: disable=no-member
@@ -30,12 +30,12 @@ class TestCustomClass(unittest.TestCase):
         self.custom_class_attributes = [
             key
             for key in self.inst.__class__.__dict__
-            if not key.startswith("__")
+            if not key.startswith("__") and not key.endswith("__")
         ]
         self.magic_class_methods = [
             key
             for key in self.inst.__class__.__dict__
-            if key.startswith("__")
+            if key.startswith("__") and key.endswith("__")
         ]
         self.assertEqual(
             self.custom_class_attributes,
@@ -47,8 +47,8 @@ class TestCustomClass(unittest.TestCase):
                 "__module__",
                 "__doc__",
                 "__init__",
-                "__setattr__",
                 "__str__",
+                "__setattr__",
                 "__dict__",
                 "__weakref__",
             ],

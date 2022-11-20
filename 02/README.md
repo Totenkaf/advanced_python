@@ -39,6 +39,5 @@ json_doc = json.loads(json_str)
 
 ## Quick Start
 ~~~
-cd 02
 python3 main.py
 ~~~

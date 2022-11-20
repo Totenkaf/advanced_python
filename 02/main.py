@@ -3,7 +3,7 @@ Json_parser.
 Copyright 2022 by Artem Ustsov
 """
 
-from parser.json_parser import keyword_handler, parse_json
+from json_parser import keyword_handler, parse_json
 
 if __name__ == "__main__":
     JSON_SOURCE_1 = (

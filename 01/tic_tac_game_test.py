@@ -7,7 +7,7 @@ import sys
 import unittest
 from unittest.mock import patch
 
-from game.tic_tac_toe import TicTacGame
+from tic_tac_toe import TicTacGame
 
 
 class TestTicTacGame(unittest.TestCase):

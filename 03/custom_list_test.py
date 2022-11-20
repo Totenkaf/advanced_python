@@ -5,7 +5,7 @@ Copyright 2022 by Artem Ustsov
 
 import unittest
 
-from list.custom_list import CustomList
+from custom_list import CustomList
 
 
 class TestCustomList(unittest.TestCase):
@@ -66,24 +66,35 @@ class TestCustomList(unittest.TestCase):
             self.full_cust_list_1 + self.full_cust_list_1,
             CustomList([2, 4, 6, 8, 10]),
         )
+        # check the immutability
+        self.assertEqual(self.full_cust_list_1, CustomList([1, 2, 3, 4, 5]))
 
         # custom_list self add suite compare with list
         self.assertEqual(
             self.full_cust_list_1 + self.full_cust_list_1,
             [2, 4, 6, 8, 10],
         )
+        # check the immutability
+        self.assertEqual(self.full_cust_list_1, CustomList([1, 2, 3, 4, 5]))
 
         # different length of custom_list suite
         self.assertEqual(
             self.full_cust_list_1 + self.full_cust_list_3,
             CustomList([7, 9, 11, 4, 5]),
         )
+        # check the immutability
+        self.assertEqual(self.full_cust_list_1, CustomList([1, 2, 3, 4, 5]))
+
+        # check the immutability
+        self.assertEqual(self.full_cust_list_3, CustomList([6, 7, 8]))
 
         # custom_list and list suite
         self.assertEqual(
             self.full_cust_list_2 + [1, 2, 3],
             [-4, -2, 0, -2, -1],
         )
+        # check the immutability
+        self.assertEqual(self.full_cust_list_2, CustomList([-5, -4, -3, -2, -1]))
 
         # custom_list self add via __radd__
         self.assertEqual(
@@ -91,9 +102,15 @@ class TestCustomList(unittest.TestCase):
             [-4, -2, 0, -2, -1],
         )
 
+        # check the immutability
+        self.assertEqual(self.full_cust_list_2, CustomList([-5, -4, -3, -2, -1]))
+
         # custom_list self add via __iadd__
-        self.full_cust_list_2 += self.full_cust_list_2
-        self.assertEqual(self.full_cust_list_2, [-10, -8, -6, -4, -2])
+        self.full_cust_list_1 += self.full_cust_list_3
+        self.assertEqual(self.full_cust_list_1, CustomList([7, 9, 11, 4, 5]))
+
+        # check the immutability
+        self.assertEqual(self.full_cust_list_3, CustomList([6, 7, 8]))
 
     def test_cust_list_sub_(self) -> None:
         """Check all substitution actions in class"""
@@ -103,31 +120,44 @@ class TestCustomList(unittest.TestCase):
             self.full_cust_list_1 - self.full_cust_list_1,
             CustomList([0, 0, 0, 0, 0]),
         )
+        # check the immutability
+        self.assertEqual(self.full_cust_list_1, CustomList([1, 2, 3, 4, 5]))
 
         # custom_list self add suite compare with list
         self.assertEqual(
             self.full_cust_list_1 - self.full_cust_list_1,
             [0, 0, 0, 0, 0],
         )
+        # check the immutability
+        self.assertEqual(self.full_cust_list_1, CustomList([1, 2, 3, 4, 5]))
 
         # different length of custom_list suite
         self.assertEqual(
             self.full_cust_list_1 - self.full_cust_list_3,
             CustomList([-5, -5, -5, 4, 5]),
         )
+        # check the immutability
+        self.assertEqual(self.full_cust_list_3, CustomList([6, 7, 8]))
 
         # custom_list and list suite
         self.assertEqual(
             self.full_cust_list_2 - [1, 2, 3],
             [-6, -6, -6, -2, -1],
         )
+        # check the immutability
+        self.assertEqual(self.full_cust_list_2, CustomList([-5, -4, -3, -2, -1]))
 
         # custom_list self add via __radd__
         self.assertEqual([1, 2, 3] - self.full_cust_list_2, [6, 6, 6, 2, 1])
+        # check the immutability
+        self.assertEqual(self.full_cust_list_2, CustomList([-5, -4, -3, -2, -1]))
 
         # custom_list self add via __iadd__
-        self.full_cust_list_2 -= self.full_cust_list_2
-        self.assertEqual(self.full_cust_list_2, [0, 0, 0, 0, 0])
+        self.full_cust_list_1 -= self.full_cust_list_3
+        self.assertEqual(self.full_cust_list_1, CustomList([-5, -5, -5, 4, 5]))
+
+        # check the immutability
+        self.assertEqual(self.full_cust_list_3, CustomList([6, 7, 8]))
 
     def test_cust_list_eq_(self) -> None:
         """Check the equality of the classes"""

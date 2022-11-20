@@ -5,7 +5,7 @@ Copyright 2022 by Artem Ustsov
 import argparse
 import sys
 
-from game.tic_tac_toe import TicTacGame
+from tic_tac_toe import TicTacGame
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

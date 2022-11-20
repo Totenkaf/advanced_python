@@ -14,6 +14,5 @@
 
 ## Quick Start
 ~~~
-cd 01
 python3 main.py --input=stdin --output=stdout
 ~~~

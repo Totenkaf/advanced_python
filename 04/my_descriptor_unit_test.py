@@ -4,42 +4,12 @@ Copyright 2022 by Artem Ustsov
 """
 
 import unittest
-from unittest.mock import patch
 
-from descriptor.my_descriptor import Data, Integer, PositiveInteger, String
-
-from .my_descriptor_factory import DataFactory
+from my_descriptor import Data
 
 
 class TestCustomDataDescriptors(unittest.TestCase):
     """Main test class for Data with data-descriptors"""
-
-    @patch.object(Integer, "__set__")
-    def test_integer_on_random_dataset(self, __set__mock):
-        """Check the call of __set__ method in Integer-descr
-        on random data"""
-
-        data = []
-        data.extend(DataFactory.create_batch(size=100))
-        self.assertEqual(__set__mock.call_count, 100)
-
-    @patch.object(String, "__set__")
-    def test_string_on_random_dataset(self, __set__mock):
-        """Check the call of __set__ method in String-descr
-        on random data"""
-
-        data = []
-        data.extend(DataFactory.create_batch(size=100))
-        self.assertEqual(__set__mock.call_count, 100)
-
-    @patch.object(PositiveInteger, "__set__")
-    def test_on_random_dataset(self, __set__mock):
-        """Check the call of __set__ method in PositiveInteger-descr
-        on random data"""
-
-        data = []
-        data.extend(DataFactory.create_batch(size=100))
-        self.assertEqual(__set__mock.call_count, 100)
 
     def test_set_valid_data_fields(self):
         """Check the dataclass initialisations via descriptors
