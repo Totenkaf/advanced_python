@@ -53,7 +53,6 @@ add.print_stat()  # выводится таблица с результатам�
 
 ## Quick Start
 ~~~
-cd 08
 python3 main.py -c 10 --ktop=3 --input=data/urls_https.txt --output=data/urls_https_parsed.txt
 ~~~
 
