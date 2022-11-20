@@ -7,7 +7,7 @@ import argparse
 import os
 import logging
 
-from server.my_server import Server
+from my_server import Server
 
 if __name__ == "__main__":
     if not os.path.isdir("logs"):

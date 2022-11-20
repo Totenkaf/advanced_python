@@ -9,8 +9,8 @@ from unittest.mock import Mock, patch
 
 import json_tools
 from requests import TooManyRedirects
-from server.my_server import Server
-from thread_pool.thread_pool import ThreadPool
+from my_server import Server
+from thread_pool import ThreadPool
 
 #  pylint: disable=too-many-public-methods
 #  pylint: disable=attribute-defined-outside-init
@@ -44,7 +44,7 @@ class TestServer(unittest.TestCase):
         self.assertEqual(self.server_socket.type, socket.SOCK_STREAM)
         self.server_socket.close()
 
-    @patch("server.my_server.socket.socket")
+    @patch("my_server.socket.socket")
     def test_read_request(self, mock_socket):
         """Mock the client socket by list of values"""
 
@@ -81,7 +81,7 @@ class TestServer(unittest.TestCase):
         self.server_socket.close()
         self.client_socket.close()
 
-    @patch("server.my_server.socket.socket")
+    @patch("my_server.socket.socket")
     def test_read_request_exception(self, mock_socket):
         """Mock the client socket and catch the exception"""
 
@@ -99,11 +99,11 @@ class TestServer(unittest.TestCase):
         self.server_socket.close()
         self.client_socket.close()
 
-    @patch("server.my_server.socket.socket")
+    @patch("my_server.socket.socket")
     def test_handle_valid_server_response(self, mock_socket):
         """Mock the requests.get"""
 
-        mock_requests_get_patcher = patch("server.my_server.requests.get")
+        mock_requests_get_patcher = patch("my_server.requests.get")
         mock_write_response_patcher = patch.object(Server, "write_response")
         mock_parse_response_patcher = patch.object(Server, "parse_response")
 
@@ -145,11 +145,11 @@ class TestServer(unittest.TestCase):
         self.assertTrue(mock_parse_response.called)
         self.assertTrue(mock_write_response.called)
 
-    @patch("server.my_server.socket.socket")
+    @patch("my_server.socket.socket")
     def test_handle_exception_error(self, mock_socket):
         """Catch the raised exceptions"""
 
-        mock_requests_patcher = patch("server.my_server.requests")
+        mock_requests_patcher = patch("my_server.requests")
 
         self.server_socket = self.server.create_serv_sock()
         mock_socket.return_value.accept.return_value = (
@@ -196,11 +196,11 @@ class TestServer(unittest.TestCase):
         self.server_socket.close()
         self.client_socket.close()
 
-    @patch("server.my_server.socket.socket")
+    @patch("my_server.socket.socket")
     def test_handle_invalid_server_response(self, mock_socket):
         """Mock the requests.get"""
 
-        mock_requests_get_patcher = patch("server.my_server.requests.get")
+        mock_requests_get_patcher = patch("my_server.requests.get")
 
         self.server_socket = self.server.create_serv_sock()
         mock_socket.return_value.accept.return_value = (
@@ -262,11 +262,11 @@ class TestServer(unittest.TestCase):
             [],
         )
 
-    @patch("server.my_server.socket.socket")
+    @patch("my_server.socket.socket")
     def test_num_of_processed_urls(self, mock_socket):
         """Response parsing"""
 
-        mock_requests_get_patcher = patch("server.my_server.requests.get")
+        mock_requests_get_patcher = patch("my_server.requests.get")
         mock_write_response_patcher = patch.object(Server, "write_response")
         mock_parse_response_patcher = patch.object(Server, "parse_response")
 
@@ -319,52 +319,3 @@ class TestServer(unittest.TestCase):
         self.client_socket.close()
 
         self.assertEqual(self.server._urls_processed, self.num_of_fake_urls)
-
-    # @patch("server.my_server.socket.socket")
-    # def test_run_server(self, mock_socket):
-    #     """Response parsing"""
-    #
-    #     mock_requests_get_patcher = patch("server.my_server.requests.get")
-    #     mock_write_response_patcher = patch.object(Server, 'write_response')
-    #     mock_parse_response_patcher = patch.object(Server, 'parse_response')
-    #     mock_read_response_patcher = patch.object(Server, 'read_request')
-    #
-    #     self.num_of_fake_urls = 10
-    #
-    #     mock_socket.return_value.bind.return_value = None
-    #     mock_socket.return_value.listen.return_value = None
-    #     self.server_socket = self.server.create_serv_sock()
-    #
-    #     mock_socket.return_value.accept.return_value = (
-    #         socket.socket,
-    #         ["fake_ip", "fake_port"],
-    #     )
-    #
-    # self.client_socket = \
-    #     self.server.accept_client_conn(self.server_socket)
-    #     mock_read_response = mock_read_response_patcher.start()
-    #     # mock_read_response.return_value = Mock(side_effect=test)
-    #     mock_read_response.return_value = self.client_socket.test()
-    #
-    #     # mock_socket.recv.return_value = FIXME
-    #
-    #     mock_requests_get = mock_requests_get_patcher.start()
-    #     mock_requests_get.return_value.text.return_value = "fake response"
-    #
-    #     mock_parse_response = mock_parse_response_patcher.start()
-    #     mock_parse_response.return_value = None
-    #
-    #     mock_write_response = mock_write_response_patcher.start()
-    #     mock_write_response.return_value = None
-    #
-    #     self.server.run_server()
-    #
-    #     mock_requests_get_patcher.stop()
-    #     mock_write_response_patcher.stop()
-    #     mock_parse_response_patcher.stop()
-    #
-    #     self.assertEqual(self.server._urls_processed, self.num_of_fake_urls)
-
-
-if __name__ == "__main__":
-    unittest.main()

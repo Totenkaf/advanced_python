@@ -10,7 +10,7 @@ import sys
 import threading
 from typing import Any, NoReturn
 
-from thread_pool.thread_pool import ThreadPool
+from thread_pool import ThreadPool
 
 
 class Client:

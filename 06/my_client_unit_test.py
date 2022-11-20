@@ -6,7 +6,7 @@ import socket
 import unittest
 from unittest.mock import Mock, patch
 
-from client.my_client import Client
+from my_client import Client
 
 #  pylint: disable=too-many-public-methods
 #  pylint: disable=attribute-defined-outside-init
@@ -31,7 +31,7 @@ class TestClient(unittest.TestCase):
         self.assertEqual(self.client._input_fd, None)
         self.assertEqual(self.client._port, 53210)
 
-    @patch("client.my_client.socket.socket")
+    @patch("my_client.socket.socket")
     def test_client_sock_create(self, mock_socket):
         """Client socket creation"""
 
@@ -41,7 +41,7 @@ class TestClient(unittest.TestCase):
         self.assertTrue(mock_socket.called)
         self.client_socket.close()
 
-    @patch("client.my_client.socket.socket")
+    @patch("my_client.socket.socket")
     def test_read_response(self, mock_socket):
         """socket.recv mocking"""
         mock_create_socket_patcher = patch.object(
@@ -86,7 +86,7 @@ class TestClient(unittest.TestCase):
         self.assertEqual(mock_socket.recv.call_count, 1)
         mock_create_socket.stop()
 
-    @patch("client.my_client.socket.socket")
+    @patch("my_client.socket.socket")
     def test_send_response(self, mock_socket):
         """socket.senddall mock"""
 
@@ -105,7 +105,7 @@ class TestClient(unittest.TestCase):
         self.client.send_response(self.server_request, self.client_socket)
         self.assertTrue(mock_create_socket.called)
 
-    @patch("client.my_client.socket.socket")
+    @patch("my_client.socket.socket")
     def test_send_response_exception(self, mock_socket):
         """socket.senddall mock"""
 
@@ -139,7 +139,7 @@ class TestClient(unittest.TestCase):
         self.assertTrue(mock_socket.sendall.called)
         mock_create_socket_patcher.stop()
 
-    @patch("client.my_client.socket.socket")
+    @patch("my_client.socket.socket")
     def test_run_client(self, mock_socket):
         """socket.senddall mock"""
 
@@ -180,7 +180,3 @@ class TestClient(unittest.TestCase):
 
         mock_send_response_patcher.stop()
         mock_read_response_patcher.stop()
-
-
-if __name__ == "__main__":
-    unittest.main()

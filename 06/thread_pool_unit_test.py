@@ -9,7 +9,7 @@ from time import sleep
 from typing import Any, NoReturn
 from unittest.mock import patch
 
-from thread_pool.thread_pool import ThreadPool, Worker
+from thread_pool import ThreadPool, Worker
 
 
 #  pylint: disable=too-many-public-methods
@@ -156,7 +156,3 @@ class TestThreadPool(unittest.TestCase):
             [2 * num + 1 for num in range(self.num_to_sum)],
         )
         self.assertEqual(self.fake_stat.counter, self.num_to_sum)
-
-
-if __name__ == "__main__":
-    unittest.main()

@@ -3,7 +3,7 @@ Acynsio fetcher project. Enter point
 Copyright 2022 by Artem Ustsov
 """
 
-from fetcher.fetcher import AsyncioFetcher
+from fetcher import AsyncioFetcher
 import asyncio
 import os
 import argparse

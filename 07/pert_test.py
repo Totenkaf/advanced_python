@@ -9,8 +9,8 @@ import time
 
 import click
 
-from matrixes import matrixes_ctypes
-from matrixes import matrixes_python
+import matrixes_ctypes
+import matrixes_python
 
 
 # pylint: disable=no-value-for-parameter

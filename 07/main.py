@@ -9,10 +9,8 @@ import logging
 import os
 import sys
 
-
-from matrixes import matrixes_python
-from matrixes import matrixes_ctypes
-
+import matrixes_python
+import matrixes_ctypes
 
 if __name__ == "__main__":
     if not os.path.isdir("logs"):

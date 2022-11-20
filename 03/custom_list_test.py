@@ -4,8 +4,16 @@ Copyright 2022 by Artem Ustsov
 """
 
 import unittest
+from typing import Iterable
 
 from custom_list import CustomList
+
+
+def _check_equality(iterable: Iterable, ground_truth: Iterable):
+    return (
+        all(item_1 == item_2 for item_1, item_2 in zip(iterable, ground_truth))
+        and iterable == ground_truth
+    )
 
 
 class TestCustomList(unittest.TestCase):
@@ -62,102 +70,110 @@ class TestCustomList(unittest.TestCase):
         """Check all adding action in class"""
 
         # custom_list self add suite compare with custom_list
-        self.assertEqual(
-            self.full_cust_list_1 + self.full_cust_list_1,
-            CustomList([2, 4, 6, 8, 10]),
-        )
+        self.result = self.full_cust_list_1 + self.full_cust_list_1
+        self.assertTrue(_check_equality(self.result, CustomList([2, 4, 6, 8, 10])))
+
         # check the immutability
-        self.assertEqual(self.full_cust_list_1, CustomList([1, 2, 3, 4, 5]))
+        self.assertTrue(
+            _check_equality(self.full_cust_list_1, CustomList([1, 2, 3, 4, 5]))
+        )
 
         # custom_list self add suite compare with list
-        self.assertEqual(
-            self.full_cust_list_1 + self.full_cust_list_1,
-            [2, 4, 6, 8, 10],
-        )
+        self.result = self.full_cust_list_1 + self.full_cust_list_1
+        self.assertTrue(_check_equality(self.result, [2, 4, 6, 8, 10]))
         # check the immutability
-        self.assertEqual(self.full_cust_list_1, CustomList([1, 2, 3, 4, 5]))
+        self.assertTrue(
+            _check_equality(self.full_cust_list_1, CustomList([1, 2, 3, 4, 5]))
+        )
 
         # different length of custom_list suite
-        self.assertEqual(
-            self.full_cust_list_1 + self.full_cust_list_3,
-            CustomList([7, 9, 11, 4, 5]),
-        )
+        self.result = self.full_cust_list_1 + self.full_cust_list_3
+        self.assertTrue(_check_equality(self.result, CustomList([7, 9, 11, 4, 5])))
         # check the immutability
-        self.assertEqual(self.full_cust_list_1, CustomList([1, 2, 3, 4, 5]))
+        self.assertTrue(
+            _check_equality(self.full_cust_list_1, CustomList([1, 2, 3, 4, 5]))
+        )
 
         # check the immutability
-        self.assertEqual(self.full_cust_list_3, CustomList([6, 7, 8]))
+        self.assertTrue(_check_equality(self.full_cust_list_3, CustomList([6, 7, 8])))
 
         # custom_list and list suite
-        self.assertEqual(
-            self.full_cust_list_2 + [1, 2, 3],
-            [-4, -2, 0, -2, -1],
-        )
+        self.result = self.full_cust_list_2 + [1, 2, 3]
+        self.assertTrue(_check_equality(self.result, [-4, -2, 0, -2, -1]))
         # check the immutability
-        self.assertEqual(self.full_cust_list_2, CustomList([-5, -4, -3, -2, -1]))
+        self.assertTrue(
+            _check_equality(self.full_cust_list_2, CustomList([-5, -4, -3, -2, -1]))
+        )
 
         # custom_list self add via __radd__
-        self.assertEqual(
-            [1, 2, 3] + self.full_cust_list_2,
-            [-4, -2, 0, -2, -1],
-        )
+        self.result = [1, 2, 3] + self.full_cust_list_2
+        self.assertTrue(_check_equality(self.result, [-4, -2, 0, -2, -1]))
 
         # check the immutability
-        self.assertEqual(self.full_cust_list_2, CustomList([-5, -4, -3, -2, -1]))
+        self.assertTrue(
+            _check_equality(self.full_cust_list_2, CustomList([-5, -4, -3, -2, -1]))
+        )
 
         # custom_list self add via __iadd__
         self.full_cust_list_1 += self.full_cust_list_3
-        self.assertEqual(self.full_cust_list_1, CustomList([7, 9, 11, 4, 5]))
+        self.assertTrue(
+            _check_equality(self.full_cust_list_1, CustomList([7, 9, 11, 4, 5]))
+        )
 
         # check the immutability
-        self.assertEqual(self.full_cust_list_3, CustomList([6, 7, 8]))
+        self.assertTrue(_check_equality(self.full_cust_list_3, CustomList([6, 7, 8])))
 
     def test_cust_list_sub_(self) -> None:
         """Check all substitution actions in class"""
 
         # custom_list self add suite compare with custom_list
-        self.assertEqual(
-            self.full_cust_list_1 - self.full_cust_list_1,
-            CustomList([0, 0, 0, 0, 0]),
-        )
+        self.result = self.full_cust_list_1 - self.full_cust_list_1
+        self.assertTrue(_check_equality(self.result, CustomList([0, 0, 0, 0, 0])))
         # check the immutability
-        self.assertEqual(self.full_cust_list_1, CustomList([1, 2, 3, 4, 5]))
+        self.assertTrue(
+            _check_equality(self.full_cust_list_1, CustomList([1, 2, 3, 4, 5]))
+        )
 
         # custom_list self add suite compare with list
-        self.assertEqual(
-            self.full_cust_list_1 - self.full_cust_list_1,
-            [0, 0, 0, 0, 0],
-        )
+        self.result = self.full_cust_list_1 - self.full_cust_list_1
+        self.assertTrue(_check_equality(self.result, [0, 0, 0, 0, 0]))
         # check the immutability
-        self.assertEqual(self.full_cust_list_1, CustomList([1, 2, 3, 4, 5]))
+        self.assertTrue(
+            _check_equality(self.full_cust_list_1, CustomList([1, 2, 3, 4, 5]))
+        )
 
         # different length of custom_list suite
-        self.assertEqual(
-            self.full_cust_list_1 - self.full_cust_list_3,
-            CustomList([-5, -5, -5, 4, 5]),
-        )
+        self.result = self.full_cust_list_1 - self.full_cust_list_3
+        self.assertTrue(_check_equality(self.result, CustomList([-5, -5, -5, 4, 5])))
         # check the immutability
-        self.assertEqual(self.full_cust_list_3, CustomList([6, 7, 8]))
+        self.assertTrue(_check_equality(self.full_cust_list_3, CustomList([6, 7, 8])))
 
         # custom_list and list suite
-        self.assertEqual(
-            self.full_cust_list_2 - [1, 2, 3],
-            [-6, -6, -6, -2, -1],
-        )
+        self.result = self.full_cust_list_2 - [1, 2, 3]
+        self.assertTrue(_check_equality(self.result, [-6, -6, -6, -2, -1]))
         # check the immutability
-        self.assertEqual(self.full_cust_list_2, CustomList([-5, -4, -3, -2, -1]))
+        self.assertTrue(
+            _check_equality(self.full_cust_list_2, CustomList([-5, -4, -3, -2, -1]))
+        )
 
         # custom_list self add via __radd__
-        self.assertEqual([1, 2, 3] - self.full_cust_list_2, [6, 6, 6, 2, 1])
+        self.result = [1, 2, 3] - self.full_cust_list_2
+        self.assertTrue(_check_equality(self.result, [6, 6, 6, 2, 1]))
         # check the immutability
-        self.assertEqual(self.full_cust_list_2, CustomList([-5, -4, -3, -2, -1]))
+        self.assertTrue(
+            _check_equality(self.full_cust_list_2, CustomList([-5, -4, -3, -2, -1]))
+        )
 
         # custom_list self add via __iadd__
         self.full_cust_list_1 -= self.full_cust_list_3
-        self.assertEqual(self.full_cust_list_1, CustomList([-5, -5, -5, 4, 5]))
+        self.assertTrue(
+            _check_equality(self.full_cust_list_1, CustomList([-5, -5, -5, 4, 5]))
+        )
 
         # check the immutability
-        self.assertEqual(self.full_cust_list_3, CustomList([6, 7, 8]))
+        self.assertTrue(
+            _check_equality(self.full_cust_list_3, CustomList([6, 7, 8]))
+        )
 
     def test_cust_list_eq_(self) -> None:
         """Check the equality of the classes"""

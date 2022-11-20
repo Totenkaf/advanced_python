@@ -6,11 +6,9 @@ Copyright 2022 by Artem Ustsov
 import os
 import sys
 import unittest
-from unittest.mock import patch
 
-from file_generator.my_file_generator import (
+from my_file_generator import (
     Chunker,
-    PositiveInteger,
     find_occurrence,
 )
 
@@ -23,37 +21,13 @@ class TestFileGenerator(unittest.TestCase):
     """Main test class for my_file_generator module"""
 
     def setUp(self) -> None:
-        self.input_fd = "tests/input.txt"
+        self.input_fd = "input.txt"
         self.output_fd = "output.txt"
         self.test_sentences = [
             "а роза упала на лапу азора",
             "розовая пантера надела розовые штаны и купила розу для Розы",
             "роза купленная вчера в магазине роз начала розоветь",
         ]
-
-    @patch.object(PositiveInteger, "__set__")
-    def test_set_integer_descr(self, __set__mock):
-        """Check the call of __set__ method in PositiveInteger-descr"""
-
-        self.chunker = Chunker(self.input_fd, self.output_fd)
-        self.assertTrue(__set__mock.called)
-
-    @patch.object(PositiveInteger, "__get__")
-    def test_get_integer_descr(self, __get__mock):
-        """Check the call of __get__ method in PositiveInteger-descr"""
-
-        __get__mock.return_value = None
-        self.chunker = Chunker(self.input_fd, self.output_fd)
-        self.assertEqual(self.chunker.chunk_size, None)
-        self.assertTrue(__get__mock.called)
-
-    @patch.object(Chunker, "__init__")
-    def test_chunker_mock_init(self, __init__mock):
-        """Chunker mock init"""
-
-        __init__mock.return_value = None
-        self.chunker = Chunker(self.input_fd, self.output_fd)
-        self.assertTrue(__init__mock.called)
 
     def test_chunker_init(self):
         """Chunker init"""

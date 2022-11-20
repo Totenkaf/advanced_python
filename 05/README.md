@@ -66,7 +66,7 @@
 ## Quick Start
 Tests and coverage
 ~~~
-coverage run -m unittest tests/*_test.py
+coverage run -m unittest *_test.py
 coverage report -m
 coverage html
 ~~~ 

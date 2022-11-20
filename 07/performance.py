@@ -10,9 +10,9 @@ import time
 import click
 
 # pylint: disable=import-error
-from matrixes import matrixes_ctypes
+import matrixes_ctypes
 
-from matrixes import matrixes_python
+import matrixes_python
 
 import numpy as np
 

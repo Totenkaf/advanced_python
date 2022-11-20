@@ -7,7 +7,7 @@ Copyright 2022 by Artem Ustsov
 import unittest
 from unittest.mock import patch
 
-from lru_cache.my_lru_cache import (
+from my_lru_cache import (
     CircledDoubleLinkedList,
     KVPair,
     LimitException,
@@ -27,25 +27,11 @@ class TestLRUCache(unittest.TestCase):
     LRUCache test
     """
 
-    @patch.object(KVPair, "__init__")
-    def test_kv_pair_init(self, __init__mock):
-        """KV Pair mock init"""
-        __init__mock.return_value = None
-        self.pair = KVPair()
-        self.assertTrue(__init__mock.called)
-
     def test_kv_pair_special_init(self):
         """KV Pair special init"""
         self.pair = KVPair("key", "value")
         self.assertEqual(self.pair.key, "key")
         self.assertEqual(self.pair.value, "value")
-
-    @patch.object(Node, "__init__")
-    def test_node_init(self, __init__mock):
-        """Node mock init"""
-        __init__mock.return_value = None
-        self.node = Node()
-        self.assertTrue(__init__mock.called)
 
     def test_node_default_init_values(self):
         """Node default init"""
@@ -63,13 +49,6 @@ class TestLRUCache(unittest.TestCase):
 
         self.assertIsNone(self.node.next)
         self.assertIsNone(self.node.prev)
-
-    @patch.object(CircledDoubleLinkedList, "__init__")
-    def test_cdll_init(self, __init__mock):
-        """CDLL mock init"""
-        __init__mock.return_value = None
-        self.cdll = CircledDoubleLinkedList()
-        self.assertTrue(__init__mock.called)
 
     def test_cdll_default_init_values(self):
         """CDLL default init"""
@@ -182,13 +161,6 @@ class TestLRUCache(unittest.TestCase):
         self.assertEqual(self.node_2.next, self.cdll.root)
         self.assertEqual(self.cdll.root.prev, self.node_2)
 
-    @patch.object(LRUCache, "__init__")
-    def test_lru_cache_init(self, __init__mock):
-        """LRUCache mock init"""
-        __init__mock.return_value = None
-        self.lru_cache = LRUCache()
-        self.assertTrue(__init__mock.called)
-
     def test_default_lru_cache_init(self):
         """LRUCache default init"""
         self.lru_cache = LRUCache()
@@ -252,7 +224,3 @@ class TestLRUCache(unittest.TestCase):
 
         #  check the LRU strategy
         self.assertEqual(self.lru_cache.cdl_list.root.next.data.key, "k1")
-
-
-if __name__ == "__main__":
-    unittest.main()

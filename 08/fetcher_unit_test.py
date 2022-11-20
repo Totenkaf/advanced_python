@@ -10,7 +10,7 @@ from unittest.mock import AsyncMock, patch
 
 import aiohttp
 
-from fetcher.fetcher import AsyncioFetcher, UrlStats
+from fetcher import AsyncioFetcher, UrlStats
 
 import json_tools
 

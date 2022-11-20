@@ -13,7 +13,7 @@ from typing import Any, NoReturn
 import requests
 from bs4 import BeautifulSoup
 from requests import TooManyRedirects
-from thread_pool.thread_pool import ThreadPool
+from thread_pool import ThreadPool
 
 
 class Server:

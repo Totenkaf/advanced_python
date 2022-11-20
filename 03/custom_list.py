@@ -39,17 +39,11 @@ class CustomList(list):
             raise TypeError
         if operator == "+":
             return [
-                x + y
-                for x, y in zip_longest(
-                    r_array, l_array, fillvalue=fill_value
-                )
+                x + y for x, y in zip_longest(r_array, l_array, fillvalue=fill_value)
             ]
         if operator == "-":
             return [
-                x - y
-                for x, y in zip_longest(
-                    r_array, l_array, fillvalue=fill_value
-                )
+                x - y for x, y in zip_longest(r_array, l_array, fillvalue=fill_value)
             ]
 
     def __sub__(self, other: Iterable):

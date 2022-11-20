@@ -21,17 +21,12 @@
 ## Quick Start
 Make a dynamic lib
 ~~~
-g++ -fPIC -shared -o matrix_chain_multiplication.so matrixes/matrixes_cpp.cpp
+g++ -fPIC -shared -o matrix_chain_multiplication.so matrixes_cpp.cpp
 ~~~
 
 Check .py script in Python-like realisation with random numbers
 ~~~
 python main.py --chain=4,2,7,2 --is_random=True --type=python
-~~~
-
-Check .py script in Ctypes-like realisation with random numbers
-~~~
-python3 main.py --chain=4,2,7,2 --type=cpp --edge=5 --verbose=1
 ~~~
 
 Check .cpp lib byself, please uncomment main function and process it manually

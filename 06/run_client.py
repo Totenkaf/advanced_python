@@ -8,7 +8,7 @@ import os
 import logging
 import sys
 
-from client.my_client import Client
+from my_client import Client
 
 
 if __name__ == "__main__":
