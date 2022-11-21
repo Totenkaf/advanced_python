@@ -13,7 +13,7 @@
 
 Слабые ссылки позволили сократить время на создание в связи с ненадобностью увеличивать счетчики ссылок.
 
-2.1-2.3 Профилирование памяти с __memory_profiler__. 
+2.1-2.3 Профилирование памяти с __memory_profiler__.   
 [2.1.1](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_2_1_1.%20MemProfiling.%20BaseAttributes%20class.png) MemProfiling. BaseAttributes. Support functions. 
 
 [2.1.2](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_2_1_2.%20MemProfiling.%20BaseAttributes%20class.png) MemProfiling. BaseAttributes. Main function. 
