@@ -53,6 +53,6 @@ add.print_stat()  # выводится таблица с результатам�
 
 ## Quick Start
 ~~~
-python3 main.py -c 10 --ktop=3 --input=data/urls_https.txt --output=data/urls_https_parsed.txt
+python3 my_profiling.py -o 1000000 -r 1
 ~~~
 
