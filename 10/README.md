@@ -1,6 +1,4 @@
-[![.github/workflows/ci.yml](https://github.com/Totenkaf/advanced_python/actions/workflows/ci.yml/badge.svg)](https://github.com/Totenkaf/advanced_python/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/Totenkaf/advanced_python/branch/HW_8/graph/badge.svg?token=5jHkOnOQib)](https://codecov.io/gh/Totenkaf/advanced_python)
-# VK | SEM II_Advanced Python | HW_8
+# VK | SEM II_Advanced Python | HW_10
 
 ================================================================ 
   
@@ -29,14 +27,14 @@
 ### 2. flake8 и pylint
 
 ## Quick Start
-Run a lru_cache
+Run a lru_cache with cache_limit = 3 and check cache logs
 ~~~
-python3 main.py -c 10 --ktop=3 --input=data/urls_https.txt --output=data/urls_https_parsed.txt
+python3 my_lru_cache.py -c 3
+cat error_cache.log
+cat warning_cache.log
 ~~~
 
-Tests and coverage
+Run a lru_cache with cache_limit = 3 and additional logging to stdout
 ~~~
-coverage run -m pytest *_test.py
-coverage report -m
-coverage html
+python3 my_lru_cache.py -c 3 -s stdout
 ~~~
