@@ -20,10 +20,10 @@
 [2.1.2](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_2_1_2.%20MemProfiling.%20BaseAttributes%20class.png) MemProfiling. BaseAttributes. Main function. 
 
 [2.2.1](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_2_2_1.%20MemProfiling.%20SlotsAttributes%20class.png) MemProfiling. SlotsAttributes. Support functions. 
-[2.2.2](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_2_2_2.%20MemProfiling.%20SlotsAttributes%20class.png) MemProfiling. SlotsAttributes. Main functions. 
+[2.2.2](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_2_2_2.%20MemProfiling.%20SlotsAttributes%20class.png) MemProfiling. SlotsAttributes. Main function. 
 
 [2.3.1](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_2_3_1.%20MemProfiling.%20WeakRefAttributes%20class.png) MemProfiling. WeakRefAttributes. Support functions. 
-[2.3.2](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_2_3_2.%20MemProfiling.%20WeakRefAttributes%20class.png) MemProfiling. WeakRefAttributes. Main functions.  
+[2.3.2](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_2_3_2.%20MemProfiling.%20WeakRefAttributes%20class.png) MemProfiling. WeakRefAttributes. Main function.  
 
 Такая же тенденция наблюдается и по памяти. Слабые ссылки существенно снижают затраты на создание объектов. Однако интересен факт, что во время изменения атрибутов уже сущестующих классов, память вновь выделяется.  
 
