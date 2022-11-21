@@ -29,11 +29,11 @@
 
 
 
-2.4 Профилирование времени с __cProfile__.  
-[2.4.1](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_2_4_1.%20cProfiling.%20BaseAttributes%20class.png) cProfiling. BaseAttributes. 
+III. Профилирование времени с __cProfile__.  
+[3.4.1](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_2_4_1.%20cProfiling.%20BaseAttributes%20class.png) cProfiling. BaseAttributes. 
 
-[2.4.2](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_2_4_2.%20cProfiling.%20SlotsAttributes%20class.png) cProfiling. SlotsAttributes. 
+[3.4.2](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_2_4_2.%20cProfiling.%20SlotsAttributes%20class.png) cProfiling. SlotsAttributes. 
 
-[2.4.3](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_2_4_3.%20cProfiling.%20WeakRefAttributes%20class.png) cProfiling. WeakRefAttributes.  
+[3.4.3](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_2_4_3.%20cProfiling.%20WeakRefAttributes%20class.png) cProfiling. WeakRefAttributes.  
 
 cProfiling подтверждает измерения из пункта I. Слабые ссылки и slots отрабатывают быстрее.  
