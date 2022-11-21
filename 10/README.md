@@ -30,11 +30,13 @@
 Run a lru_cache with cache_limit = 3 and check cache logs
 ~~~
 python3 my_lru_cache.py -c 3
-cat error_cache.log
+cat debug_cache.log
 cat warning_cache.log
 ~~~
 
 Run a lru_cache with cache_limit = 3 and additional logging to stdout
 ~~~
 python3 my_lru_cache.py -c 3 -s stdout
+cat debug_cache.log
+cat warning_cache.log
 ~~~
