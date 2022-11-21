@@ -7,15 +7,15 @@
 Преподаватели: Геннадий Кандауров, Антон Кухтичев
 
 ## Результаты
-1. [Замер](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_1.%20Simple%20Time%20Measuring.png) времени на создание 1 000 000 объектов, доступ, изменение атрибутов, удаление объектов. 
+I. [Замер](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_1.%20Simple%20Time%20Measuring.png) времени на создание 1 000 000 объектов, доступ, изменение атрибутов, удаление объектов. 
 Видно, что использование __slots__ существенно сокращает время на создание классов, что очевидно в связи с ненадобностью
 в создании дополнительных атрибутов.
 
 Слабые ссылки позволили сократить время на создание в связи с ненадобностью увеличивать счетчики ссылок.
 
-2.1-2.3 Профилирование памяти с __memory_profiler__.   
-[2.1.1](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_2_1_1.%20MemProfiling.%20BaseAttributes%20class.png) MemProfiling. BaseAttributes. Support functions. 
+II. Профилирование памяти с __memory_profiler__.   
 
+[2.1.1](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_2_1_1.%20MemProfiling.%20BaseAttributes%20class.png) MemProfiling. BaseAttributes. Support functions. 
 [2.1.2](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_2_1_2.%20MemProfiling.%20BaseAttributes%20class.png) MemProfiling. BaseAttributes. Main function. 
 
 [2.2.1](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_2_2_1.%20MemProfiling.%20SlotsAttributes%20class.png) MemProfiling. SlotsAttributes. Support functions. 
