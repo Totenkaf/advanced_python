@@ -27,7 +27,7 @@ II. Профилирование памяти с __memory_profiler__.
 
 Такая же тенденция наблюдается и по памяти. Слабые ссылки существенно снижают затраты на создание объектов. Однако интересен факт, что во время изменения атрибутов уже сущестующих классов, память вновь выделяется.  
 
-2.4 Профилирование времени с __cProfile__
+2.4 Профилирование времени с __cProfile__. 
 [2.4.1](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_2_4_1.%20cProfiling.%20BaseAttributes%20class.png) cProfiling. BaseAttributes. 
 
 [2.4.2](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_2_4_2.%20cProfiling.%20SlotsAttributes%20class.png) cProfiling. SlotsAttributes. 
