@@ -29,7 +29,7 @@
 
 
 
-III. Профилирование времени с __cProfile__.  
+### III. Профилирование времени с __cProfile__.  
 [3.4.1](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_2_4_1.%20cProfiling.%20BaseAttributes%20class.png) cProfiling. BaseAttributes. 
 
 [3.4.2](https://github.com/Totenkaf/advanced_python/blob/HW_9/09/results/Task_2_4_2.%20cProfiling.%20SlotsAttributes%20class.png) cProfiling. SlotsAttributes. 
