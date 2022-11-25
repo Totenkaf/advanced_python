@@ -25,7 +25,7 @@
 ## Quick Start
 Run a fetcher
 ~~~
-c
+python3 main.py -c 10 --ktop=3 --input=data/urls_https.txt --output=data/urls_https_parsed.txt
 ~~~
 
 Tests and coverage
