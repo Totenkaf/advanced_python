@@ -10,8 +10,6 @@ import weakref
 import cProfile
 import pstats
 
-pr = cProfile.Profile()
-
 
 # pylint: disable=invalid-name
 # pylint: disable=too-few-public-methods
@@ -106,6 +104,8 @@ class WeakRefAttributes:
 
 def profile_deco(function):
     """cProfile decorator"""
+
+    pr = cProfile.Profile()
 
     @wraps(function)
     def wrapped(*args, **kwargs):
