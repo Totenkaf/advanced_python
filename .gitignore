@@ -2,7 +2,12 @@
 .idea/
 __pycache__/
 logs
-other
+/other
 data/urls_https_parsed.txt
 .DS_store
 .pytest_cache
+/venv
+/fastapi-venv
+/13-FastAPI/blog-env
+sandbox.py
+target-tmp.json
