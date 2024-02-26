@@ -11,3 +11,4 @@ data/urls_https_parsed.txt
 /13-FastAPI/blog-env
 sandbox.py
 target-tmp.json
+.mypy_cache
