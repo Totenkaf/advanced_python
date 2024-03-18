@@ -37,6 +37,7 @@ services:
       POSTGRES_DB: "test-db"
       POSTGRES_USER: "test-user"
       POSTGRES_PASSWORD: "qwerty"
+      PGUSER: "test-user"
       PGDATA: "/var/lib/postgresql/data/pgdata"
     volumes:
       - ../init_db:/docker-entrypoint-initdb.d
@@ -53,7 +54,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1'
+          cpus: '4'
           memory: 4G
     networks:
       - postgres

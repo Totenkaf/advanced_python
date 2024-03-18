@@ -46,19 +46,24 @@ INSERT INTO product_size VALUES(3, 'Large');
 
 
 async def main():
-    connection = await asyncpg.connect(host='127.0.0.1',
-                                       port=5432,
-                                       user='postgres',
-                                       database='products',
-                                       password='password',
-                                       )
-    statements = [CREATE_BRAND_TABLE,
-                  CREATE_PRODUCT_TABLE,
-                  CREATE_PRODUCT_COLOR_TABLE,
-                  CREATE_PRODUCT_SIZE_TABLE,
-                  CREATE_SKU_TABLE,
-                  SIZE_INSERT,
-                  COLOR_INSERT]
+    connection = await asyncpg.connect(
+        host='127.0.0.1',
+        port=5432,
+        user='test-user',
+        database='test-db',
+        password='qwerty',
+    )
+
+    statements = [
+        CREATE_BRAND_TABLE,
+        CREATE_PRODUCT_TABLE,
+        CREATE_PRODUCT_COLOR_TABLE,
+        CREATE_PRODUCT_SIZE_TABLE,
+        CREATE_SKU_TABLE,
+        SIZE_INSERT,
+        COLOR_INSERT,
+    ]
+
     print('Создается база данных product...')
     for statement in statements:
         status = await connection.execute(statement)
@@ -69,15 +74,3 @@ async def main():
 
 if __name__ == '__main__':
     asyncio.run(main())
-
-agent_status_tasks = [
-    get_agent_cpu,
-    get_agent_ram,
-    _get_agent_status,
-    _get_sarafan_version,
-    _get_adcm_version,
-    _get_backup_plugin_version(cm.BackupPlugins.gpbackup),
-    _get_backup_plugin_version(cm.BackupPlugins.gpbackup_s3_plugin),
-    _get_backup_plugin_version(cm.BackupPlugins.gpbackup_manager),
-]
-results = asyncio.gather(*agent_status_tasks)
