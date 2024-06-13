@@ -1,0 +1,10 @@
+.idea/
+__pycache__/
+*.pyc
+venv
+.env
+user_files/
+.coverage
+.pytest_cache/
+venv/
+test_file.txt
