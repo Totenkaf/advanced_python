@@ -1,0 +1,18 @@
+_target_: entities.ModelConfig
+
+path_to_output_model: 'models/model_logreg.pkl'
+path_to_model_metric: 'models/metrics/logreg.json'
+
+path_to_processed_data: 'data/processed/heart_cleveland_upload_train_processed_logreg.csv'
+path_to_transformer: 'models/transformers/transformer_logreg.pkl'
+
+feature_processing_params:
+  _target_: entities.FeatureProcessingParams
+  process_categorical: True
+  process_numerical: True
+
+train_params:
+  _target_: entities.TrainingParams
+  model_type: 'LogisticRegression'
+  random_state: 42
+  grid_search: True

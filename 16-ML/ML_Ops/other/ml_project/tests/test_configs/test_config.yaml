@@ -1,0 +1,34 @@
+_target_: entities.TrainConfig
+
+defaults:
+  - _self_
+  - model: knn
+
+path_to_input_data: 'tests/synthetic_data/synthetic_data.csv'
+path_to_test_data: 'tests/synthetic_data/synthetic_data_test_unlabeled.csv'
+
+splitting_params:
+  _target_: entities.SplittingParams
+  test_size: 0.2
+  random_state: 42
+
+feature_params:
+  _target_: entities.FeatureParams
+  categorical:
+    - 'sex'
+    - 'cp'
+    - 'fbs'
+    - 'restecg'
+    - 'exang'
+    - 'slope'
+    - 'ca'
+    - 'thal'
+  numerical:
+    - 'age'
+    - 'trestbps'
+    - 'chol'
+    - 'thalach'
+    - 'oldpeak'
+  target_column: 'condition'
+
+mlflow_run_name: 'test'

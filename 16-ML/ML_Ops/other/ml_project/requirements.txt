@@ -1,0 +1,10 @@
+dataprep==0.4.5
+hydra-core==1.2.0
+numpy==1.23.3
+pandas==1.5.0
+scikit-learn==1.1.2
+typing==3.7.4.3
+DataSynthesizer==0.1.11
+matplotlib==3.6.0
+dvc==2.30.0
+dvc-gdrive==2.19.0

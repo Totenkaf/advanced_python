@@ -1,0 +1,53 @@
+# Copyright 2022 by Artem Ustsov
+
+input_data_path: "data/raw/heart_cleveland_upload.csv"
+output_params:
+  clean_input: "data/processed/heart_cleveland_upload_processed.csv"
+  train: "data/processed/train.csv"
+  train_processed: "data/processed/train_processed.csv"
+  test: "data/processed/test.csv"
+  target_train: "data/processed/target_train.csv"
+  target_test: "data/processed/target_test.csv"
+  eda: "reports/eda"
+  visuals: "reports/graphs"
+  model: "models/LogisticRegressionCV_model.pkl"
+  metric: "models/LogisticRegressionCV_metrics.json"
+mlflow_params:
+  use_mlflow: True
+  mlflow_uri: "http://5.188.141.0:8000"
+  mlflow_experiment: "my_ml_project"
+downloading_params:
+  s3_bucket: ml_project
+  s3_endpoint_url: "https://hb.bizmrg.com"
+  aws_access_key_id: "6CKG3ZF3Mxs91VfNrw3c9Z"
+  aws_secret_access_key: "47vCFUUq3su1EhCeLzpXDDL2iBvtV6DudxJDcNsh9kKp"
+  paths:
+    - dataset/heart_cleveland_upload.csv
+  output_folder: "data/raw/"
+splitting_params:
+  val_size: 0.3
+  random_state: 42
+train_params:
+  model_type: "LogisticRegressionCV"
+  cross_val_strategy: "StratifiedKFold"
+  n_split: 20
+  penalty: "l2"
+  max_iter: 10000
+  tol: 0.001
+feature_params:
+  categorical_features:
+    - "sex"
+    - "chest_pain_type"
+    - "fasting_blood_sugar"
+    - "rest_ecg"
+    - "exercise_induced_angina"
+    - "st_slope"
+    - "thalassemia"
+  numerical_features:
+    - "age"
+    - "resting_blood_pressure"
+    - "cholesterol"
+    - "max_heart_rate_achieved"
+    - "st_depression"
+    - "num_major_vessels"
+  target_col: "condition"

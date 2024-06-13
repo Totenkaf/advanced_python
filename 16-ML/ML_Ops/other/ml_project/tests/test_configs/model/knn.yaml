@@ -1,0 +1,18 @@
+_target_: entities.ModelConfig
+
+path_to_output_model: 'tests/models/model.pkl'
+path_to_model_metric: 'tests/models/metric.json'
+
+path_to_processed_data: 'tests/synthetic_data/synthetic_data_processed.csv'
+path_to_transformer: 'tests/models/transformer.pkl'
+
+feature_processing_params:
+  _target_: entities.FeatureProcessingParams
+  process_categorical: True
+  process_numerical: True
+
+train_params:
+  _target_: entities.TrainingParams
+  model_type: 'KNeighborsClassifier'
+  random_state: 42
+  grid_search: True
