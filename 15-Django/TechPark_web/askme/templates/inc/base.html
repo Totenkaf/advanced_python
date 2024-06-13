@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="" name="description">
+    <meta content="Mark Otto, Jacob Thornton, and Bootstrap contributors" name="author">
+    <meta content="Hugo 0.88.1" name="generator">
+    <title>HeapIsEternal</title>
+    <link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
+    <link rel="stylesheet" href="{% static "css/my.css" %}">
+
+</head>
+
+<header>
+  <nav class="hcenter">
+
+
+    <div class="search">
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Найти</button>
+      </form>
+    </div>
+
+    <div class="ui-zone rblock hcenter">
+      <div class="create">
+        <a href="{%  url 'ask' %}">
+          <button class="btn btn-outline-success">Спросить!</button>
+        </a>
+      </div>
+
+      <div class="user-data">
+
+        {% if curr_user.is_authenticated %}
+          <div class="avatar fl">
+            <img src="{% static 'img/img_avatar.png' %}" alt=""/>
+          </div>
+
+          <div class="fl">
+            <p class="username">{{curr_user.username}}</p>
+            <div class="authorization">
+              <a class="r" href="{% url 'settings' %}">Настройки</a>
+              <a class="l" href="{% url 'logout' %}?next={{ request.get_full_path }}">Выйти</a>
+            </div>
+          </div>
+        {% else %}
+          <div class="avatar fl">
+            <img src="{% static 'img/img_avatar.png' %}" alt=""/>
+          </div>
+
+          <div class="fl">
+            <p class="username">ANONIMUS</p>
+            <div class="authorization">
+              {% if curr_url == 'sign_up' %}
+                <a class="r" href="#">Регистрация</a>
+              {% else %}
+                <a class="r" href="{% url 'sign_up' %}">Регистрация</a>
+              {% endif %}
+
+              {% if curr_url == 'login' %}
+                <a class="l" href="#">Войти</a>
+              {% else %}
+
+                {% if curr_url == 'sign_up' %}
+                  <a class="l" href="{% url 'login' %}">Войти</a>
+                {% else %}
+                  <a class="l" href="{% url 'login' %}?next={{ request.get_full_path }}">Войти</a>
+                {% endif %}
+
+              {% endif %}
+              </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    </div>
+  </nav>
+
+</header>
+
+<main class="flex-shrink-0">
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col-8">
+
+        {% block content %}
+        {% endblock %}
+
+      </div>
+
+      <div class="col-4">
+        <div class="popular-zone">
+          <div class="tags">
+            <h2>Популярные теги</h2>
+            {% for some_tag in tags %}
+              <a class="tag" id="tag-{{forloop.counter}}" href="{% url 'tag' tag_name=some_tag.name %}">{{some_tag.name}}</a>
+            {% endfor %}
+          </div>
+
+          <div class="members">
+            <h2>Лучшие участники</h2>
+            {% for some_member in members %}
+              <a class="member" id="member-{{forloop.counter}}" href="#">{{some_member.user.username}}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+
+   <footer class="position-fixed bottom-0 container-fluid" style="background-color: rgba(255, 255, 255, 0.7); border-top: none; padding: 5px 0;">
+      <div class="container py-3">
+        <p class="text-center mb-0">&copy; HeapIsEternal 2023</p>
+      </div>
+    </footer>
+
+
+</body>
+
+</html>

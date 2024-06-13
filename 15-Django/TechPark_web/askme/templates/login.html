@@ -1,0 +1,19 @@
+{% extends 'inc/base.html' %}
+{% load static %}
+
+{% load bootstrap5 %}
+
+{% block content %}
+
+<div class="dflex mbottom">
+  <h1 class="dinline">Вход</h1>
+  <a class="mleft" href="{% url 'sign_up' %}">Регистрация</a>
+</div>
+
+<form novalidate class="col-12" action="/login/?next={{ next_url }}" method="post">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  <button type="submit" class="btn btn-primary button_margin_top_10">Войти</button>
+</form>
+
+{% endblock %}

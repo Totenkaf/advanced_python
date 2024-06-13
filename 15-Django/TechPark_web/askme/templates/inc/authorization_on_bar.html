@@ -1,0 +1,55 @@
+{% load static %}
+<!--<div class='d-flex flex-row align-items-center gap-2'>-->
+<!--    <img class="avatar "src="{% static 'img/img_avatar.png' %}"  >-->
+<!--    <div>-->
+<!--        <p>some username</p>-->
+<!--        <a href="{% url 'settings' %}">Настройки</a>-->
+<!--        <a href="">Выйти</a>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+
+<div class="user-data">
+
+    {% if curr_user.is_authenticated %}
+      <div class="avatar fl">
+        <img src="{% static 'img/default_avatar.jpeg' %}" alt=""/>
+      </div>
+
+      <div class="fl">
+        <p class="username">{{curr_user.username}}</p>
+        <div class="authorization">
+          <a class="r" href="{% url 'settings' %}">settings</a>
+          <a class="l" href="{% url 'logout' %}?next={{ request.get_full_path }}">log out</a>
+        </div>
+      </div>
+    {% else %}
+      <div class="avatar fl">
+        <img src="{% static 'img/default_avatar.jpeg' %}" alt=""/>
+      </div>
+
+      <div class="fl">
+        <p class="username">INCOGNITO</p>
+        <div class="authorization">
+          {% if curr_url == 'signup' %}
+            <a class="r" href="#">sign up</a>
+          {% else %}
+            <a class="r" href="{% url 'sign_up' %}">sign up</a>
+          {% endif %}
+
+          {% if curr_url == 'login' %}
+            <a class="l" href="#">log in</a>
+          {% else %}
+
+            {% if curr_url == 'signup' %}
+              <a class="l" href="{% url 'login' %}">log in</a>
+            {% else %}
+              <a class="l" href="{% url 'login' %}?next={{ request.get_full_path }}">log in</a>
+            {% endif %}
+
+          {% endif %}
+          </div>
+      </div>
+    {% endif %}
+</div>

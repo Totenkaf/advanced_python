@@ -1,0 +1,38 @@
+{% load static %}
+
+<div class="answer" id="answer-{{answer.id}}">
+    <div class="row">
+      <div class="col-3">
+        <div class="feedback fl">
+            <button class="btn btn-sm btn-primary text-nowrap">
+                <i class="bi bi-star"></i>
+                <span>{{answer.get_likes_count}}</span>
+            </button>
+        </div>
+        <div class="avatar fl">
+          <img src="{% static 'img/default_avatar.jpeg' %}" alt=""/>
+        </div>
+      </div>
+      <div class="col-9">
+        <div class="answer-text">
+          {{ answer.text }}
+        </div>
+
+        <div class="form-check form-checkbox">
+
+          {% if answer.marked_as_correct %}
+          <input class="form-check-input" type="checkbox" value="" id="flex_check_{{ answer.id }}" checked>
+          {% else %}
+          <input class="form-check-input" type="checkbox" value="" id="flex_check_{{ answer.id }}">
+          {% endif %}
+
+          <label class="form-check-label with-checkbox" for="flex_check_{{ answer.id }}">
+            Correct
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+

@@ -1,0 +1,19 @@
+
+<div class='d-flex justify-content-end' id="sidebar">
+  <div class='d-flex flex-column ms-5 gap-5'>
+    <div class='d-flex flex-column gap-1'>
+      <h3>Топ тегов</h3>
+        <div class='text-wrap d-flex gap-4 flex-wrap' style='align-self: right; width: 300px'>
+            {% for some_tag in tags %}
+              <a class="tag" id="tag-{{forloop.counter}}" href="{% url 'tag' tag_name=some_tag.name %}">{{some_tag.name}}</a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class='d-flex flex-column gap-1'>
+      <h3>Лучшие участники</h3>
+            {% for some_member in members %}
+              <a class="member" id="member-{{forloop.counter}}" href="#">{{some_member.user.username}}</a>
+            {% endfor %}
+    </div>
+  </div>
+</div>

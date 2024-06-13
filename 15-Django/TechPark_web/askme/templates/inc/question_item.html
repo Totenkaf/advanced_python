@@ -1,0 +1,29 @@
+{% load static %}
+
+<div class='border p-3 box'>
+  <div class='d-flex flex-row gap-3'>
+    <div class='d-flex flex-column gap-2'>
+      <img class="avatar "src="{% static 'img/img_avatar.png' %}"  >
+      <button name='btn_question' id={{question.id}} class='btn btn-primary d-flex flex-row gap-2 align-items-center'>
+        <i class="bi bi-award" style='font-size: x-large;'></i>
+        <span>{{question.get_likes_count}}</span>
+      </button>
+    </div>
+    <div class='container-fluid d-flex flex-column'>
+      <a href="{% url 'question' question_id=question.id %}" style='font-size: x-large'>{{question.title}}</a>
+      <p>{{question.text}}</p>
+      <div class='d-flex flex-row justify-content-between'>
+        <a href="">Ответы ({{ question.get_answers_count }})</a>
+        <div class='d-flex flex-row gap-2'>
+          <span>Теги:</span>
+          {% for tag in question.get_tags %}
+            <a class="question-tag" href="{% url 'tag' tag_name=tag.name %}">{{ tag.name }}</a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

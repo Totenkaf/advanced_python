@@ -1,0 +1,320 @@
+main > .container {
+    padding-top: 60px;
+}
+
+.avatar {
+    border-radius: 40%;
+    overflow: hidden;
+}
+
+.hcenter {
+    display: flex;
+    align-items: center;
+}
+
+.btn-success {
+    background-color: orange;
+}
+
+nav {
+    height: auto;
+    width: 100%;
+    background-color: #1E1112;
+}
+
+html {
+    height: 100%;
+}
+body {
+    position: relative;
+    margin: 0;
+    min-height: 100%;
+}
+main {
+    padding-bottom: 40px;
+}
+footer {
+    position: absolute;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+}
+footer > .container {
+    padding-top: 10px;
+}
+
+.logo {
+    margin: 15px 15px 15px 15px;
+}
+
+nav .avatar, .logo {
+    width: 70px;
+    height: 70px;
+    border-radius: 40%;
+    overflow: hidden;
+}
+
+.rblock {
+    position: absolute;
+    right: 0px;
+}
+
+.fl {
+    margin: auto 5px;
+    float: left;
+}
+.fr {
+    margin: auto 15px;
+    float: right;
+}
+.ui-zone {
+    margin: auto 40px;
+}
+
+.avatar img, .logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.tag {
+    margin: 7px;
+    text-decoration: none;
+}
+
+.popular-zone {
+    margin: 20px 40px 30px;
+}
+
+.user-data .username {
+    color:antiquewhite;
+    margin-bottom: 0;
+}
+.user-data {
+    display: flex;
+}
+.authorization > a.l {
+    margin: auto 5px;
+}
+
+.username {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 1.1em;
+}
+
+.user-data {
+    margin: auto 20px;
+}
+.create {
+    margin: auto auto;
+}
+
+.tags {
+    margin-bottom: 45px;
+}
+
+.member {
+    font-size: large;
+    display: block;
+}
+
+.dflex {
+    display: flex;
+    align-items: center;
+}
+
+.mleft {
+    margin-left: 7px;
+}
+
+.mbottom {
+    margin-bottom: 10px;
+}
+
+
+
+
+
+.answer {
+    border: 2px solid gray;
+    padding: 20px;
+    border-radius: 6px;
+    min-height: 168px;
+    margin: auto 20px 20px 5px;
+}
+
+#new_answer {
+    margin: 20px 20px 10px 5px;
+    min-height: 150px;
+    min-width: 100%;
+    padding: 5px;
+}
+
+.disable {
+    pointer-events:none;
+}
+
+.item-text {
+    position: relative;
+    width: 90%;
+    word-wrap: break-word;
+    padding: 5px
+}
+
+a.count-answers {
+    pointer-events: none;
+    cursor: default;
+    color: #999;
+}
+
+.question-title > a {
+    pointer-events: none;
+    cursor: default;
+}
+
+
+
+.question-text {
+    margin-bottom: 5px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.question {
+    border: 2px solid gray;
+}
+
+
+
+.dinline {
+    display: inline;
+}
+
+.dflex {
+    display: flex;
+    align-items: center;
+}
+
+.mbottom {
+    margin-bottom: 10px;
+}
+
+.mleft {
+    margin-left: 7px;
+}
+
+
+
+.question .avatar {
+    width: 90px;
+    height: 90px;
+}
+
+.answer .avatar {
+    width: 70px;
+    height: 70px;
+    margin-top: 35px;
+}
+
+h1 + .mleft {
+    margin-left: 15px;
+}
+
+.swipe {
+    width: 45px;
+    height: 43px;
+    padding: 0;
+}
+
+.question input.swipe-up, .answer input.swipe-up {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.item-text {
+    position: relative;
+    width: 90%;
+    word-wrap: break-word;
+    padding: 5px
+}
+
+.avatar {
+    margin: 18px 0 18px 22px;
+}
+
+.question {
+    padding: 20px;
+    border-radius: 6px;
+    min-height: 168px;
+    margin: auto 20px 20px 5px;
+    border-bottom: 2px solid gray;
+}
+
+.feedback .score {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.feedback {
+    margin: 27px 0 18px 22px;
+}
+
+.dblock {
+    display: block;
+}
+
+.dinline {
+    display: inline;
+}
+
+div.form-checkbox {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+label.with-checkbox {
+    text-align: left;
+    margin-left: 5px;
+}
+
+.question-tag {
+    margin: 5px;
+}
+
+.question-title > a {
+    color: black;
+    text-decoration: none;
+}
+
+
+textarea {
+    width: 50%;
+}
+
+div.username, div.email, div.password, div.repeat_password, div.current-avatar, div.change-avatar, div.save {
+    margin: 15px auto;
+}
+
+textarea#form_username {
+    border: 1px solid red;
+}
+
+.current-avatar .avatar {
+    width: 70px;
+    height: 70px;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+

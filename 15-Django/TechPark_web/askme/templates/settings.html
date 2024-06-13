@@ -1,0 +1,16 @@
+{% extends 'inc/base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+
+
+{% block content %}
+
+<h2>Настройки</h2>
+<form novalidate class="form" id="form_settings" action="/profile/edit/" method="post">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  <button class="btn btn-outline-success">Сохранить</button>
+</form>
+
+{% endblock %}
+

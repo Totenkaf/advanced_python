@@ -1,0 +1,14 @@
+{% extends 'inc/base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+
+{% block content %}
+
+<h1></h1>
+<form novalidate class="form" id="form_new_question" action="/ask/" method="post">
+    {% csrf_token %}
+    {% bootstrap_form ask_form %}
+    <button class="btn btn-success">Спросить!</button>
+</form>
+
+{% endblock %}

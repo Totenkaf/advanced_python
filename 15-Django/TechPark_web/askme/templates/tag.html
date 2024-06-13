@@ -1,0 +1,19 @@
+{% extends 'inc/base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="dflex mbottom">
+  <h1 class="dinline">Тег: {{ tag.name }}</h1>
+  <a class="mleft" href="{% url 'index' %}">Новые вопросы</a>
+  <a class="mleft" href="{% url 'hot' %}">Самые популярные</a>
+</div>
+
+{% for question in questions %}
+  {% include 'inc/question_item.html' %}
+{% endfor %}
+
+{% include 'inc/paginator.html' %}
+
+{% endblock %}

@@ -1,0 +1,127 @@
+{% load static %}
+
+<ul class="pagination">
+
+  {% if paginator.enabled_previous %}
+    <li class="page-item"></li>
+      {% if curr_url == 'tag' %}
+        <a class="page-link" href="{% url curr_url tag_name=tag %}?page={{paginator.prev_prev_page}}">Назад</a>
+      {% else %}
+        {% if curr_url == 'question' %}
+          <a class="page-link" href="{% url curr_url question_id=id %}?page={{paginator.prev_prev_page}}">Назад</a>
+        {% else %}
+          <a class="page-link" href="{% url curr_url %}?page={{paginator.prev_prev_page}}">Назад</a>
+        {% endif %}
+      {% endif %}
+    </li>
+  {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" href="#">Назад</a>
+    </li>
+  {% endif %}
+
+
+  {% if paginator.page != paginator.page_start %}
+    <li class="page-item">
+      {% if curr_url == 'tag' %}
+        <a class="page-link" href="{% url curr_url tag_name=tag %}?page=0">{{ paginator.page_start }}</a>
+      {% else %}
+        {% if curr_url == 'question' %}
+          <a class="page-link" href="{% url curr_url question_id=id %}?page=0">{{ paginator.page_start }}</a>
+        {% else %}
+          <a class="page-link" href="{% url curr_url %}?page=0">{{ paginator.page_start }}</a>
+        {% endif %}
+      {% endif %}
+    </li>
+  {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" href="#">{{ paginator.page_start }}</a>
+    </li>
+  {% endif %}
+
+  {% if paginator.prev_prev_page > paginator.page_start and paginator.prev_prev_page < paginator.page_end %}
+    <li class="page-item disabled">
+      <a class="page-link" href="#">..</a>
+    </li>
+  {% endif %}
+
+
+  {% if paginator.prev_page > paginator.page_start and paginator.prev_page < paginator.page_end %}
+    <li class="page-item">
+      {% if curr_url == 'tag' %}
+        <a class="page-link" href="{% url curr_url tag_name=tag %}?page={{paginator.prev_prev_page}}">{{ paginator.prev_page }}</a>
+      {% else %}
+        {% if curr_url == 'question' %}
+          <a class="page-link" href="{% url curr_url question_id=id %}?page={{paginator.prev_prev_page}}">{{ paginator.prev_page }}</a>
+        {% else %}
+          <a class="page-link" href="{% url curr_url %}?page={{paginator.prev_prev_page}}">{{ paginator.prev_page }}</a>
+        {% endif %}
+      {% endif %}
+    </li>
+  {% endif %}
+
+  {% if paginator.page > paginator.page_start and paginator.page < paginator.page_end %}
+    <li class="page-item disabled">
+      <a class="page-link" href="#">{{ paginator.page }}</a>
+    </li>
+  {% endif %}
+
+  {% if paginator.next_page > paginator.page_start and paginator.next_page < paginator.page_end %}
+    <li class="page-item">
+      {% if curr_url == 'tag' %}
+        <a class="page-link" href="{% url curr_url tag_name=tag %}?page={{paginator.page}}">{{ paginator.next_page }}</a>
+      {% else %}
+        {% if curr_url == 'question' %}
+          <a class="page-link" href="{% url curr_url question_id=id %}?page={{paginator.page}}">{{ paginator.next_page }}</a>
+        {% else %}
+          <a class="page-link" href="{% url curr_url %}?page={{paginator.page}}">{{ paginator.next_page }}</a>
+        {% endif %}
+      {% endif %}
+    </li>
+  {% endif %}
+  {% if paginator.next_next_page > paginator.page_start and paginator.next_next_page < paginator.page_end %}
+    <li class="page-item disabled">
+      <a class="page-link" href="#">..</a>
+    </li>
+  {% endif %}
+
+  {% if paginator.page_start != paginator.page_end %}
+    {% if paginator.page != paginator.page_end %}
+      <li class="page-item">
+        {% if curr_url == 'tag' %}
+          <a class="page-link" href="{% url curr_url tag_name=tag %}?page={{paginator.page_prev_end}}">{{ paginator.page_end }}</a>
+        {% else %}
+          {% if curr_url == 'question' %}
+            <a class="page-link" href="{% url curr_url question_id=id %}?page={{paginator.page_prev_end}}">{{ paginator.page_end }}</a>
+          {% else %}
+            <a class="page-link" href="{% url curr_url %}?page={{paginator.page_prev_end}}">{{ paginator.page_end }}</a>
+          {% endif %}
+        {% endif %}
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <a class="page-link" href="#">{{ paginator.page_end }}</a>
+      </li>
+    {% endif %}
+  {% endif %}
+
+
+  {% if paginator.enabled_next %}
+    <li class="page-item">
+      {% if curr_url == 'tag' %}
+        <a class="page-link" href="{% url curr_url tag_name=tag %}?page={{paginator.page}}">Далее</a>
+      {% else %}
+        {% if curr_url == 'question' %}
+          <a class="page-link" href="{% url curr_url question_id=id %}?page={{paginator.page}}">Далее</a>
+        {% else %}
+          <a class="page-link" href="{% url curr_url %}?page={{paginator.page}}">Далее</a>
+        {% endif %}
+      {% endif %}
+    </li>
+  {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" href="#">Далее</a>
+    </li>
+  {% endif %}
+
+</ul>

@@ -1,0 +1,28 @@
+{% extends "inc/base.html" %}
+{% load static %}
+
+{% block main %}
+
+<div class='d-flex flex-column'>
+    <div class='d-flex flex-row align-items-center gap-5'>
+        <h1>Самые популярные</h1>
+        <a class="mleft" href="{% url 'index' %}">Новые вопросы</a>
+    </div>
+
+     <div class='mt-4 d-flex flex-column gap-5'>
+        {% for question in questions %}
+            {% include "inc/question_item.html" %}
+        {% endfor %}
+     </div>
+
+
+    <script>
+          var questions = document.getElementsByClassName('item-text');
+          for (var i = 0; i < questions.length; i++) {
+            questions[i].classList.add("question-text");
+          }
+    </script>
+    {% include 'inc/paginator.html' with the_url='index' %}
+</div>
+
+{% endblock main %}
