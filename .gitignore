@@ -10,5 +10,5 @@ data/urls_https_parsed.txt
 /fastapi-venv
 /13-FastAPI/blog-env
 sandbox.py
-target-tmp.json
+*.json
 .mypy_cache
