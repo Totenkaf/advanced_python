@@ -5,7 +5,6 @@ This class demonstrates all available Python dunder methods as of Python 3.10.
 Not all methods need to be implemented in a real class - only implement what you need.
 Some methods are mutually exclusive (like __getattr__ and __getattribute__).
 
-The __getattribute__ method is not included because it can easily cause infinite recursion.
 Some methods are rarely used in practice (__complex__, __index__, etc.).
 
 The implementations are simplified for demonstration - real-world usage would need more robust error handling.
@@ -29,9 +28,104 @@ class DunderDemo:
 
     # 1. Object Initialization and Representation
 
-    def __init__(self, value):
-        """Initializer - Called when creating an instance: obj = DunderDemo(5)"""
-        self.value = value
+    def __new__(cls, name, bases, namespace, **kwargs):
+        """Called to create the class object itself"""
+        print(f"Meta __new__: Creating class {name}")
+        # Add a class attribute to all classes using this metaclass
+        namespace['created_by_meta'] = True
+        return super().__new__(cls, name, bases, namespace)
+
+    def __init__(self, name, bases, namespace, **kwargs):
+        """Called after the class is created to initialize it"""
+        print(f"Meta __init__: Initializing class {name}")
+        super().__init__(name, bases, namespace)
+
+    def __del__(self):
+        """Destructor - Called when object is about to be destroyed"""
+        print(f"Class __del__: Deleting instance with value {self.value}")
+
+    @classmethod
+    def __prepare__(cls, name, bases, **kwargs):
+        """
+        Метод __prepare__ в Python используется для настройки пространства имен (namespace),
+        которое будет использоваться при создании класса.
+        Метод должен вернуть объект-словарь, который интерпретатор заполняет в момент парсинга тела класса
+
+        - Сохранение порядка объявления атрибутов класса (класс Enum)
+        class EnumMeta(type):
+            @classmethod
+            def __prepare__(cls, name, bases):
+                return {}
+
+            def __new__(mcls, name, bases, namespace):
+                # Автоматически нумеруем значения
+                for i, name in enumerate(namespace.get('_member_names', [])):
+                    namespace[name] = i
+                return super().__new__(mcls, name, bases, namespace)
+
+        class Color(metaclass=EnumMeta):
+            _member_names = ['RED', 'GREEN', 'BLUE']
+
+        - Предварительная обработка атрибутов перед созданием класса
+        class UpperCaseAttributes(type):
+            @classmethod
+            def __prepare__(cls, name, bases):
+                return defaultdict(str)  # Все атрибуты будут uppercase
+
+        - Логирование или отслеживание создания атрибутов
+        class LoggingMeta(type):
+            @classmethod
+            def __prepare__(cls, name, bases):
+                class LoggingDict(dict):
+                    def __setitem__(self, key, value):
+                        print(f"Defining attribute: {key} = {value}")
+                        super().__setitem__(key, value)
+                return LoggingDict()
+
+        - Валидация атрибутов на этапе определения класса
+        class ValidationMeta(type):
+            @classmethod
+            def __prepare__(cls, name, bases):
+                class ValidatingDict(dict):
+                    def __setitem__(self, key, value):
+                        if key.startswith('_'):
+                            raise ValueError("Protected attributes not allowed")
+                        super().__setitem__(key, value)
+                return ValidatingDict()
+
+        Когда НЕ нужно использовать __prepare__:
+        - Для обычных классов без метаклассов
+        - Когда не требуется контроль над пространством имен
+        - Для простых случаев, где достаточно стандартного dict
+
+        Важные особенности:
+        - __prepare__ должен быть классметодом (@classmethod)
+        - Должен возвращать объект, поддерживающий интерфейс словаря
+        - Вызывается перед __new__ и __init__ метакласса
+        - Работает только в Python 3 и выше
+        """
+        print(f"Class __prepare__: Preparing namespace for {name}")
+        return {}
+
+    @classmethod
+    def __instancecheck__(cls, instance):
+        """Override isinstance() check for this class"""
+        print(f"Class __instancecheck__: Checking {instance}")
+        return hasattr(instance, 'value')
+
+    @classmethod
+    def __subclasscheck__(cls, subclass):
+        """Override issubclass() check for this class"""
+        print(f"Class __subclasscheck__: Checking {subclass}")
+        return True
+
+    def __call__(cls, *args, **kwargs):
+        """Called when an instance is 'called' (instantiated)"""
+        print(f"Meta __call__: Creating instance of {cls.__name__}")
+        # Custom instance creation - could modify or wrap the standard behavior
+        instance = super().__call__(*args, **kwargs)
+        instance._meta_created = True
+        return instance
 
     def __repr__(self):
         """Unambiguous string representation - Used by repr() and for debugging"""
@@ -237,6 +331,14 @@ class DunderDemo:
         return self.value
 
     # 9. Attribute Access
+
+    def __getattribute__(self, name):
+        """Called for all attribute access (use with caution!)"""
+        print(f"__getattribute__: Accessing {name}")
+        try:
+            return super().__getattribute__(name)
+        except AttributeError:
+            raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{name}'")
 
     def __getattr__(self, name):
         """Called when attribute not found - Used by obj.missing_attr"""
