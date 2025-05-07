@@ -1,0 +1,9 @@
+
+.idea/
+__pycache__/
+*.pyc
+jobs_data.json
+scheduler.pickle
+app.log
+.pytest_cache/
+.coverage

@@ -1,0 +1,11 @@
+
+creds.ini
+.idea/
+__pycache__/
+*.pyc
+.coverage*
+app.log
+cities_stats.csv
+.pytest_cache/
+tests/.pytest_cache/
+tests/coverage
